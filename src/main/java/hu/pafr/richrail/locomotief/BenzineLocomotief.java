@@ -7,6 +7,7 @@ public class BenzineLocomotief extends Locomotief {
 	private boolean gps;
 	private Double max_sneleheid;
 	private int stoelen;
+	private int test;
 
 	public BenzineLocomotief(String naam, String vertrekPunt, String eindBestemming, String type_moter,
 				Double hoogte, Double lengte, boolean gps, Double max_sneleheid, int stoelen) {
