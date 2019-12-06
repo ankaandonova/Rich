@@ -14,14 +14,17 @@ public class GUI extends Application{
 	private Scene scene;
 	private ChoiceBox<String>  choiceBox;
 	private Button selectSpoor;
+	private Button deleteSpoor;
 	private Button addSpoor;
 	private TextField nummer;
 	private TextField lengte;
 	private TabPane tabLayout;
 	private TextField locomotiefNaam;
 	private Button selectLocomotief;
+	private Button deleteLocomotief;
 	private Button addLocomotief;
 	private Button selectWagon;
+	private Button deleteWagon;
 	private TextField wagonNaam;
 	private TextField wagonStoel;
 	private TextField wagonBedden;
@@ -43,8 +46,9 @@ public class GUI extends Application{
 		  VBox Spoor_VBox = new VBox();
 		  Spoor_VBox.getChildren().addAll(
 				  new Label ("Kies een spoor"),
-				  selectSpoor =  new Button ("select"),
 				  choiceBox = new ChoiceBox<>(),
+				  selectSpoor =  new Button ("select"),
+				  deleteSpoor =  new Button ("delete"),
 				  new Label ("Spoor nummer"),
 				  nummer = new TextField (),
 				  new Label ("Lengte"),
@@ -70,6 +74,7 @@ public class GUI extends Application{
 				  new Label ("Kies een locomotief"),
 				  choiceBox = new ChoiceBox<>(),
 				  selectLocomotief =  new Button ("select"),
+				  deleteLocomotief =  new Button ("delete"),
 				  new Label ("Naam"),
 				  locomotiefNaam = new TextField (),
 				  new Label ("Vertrek punt"),
@@ -93,8 +98,7 @@ public class GUI extends Application{
 		  tabLocomotief.setContent(Locomotief_VBox);
 		  tabLayout.getTabs().add(tabLocomotief);
 		  
-		  
-		  
+		
 		  //tabWagon
 		  Tab tabWagon =new Tab("Wagon");
 		  VBox Wagon_VBox = new VBox();
@@ -102,6 +106,7 @@ public class GUI extends Application{
 				  new Label ("Kies een wagon"),
 				  choiceBox = new ChoiceBox<>(),
 				  selectWagon =  new Button ("select"),
+				  deleteWagon =  new Button ("delete"),
 				  new Label ("Naam"),
 				  wagonNaam = new TextField (),
 				  
