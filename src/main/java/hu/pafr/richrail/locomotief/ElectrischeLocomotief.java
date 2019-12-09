@@ -5,9 +5,9 @@ import java.util.List;
 
 import hu.pafr.richrail.wagon.Wagon;
 
-public class ElectrischeLocomotief implements Locomotief {
+public class ElectrischeLocomotief implements Locomotief, Cloneable {
 	private List<Wagon> wagons = new ArrayList<Wagon>();
-	
+
 	private String naam;
 	private String vertrekPunt;
 	private String eindBestemming;
@@ -30,6 +30,12 @@ public class ElectrischeLocomotief implements Locomotief {
 		this.max_snelheid = max_snelheid;
 		this.stoelen = stoelen;
 	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+
 	public String getNaam() {
 		return naam;
 	}
@@ -69,6 +75,7 @@ public class ElectrischeLocomotief implements Locomotief {
 	public List<Wagon> getWagons() {
 		return wagons;
 	}
+
 	public String getType_moter() {
 		return type_moter;
 	}

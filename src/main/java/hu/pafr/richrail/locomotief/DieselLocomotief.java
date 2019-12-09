@@ -5,7 +5,7 @@ import java.util.List;
 
 import hu.pafr.richrail.wagon.Wagon;
 
-public class DieselLocomotief implements Locomotief {
+public class DieselLocomotief implements Locomotief, Cloneable {
 	private List<Wagon> wagons = new ArrayList<Wagon>();
 
 	private String naam;
@@ -29,6 +29,11 @@ public class DieselLocomotief implements Locomotief {
 		this.gps = gps;
 		this.max_snelheid = max_snelheid;
 		this.stoelen = stoelen;
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 
 	public String getType_moter() {

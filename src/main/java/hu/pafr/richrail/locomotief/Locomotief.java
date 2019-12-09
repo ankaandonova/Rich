@@ -5,7 +5,8 @@ import java.util.List;
 import hu.pafr.richrail.wagon.Wagon;
 
 public interface Locomotief {
-	//superklasse
+	public Object clone() throws CloneNotSupportedException;
+
 	public String getNaam();
 
 	public void setNaam(String naam);

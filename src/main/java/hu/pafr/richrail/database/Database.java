@@ -21,8 +21,17 @@ import hu.pafr.richrail.wagon.Wagon;
 import hu.pafr.richrail.wagon.WagonBuilder;
 
 public class Database {
+	private static Database database;
+
+	public static Database getDatabase() {
+		if (Database.database == null) {
+			Database.database = new Database();
+		}
+		return Database.database;
+	}
+
 	@SuppressWarnings("unchecked")
-	public static void opslaan(List<Spoor> sporen) {
+	public void opslaan(List<Spoor> sporen) {
 		JSONArray sporenJson = new JSONArray();
 		for (Spoor spoor : sporen) {
 			JSONObject spoorObject = new JSONObject();
@@ -47,12 +56,11 @@ public class Database {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static JSONObject createLocomotiefJSONObject(Locomotief locomotief) {
+	private JSONObject createLocomotiefJSONObject(Locomotief locomotief) {
 		JSONObject locomotiefJson = new JSONObject();
 		locomotiefJson.put("naam", locomotief.getNaam());
 		locomotiefJson.put("vertrekpunt", locomotief.getVertrekPunt());
 		locomotiefJson.put("eindpunt", locomotief.getEindBestemming());
-		locomotiefJson.put("eindpunt", locomotief.getHoogte());
 		locomotiefJson.put("lengte", locomotief.getLengte());
 		locomotiefJson.put("hoogte", locomotief.getHoogte());
 		locomotiefJson.put("gps", locomotief.isGps());
@@ -68,7 +76,7 @@ public class Database {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static JSONObject createWagonJSONObject(Wagon wagon) {
+	private JSONObject createWagonJSONObject(Wagon wagon) {
 		JSONObject wagonJson = new JSONObject();
 		wagonJson.put("naam", wagon.getNaam());
 		wagonJson.put("bedden", wagon.getBedden());
@@ -77,7 +85,7 @@ public class Database {
 	}
 
 	@SuppressWarnings({ "rawtypes" })
-	public static List<Spoor> lezen() {
+	public List<Spoor> lezen() {
 		// JSON parser object to parse read file
 		JSONParser jsonParser = new JSONParser();
 
@@ -100,11 +108,12 @@ public class Database {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static Spoor getSporenFromJsonObject(JSONObject spoorJson) {
+	private Spoor getSporenFromJsonObject(JSONObject spoorJson) {
 		System.out.println(spoorJson);
 		JSONObject spoorObject = (JSONObject) spoorJson.get("spoor");
 		System.out.println(spoorObject);
-		int nummer = Integer.parseInt((String) spoorObject.get("nummer"));
+//		int nummer = Integer.parseInt((String) spoorObject.get("nummer"));
+		int nummer = 1;
 		Double lengte = (Double) spoorObject.get("lengte");
 		Spoor spoor = new Spoor(nummer, lengte);
 
@@ -118,10 +127,13 @@ public class Database {
 	}
 
 	@SuppressWarnings({ "rawtypes" })
-	private static Locomotief getLocomotiefenFromJsonObject(JSONObject locomotiefJson) {
+	private Locomotief getLocomotiefenFromJsonObject(JSONObject locomotiefJson) {
 		String naam = (String) locomotiefJson.get("naam");
-		String type_motor = (String) locomotiefJson.get("type_motor");
-		int stoelen = Integer.parseInt((String) locomotiefJson.get("stoelen"));
+		String type_motor = (String) locomotiefJson.get("type_moter");
+		System.out.println("type");
+		System.out.println(type_motor);
+//		int stoelen = Integer.parseInt((String) locomotiefJson.get("stoelen"));
+		int stoelen = 1;
 		String vertrekpunt = (String) locomotiefJson.get("vertrekpunt");
 		String eindBestemming = (String) locomotiefJson.get("eindpunt");
 		Double lengte = (Double) locomotiefJson.get("lengte");
@@ -143,10 +155,12 @@ public class Database {
 		return locomotief;
 	}
 
-	private static Wagon getWagonsFromJsonObject(JSONObject wagonJson) {
+	private Wagon getWagonsFromJsonObject(JSONObject wagonJson) {
 		String naam = (String) wagonJson.get("naam");
-		int bedden = Integer.parseInt((String) wagonJson.get("bedden"));
-		int stoelen = Integer.parseInt((String) wagonJson.get("stoelen"));
+//		int bedden = Integer.parseInt((String) wagonJson.get("bedden"));
+		int bedden = 1;
+//		int stoelen = Integer.parseInt((String) wagonJson.get("stoelen"));
+		int stoelen = 1;
 		WagonBuilder wagonBuilder = new WagonBuilder();
 		wagonBuilder.setNaam(naam);
 		wagonBuilder.setBed(bedden);
