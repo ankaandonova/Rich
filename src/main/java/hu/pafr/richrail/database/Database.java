@@ -1,6 +1,6 @@
 package hu.pafr.richrail.database;
 
-import java.io.FileNotFoundException;
+import java.io.FileNotFoundException; 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,16 +13,21 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import hu.pafr.richrail.locomotief.Factory;
+import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
-import hu.pafr.richrail.locomotief.LocomotiefFactory;
+import hu.pafr.richrail.locomotief.LocomotiefBuilder;
 import hu.pafr.richrail.spoor.Spoor;
+import hu.pafr.richrail.wagon.Factory;
 import hu.pafr.richrail.wagon.Wagon;
-import hu.pafr.richrail.wagon.WagonBuilder;
+import hu.pafr.richrail.wagon.WagonFactory;
 
 public class Database {
 	private static Database database;
 
+	private Database() {
+		
+	}
+	
 	public static Database getDatabase() {
 		if (Database.database == null) {
 			Database.database = new Database();
@@ -35,15 +40,13 @@ public class Database {
 		JSONArray sporenJson = new JSONArray();
 		for (Spoor spoor : sporen) {
 			JSONObject spoorObject = new JSONObject();
-			JSONObject spoorJson = new JSONObject();
-			spoorJson.put("nummer", spoor.getNummer());
-			spoorJson.put("lengte", spoor.getLengte());
+			spoorObject.put("nummer", Integer.toString(spoor.getNummer()));
+			spoorObject.put("lengte", spoor.getLengte());
 			JSONArray locomotiefen = new JSONArray();
 			for (Locomotief locomotief : spoor.getLocomotiefen()) {
 				locomotiefen.add(createLocomotiefJSONObject(locomotief));
 			}
-			spoorJson.put("locomotiefen", locomotiefen);
-			spoorObject.put("spoor", spoorJson);
+			spoorObject.put("locomotiefen", locomotiefen);
 			sporenJson.add(spoorObject);
 		}
 		// naar JSON file schrijven
@@ -65,7 +68,7 @@ public class Database {
 		locomotiefJson.put("hoogte", locomotief.getHoogte());
 		locomotiefJson.put("gps", locomotief.isGps());
 		locomotiefJson.put("max_snelheid", locomotief.getMax_snelheid());
-		locomotiefJson.put("stoelen", locomotief.getStoelen());
+		locomotiefJson.put("stoelen", Integer.toString(locomotief.getStoelen()));
 		locomotiefJson.put("type_moter", locomotief.getType_moter());
 		JSONArray wagons = new JSONArray();
 		for (Wagon wagon : locomotief.getWagons()) {
@@ -79,16 +82,14 @@ public class Database {
 	private JSONObject createWagonJSONObject(Wagon wagon) {
 		JSONObject wagonJson = new JSONObject();
 		wagonJson.put("naam", wagon.getNaam());
-		wagonJson.put("bedden", wagon.getBedden());
-		wagonJson.put("stoelen", wagon.getStoelen());
+		wagonJson.put("bedden", Integer.toString(wagon.getBedden()));
+		wagonJson.put("stoelen", Integer.toString(wagon.getStoelen()));
 		return wagonJson;
 	}
 
 	@SuppressWarnings({ "rawtypes" })
 	public List<Spoor> lezen() {
-		// JSON parser object to parse read file
 		JSONParser jsonParser = new JSONParser();
-
 		try (FileReader reader = new FileReader("database.json")) {
 			Object obj = jsonParser.parse(reader);
 			List<Spoor> sporen = new ArrayList<Spoor>();
@@ -109,16 +110,12 @@ public class Database {
 
 	@SuppressWarnings("rawtypes")
 	private Spoor getSporenFromJsonObject(JSONObject spoorJson) {
-		System.out.println(spoorJson);
-		JSONObject spoorObject = (JSONObject) spoorJson.get("spoor");
-		System.out.println(spoorObject);
-//		int nummer = Integer.parseInt((String) spoorObject.get("nummer"));
-		int nummer = 1;
-		Double lengte = (Double) spoorObject.get("lengte");
+		int nummer = Integer.parseInt((String) spoorJson.get("nummer"));
+		Double lengte = (Double) spoorJson.get("lengte");
 		Spoor spoor = new Spoor(nummer, lengte);
 
 		List<Locomotief> locomotiefen = new ArrayList<Locomotief>();
-		JSONArray alleLocomotiefen = (JSONArray) spoorObject.get("locomotiefen");
+		JSONArray alleLocomotiefen = (JSONArray) spoorJson.get("locomotiefen");
 		Iterator iterator = alleLocomotiefen.iterator();
 		while (iterator.hasNext()) {
 			locomotiefen.add(getLocomotiefenFromJsonObject((JSONObject) iterator.next()));
@@ -130,10 +127,7 @@ public class Database {
 	private Locomotief getLocomotiefenFromJsonObject(JSONObject locomotiefJson) {
 		String naam = (String) locomotiefJson.get("naam");
 		String type_motor = (String) locomotiefJson.get("type_moter");
-		System.out.println("type");
-		System.out.println(type_motor);
-//		int stoelen = Integer.parseInt((String) locomotiefJson.get("stoelen"));
-		int stoelen = 1;
+		int stoelen = Integer.parseInt((String) locomotiefJson.get("stoelen"));
 		String vertrekpunt = (String) locomotiefJson.get("vertrekpunt");
 		String eindBestemming = (String) locomotiefJson.get("eindpunt");
 		Double lengte = (Double) locomotiefJson.get("lengte");
@@ -141,10 +135,18 @@ public class Database {
 		boolean gps = (boolean) locomotiefJson.get("gps");
 		Double max_snelheid = (Double) locomotiefJson.get("max_snelheid");
 
-		Factory factory = new LocomotiefFactory();
-		Locomotief locomotief = factory.createLocomotief(naam, vertrekpunt, eindBestemming, type_motor, hoogte, lengte,
-				gps, max_snelheid, stoelen);
-
+		Builder locomotiefBuilder = new LocomotiefBuilder();
+		locomotiefBuilder.setNaam(naam);
+		locomotiefBuilder.setVertrekPunt(vertrekpunt);
+		locomotiefBuilder.setEindBestemming(eindBestemming);
+		locomotiefBuilder.setType_moter(type_motor);
+		locomotiefBuilder.setHoogte(hoogte);
+		locomotiefBuilder.setLengte(lengte);
+		locomotiefBuilder.setGps(gps);
+		locomotiefBuilder.setMax_snelheid(max_snelheid);
+		locomotiefBuilder.setStoelen(stoelen);
+		Locomotief locomotief = locomotiefBuilder.build();
+		
 		List<Wagon> wagons = new ArrayList<Wagon>();
 		JSONArray alleWagons = (JSONArray) locomotiefJson.get("wagons");
 		Iterator iterator = alleWagons.iterator();
@@ -157,14 +159,10 @@ public class Database {
 
 	private Wagon getWagonsFromJsonObject(JSONObject wagonJson) {
 		String naam = (String) wagonJson.get("naam");
-//		int bedden = Integer.parseInt((String) wagonJson.get("bedden"));
-		int bedden = 1;
-//		int stoelen = Integer.parseInt((String) wagonJson.get("stoelen"));
-		int stoelen = 1;
-		WagonBuilder wagonBuilder = new WagonBuilder();
-		wagonBuilder.setNaam(naam);
-		wagonBuilder.setBed(bedden);
-		wagonBuilder.setStoel(stoelen);
-		return wagonBuilder.build();
+		int bedden = Integer.parseInt((String) wagonJson.get("bedden"));
+		int stoelen = Integer.parseInt((String) wagonJson.get("stoelen"));
+		
+		Factory factory = new WagonFactory();
+		return factory.createWagon(naam, stoelen, bedden);
 	}
 }
