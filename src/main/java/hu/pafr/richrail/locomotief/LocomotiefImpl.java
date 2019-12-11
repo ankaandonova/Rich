@@ -64,7 +64,7 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 		this.wagons = wagons;
 	}
 
-	public void voegWagonToe(Wagon wagon) {
+	public void setWagon(Wagon wagon) {
 		wagons.add(wagon);
 	}
 

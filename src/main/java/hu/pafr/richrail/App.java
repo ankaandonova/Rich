@@ -92,7 +92,7 @@ public class App {
 		System.out.println(database2);
 
 		//opslaan in database
-		database.opslaan(sporen);
+		database.sporenOpslaan(sporen);
 		System.out.println("test");
 
 		//uit database lezen

@@ -21,7 +21,7 @@ public interface Locomotief {
 
 	public void setWagons(List<Wagon> wagons);
 
-	public void voegWagonToe(Wagon wagon);
+	public void setWagon(Wagon wagon);
 
 	public void verwijderWagon(Wagon wagon);
 
