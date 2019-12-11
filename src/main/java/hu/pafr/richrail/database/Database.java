@@ -1,6 +1,6 @@
 package hu.pafr.richrail.database;
 
-import java.io.FileNotFoundException; 
+import java.io.FileNotFoundException;  
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -126,6 +126,7 @@ public class Database {
 	@SuppressWarnings({ "rawtypes" })
 	private Locomotief getLocomotiefenFromJsonObject(JSONObject locomotiefJson) {
 		String naam = (String) locomotiefJson.get("naam");
+		System.out.println(locomotiefJson);
 		String type_motor = (String) locomotiefJson.get("type_moter");
 		int stoelen = Integer.parseInt((String) locomotiefJson.get("stoelen"));
 		String vertrekpunt = (String) locomotiefJson.get("vertrekpunt");
@@ -159,6 +160,8 @@ public class Database {
 
 	private Wagon getWagonsFromJsonObject(JSONObject wagonJson) {
 		String naam = (String) wagonJson.get("naam");
+		System.out.println("wagon "+(String) wagonJson.get("bedden"));
+		System.out.println("wagonJson "+ wagonJson);
 		int bedden = Integer.parseInt((String) wagonJson.get("bedden"));
 		int stoelen = Integer.parseInt((String) wagonJson.get("stoelen"));
 		
@@ -166,8 +169,74 @@ public class Database {
 		return factory.createWagon(naam, stoelen, bedden);
 	}
 
-	public List<Locomotief> getLocomotiefFromSpoor(Spoor spoor) {
-		// TODO Auto-generated method stub
-		return null;
+	@SuppressWarnings({ "rawtypes" })
+	public void getLocomotiefFromSpoor(Spoor spoor) {
+		JSONParser jsonParser = new JSONParser();
+		try (FileReader reader = new FileReader("database.json")) {
+			//haalt alle sporen uit de database op
+			Object obj = jsonParser.parse(reader);
+			JSONArray alleSporen = (JSONArray) obj;
+			Iterator iterator = alleSporen.iterator();
+			while (iterator.hasNext()) {
+				//gaat elk spoor langs
+				JSONObject spoorJson = (JSONObject) iterator.next();
+				int nummer = Integer.parseInt((String) spoorJson.get("nummer"));
+				System.out.println("spoor" + nummer);
+				if(nummer == spoor.getNummer()) {
+					System.out.println(spoor.getNummer()+" gelijk met "+nummer);
+					//als het nummer van het meegegeven spoor gelijk is aan het geloopte spoornummer
+					JSONArray alleLocomotiefen = (JSONArray) spoorJson.get("locomotiefen");
+					Iterator iterator2 = alleLocomotiefen.iterator();
+					while (iterator2.hasNext()) {
+						//locomotieven van het spoor uit de database worden doorgegaan
+						Locomotief locomotief = getLocomotiefenFromJsonObject((JSONObject) iterator2.next());
+						spoor.addLocomotief(locomotief);
+					}	
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
+	@SuppressWarnings({ "rawtypes" })
+	public void getWagonsFromLocomotief(Locomotief locomotief){
+		JSONParser jsonParser = new JSONParser();
+		try (FileReader reader = new FileReader("database.json")) {
+			//haalt alle sporen uit de database op
+			Object obj = jsonParser.parse(reader);
+			JSONArray alleSporen = (JSONArray) obj;
+			Iterator iterator = alleSporen.iterator();
+			while (iterator.hasNext()) {
+				//gaat elk spoor langs
+				JSONObject spoorJson = (JSONObject) iterator.next();				
+				JSONArray alleLocomotiefen = (JSONArray) spoorJson.get("locomotiefen");
+				Iterator iterator2 = alleLocomotiefen.iterator();
+				while (iterator2.hasNext()) {
+					//locomotieven van het spoor uit de database worden doorgegaan
+					JSONObject locomotiefJson = (JSONObject) iterator2.next();
+					Locomotief locomotief1 = getLocomotiefenFromJsonObject(locomotiefJson);
+					if(locomotief1.getNaam().equals(locomotief.getNaam())) {
+						// de locomotief is gevonden in de database
+						JSONArray alleWagonsVanLocomotief = (JSONArray) locomotiefJson.get("wagons");
+						Iterator iterator3 = alleWagonsVanLocomotief.iterator();
+						while (iterator3.hasNext()) {
+							locomotief.voegWagonToe(getWagonsFromJsonObject((JSONObject) iterator3.next()));
+						}
+					}
+				}	
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 }

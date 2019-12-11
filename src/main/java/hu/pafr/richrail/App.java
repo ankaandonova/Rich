@@ -31,38 +31,28 @@ public class App {
 		Spoor spoor1 = new Spoor(16, 312.2);
 		sporen.add(spoor1);
 
-		// locomotief
-		String naam = "grote trein";
-		String vertrekPunt = "Amsterdam";
-		String eindBestemming = "Utrecht";
-		String type_moter = "diesel";
-		Double hoogte = 2.00;
-		Double lengte = 20.00;
-		boolean gps = true;
-		Double max_snelheid = 150.00;
-		int stoelen = 20;
-		
+
 		// locomotief aanmaken
-		builder.setNaam(naam);
-		builder.setVertrekPunt(vertrekPunt);
-		builder.setEindBestemming(eindBestemming);
-		builder.setType_moter(type_moter);
-		builder.setHoogte(hoogte);
-		builder.setLengte(lengte);
-		builder.setGps(gps);
-		builder.setMax_snelheid(max_snelheid);
-		builder.setStoelen(stoelen);
+		builder.setNaam("grote trein");
+		builder.setVertrekPunt("Amsterdam");
+		builder.setEindBestemming("Utrecht");
+		builder.setType_moter( "diesel");
+		builder.setHoogte(2.00);
+		builder.setLengte(20.00);
+		builder.setGps(true);
+		builder.setMax_snelheid(150.00);
+		builder.setStoelen(20);
 		Locomotief locomotief1 = builder.build();
 
-		builder.setNaam(naam);
-		builder.setVertrekPunt(vertrekPunt);
-		builder.setEindBestemming(eindBestemming);
-		builder.setType_moter(type_moter);
-		builder.setHoogte(hoogte);
-		builder.setLengte(lengte);
-		builder.setGps(gps);
-		builder.setMax_snelheid(max_snelheid);
-		builder.setStoelen(stoelen);
+		builder.setNaam("trein 1");
+		builder.setVertrekPunt("utrecht");
+		builder.setEindBestemming("amsterdam");
+		builder.setType_moter("bezine");
+		builder.setHoogte(1.8);
+		builder.setLengte(50.0);
+		builder.setGps(false);
+		builder.setMax_snelheid(180.0);
+		builder.setStoelen(5);
 		Locomotief locomotief2 = builder.build();
 		
 		// wagon aanmaken
@@ -90,7 +80,7 @@ public class App {
 		spoor.addLocomotief(locomotief3);
 
 		// verwijderen
-		spoor.verwijderLocomotief(locomotief2);
+		spoor.verwijderLocomotief(locomotief3);
 		locomotief1.verwijderWagon(wagon);
 
 		// singelot (er word maximaal 1 database oobject aangemaakt)
