@@ -1,9 +1,14 @@
 package hu.pafr.richrail;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import hu.pafr.richrail.database.Database;
+import hu.pafr.richrail.database.LocomotiefDao;
+import hu.pafr.richrail.database.LocomotiefDaoImpl;
+import hu.pafr.richrail.database.SpoorDao;
+import hu.pafr.richrail.database.SpoorDaoImpl;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
@@ -14,18 +19,56 @@ import hu.pafr.richrail.wagon.Wagon;
 import hu.pafr.richrail.wagon.WagonFactory;
 
 public class App {
-	public static void main(String[] args) throws CloneNotSupportedException {
+	public static void main(String[] args) throws CloneNotSupportedException, FileNotFoundException {
+		
+		
+		
+		
+		
+		Builder builder = new LocomotiefBuilder();
+		builder.setNaam("trein121");
+		builder.setVertrekPunt("utrecht");
+		builder.setEindBestemming("amsterdam");
+		builder.setType_moter("bezsine");
+		builder.setHoogte(1.8);
+		builder.setLengte(50.0);
+		builder.setGps(false);
+		builder.setMax_snelheid(180.0);
+		builder.setStoelen(5);
+		Locomotief locomotief = builder.build();
+		
+		Factory factory = new WagonFactory();
+		Wagon wagon = factory.createWagon("wag1on1", 98, 0);
+		locomotief.setWagon(wagon);
+		
+		Spoor spoor = new Spoor(1, 300.0);
+		Spoor spoor4 = new Spoor(6, 300.0);
+		spoor.addLocomotief(locomotief);
+		
+		SpoorDao spoorDaoImpl = new SpoorDaoImpl();
+		List<Spoor> sporen = new ArrayList<Spoor>();
+		sporen.add(spoor);
+		sporen.add(spoor4);
+		spoorDaoImpl.opslaan(sporen);
+		
+		
+		for(Spoor spoor1 : spoorDaoImpl.lezen()) {
+			System.out.println(spoor1.getNummer());
+		}
+		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
+		locomotiefDao.getWagonsFromLocomotief(locomotief);
+		
+		
+		
+		
+		
 		
 		RichRailCli.voerCommandUit("new train id");
 		System.out.println("dsfhdjsbfjkdsjkfn");
 		
-		List<Spoor> sporen = new ArrayList<Spoor>();
 		// locomotief maken
-		Factory factory = new WagonFactory();
-		Builder builder = new LocomotiefBuilder();
 
 		// spoor aangemaakt
-		Spoor spoor = new Spoor(1, 12.0);
 		sporen.add(spoor);
 
 		Spoor spoor1 = new Spoor(16, 312.2);
@@ -56,7 +99,7 @@ public class App {
 		Locomotief locomotief2 = builder.build();
 		
 		// wagon aanmaken
-		Wagon wagon = factory.createWagon("sinterklaas", 98, 0);
+		Wagon wagon5 = factory.createWagon("sinterklaas", 98, 0);
 
 		
 		//clone locmotief
@@ -70,12 +113,12 @@ public class App {
 		
 		// toevoegen
 		spoor.addLocomotief(locomotief1);
-		locomotief1.voegWagonToe(wagon);
-		locomotief1.voegWagonToe(wagon);
-		locomotief1.voegWagonToe(wagon);
+		locomotief1.setWagon(wagon5);
+		locomotief1.setWagon(wagon5);
+		locomotief1.setWagon(wagon);
 		
 		spoor.addLocomotief(locomotief2);
-		locomotief1.voegWagonToe(wagon);
+		locomotief1.setWagon(wagon);
 		
 		spoor.addLocomotief(locomotief3);
 
@@ -92,16 +135,17 @@ public class App {
 		System.out.println(database2);
 
 		//opslaan in database
-		database.sporenOpslaan(sporen);
+		SpoorDao spoorDao = new SpoorDaoImpl();
+		spoorDao.opslaan(sporen);
 		System.out.println("test");
 
 		//uit database lezen
-		List <Spoor> sporen1 = database.lezen();
+		List <Spoor> sporen1 = spoorDao.lezen();
 		for(Spoor spoor3 : sporen1) {
 			System.out.println("spoor "+ spoor3.getNummer());
-			for(Locomotief locomotief : spoor3.getLocomotiefen()) {
-				System.out.println("locomotief: "+ locomotief.getNaam());
-				for(Wagon wagon1 : locomotief.getWagons()) {
+			for(Locomotief locomotieft : spoor3.getLocomotiefen()) {
+				System.out.println("locomotief: "+ locomotieft.getNaam());
+				for(Wagon wagon1 : locomotieft.getWagons()) {
 					System.out.println("Wagon: "+ wagon1.getNaam());
 				}
 			}

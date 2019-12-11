@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.spoor.Spoor;
+import hu.pafr.richrail.wagon.Wagon;
 
 public interface LocomotiefDao {
 	public Locomotief getLocomotiefenFromJsonObject(JSONObject locomotiefJson);
@@ -15,5 +16,6 @@ public interface LocomotiefDao {
 	public JSONObject createLocomotiefJSONObject(Locomotief locomotief);
 
 	public void getWagonsFromLocomotief(Locomotief locomotief) throws FileNotFoundException;
+	public void removeWagon(Locomotief locomotief, Wagon wagon) throws FileNotFoundException;
 
 }

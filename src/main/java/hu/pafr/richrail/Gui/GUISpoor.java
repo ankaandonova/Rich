@@ -94,7 +94,6 @@ public class GUISpoor {
 		});
 
 
-		
 		//spoor verweijderen
 		deleteSpoor.setOnAction(e -> deleteChoiceSpoor(choiceSpoor));
 	}

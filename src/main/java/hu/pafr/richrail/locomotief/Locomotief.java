@@ -1,5 +1,6 @@
 package hu.pafr.richrail.locomotief;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import hu.pafr.richrail.wagon.Wagon;
@@ -51,5 +52,9 @@ public interface Locomotief {
 	public int getStoelen();
 
 	public void setStoelen(int stoelen);
+
+	public void getWagonnenFromDatabase() throws FileNotFoundException;
+
+	public boolean removeWagon(Wagon wagon) throws FileNotFoundException;
 
 }

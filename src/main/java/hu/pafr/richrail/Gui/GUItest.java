@@ -63,15 +63,13 @@ public class GUItest extends Application {
 		locomotiefDao.getLocomotiefFromSpoor(sporen);
 		
 		for (Locomotief locomotief : sporen.getLocomotiefen()) {
-			System.out.println("=======locomotief " + locomotief.getNaam());
 			Image benzineLocomotiefImg = new Image("locomotief.jpg");
 			scherm1.getChildren().add(new ImageView(benzineLocomotiefImg));
 		}
-
 	}
 
 	static void createWagon(String locomotief) throws FileNotFoundException {
-		
+		System.out.println("==============================");
 		Builder builder = new LocomotiefBuilder();
 		Locomotief locomotiefen= builder.build();
 		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl() ;

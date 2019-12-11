@@ -15,11 +15,11 @@ import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.spoor.Spoor;
 
 public class SpoorDaoImpl implements SpoorDao{
-	LocomotiefDao LocomotiefDaoImpl = new LocomotiefDaoImpl();
 	Database database = Database.getDatabase();
 	
 	@SuppressWarnings("unchecked")
 	public void opslaan(List<Spoor> sporen) {
+		LocomotiefDao LocomotiefDaoImpl = new LocomotiefDaoImpl();
 		JSONArray sporenJson = new JSONArray();
 		for (Spoor spoor : sporen) {
 			JSONObject spoorObject = new JSONObject();
@@ -50,6 +50,7 @@ public class SpoorDaoImpl implements SpoorDao{
 	@SuppressWarnings("rawtypes")
 	public Spoor getSporenFromJsonObject(JSONObject spoorJson) {
 		int nummer = Integer.parseInt((String) spoorJson.get("nummer"));
+		LocomotiefDao LocomotiefDaoImpl = new LocomotiefDaoImpl();
 		Double lengte = (Double) spoorJson.get("lengte");
 		Spoor spoor = new Spoor(nummer, lengte);
 

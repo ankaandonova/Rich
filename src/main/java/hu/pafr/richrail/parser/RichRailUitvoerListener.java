@@ -1,14 +1,16 @@
 package hu.pafr.richrail.parser;
 
+import java.io.FileNotFoundException;
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import hu.pafr.richrail.database.Database;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
 import hu.pafr.richrail.wagon.Factory;
+import hu.pafr.richrail.wagon.Wagon;
 import hu.pafr.richrail.wagon.WagonFactory;
 import parser.RichRailListener;
 import parser.RichRailParser.AddcommandContext;
@@ -25,8 +27,7 @@ public class RichRailUitvoerListener implements RichRailListener {
 
 	private String message;
 	private Object object;
-	private Database database = Database.getDatabase();
-	
+
 	
 	@Override
 	public void visitTerminal(TerminalNode node) {
@@ -83,6 +84,7 @@ public class RichRailUitvoerListener implements RichRailListener {
 		Locomotief l1 = builder.build();
 		this.object = l1;
 		this.message = "De trein " + id + " is aangemaakt";
+		
 	}
 
 	@Override
@@ -142,9 +144,23 @@ public class RichRailUitvoerListener implements RichRailListener {
 	}
 
 	@Override
-	public void exitRemcommand(RemcommandContext ctx) {
-		System.out.println("exitRemcommand");
-
+	public void exitRemcommand(RemcommandContext ctx) throws FileNotFoundException {
+		String locomotiefId = ctx.ID(1).getText();
+		TerminalNode wagonId = ctx.ID().get(0);
+		
+		Builder builder = new LocomotiefBuilder();
+		builder.setNaam(locomotiefId);
+		Locomotief locomotief = builder.build();
+		
+		Factory factory = new WagonFactory();
+		Wagon wagon = factory.createWagon(wagonId.toString(), 0, 0);
+		
+		if(locomotief.removeWagon(wagon)) {
+			message = "Wagon "+ wagonId +" is verwijderd uit locomotief "+ locomotiefId;
+		} else {
+			message = "Wagon "+ wagonId +" is niet gevonden in locomotief "+ locomotiefId;
+		}
+		object = locomotief;
 	}
 
 	@Override

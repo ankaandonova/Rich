@@ -22,57 +22,24 @@ import hu.pafr.richrail.wagon.WagonFactory;
 
 public class CommandTest {
 	public static void main(String[] args) throws CloneNotSupportedException, FileNotFoundException {
+
 		
-		Builder builder = new LocomotiefBuilder();
-		builder.setNaam("trein121");
-		builder.setVertrekPunt("utrecht");
-		builder.setEindBestemming("amsterdam");
-		builder.setType_moter("bezsine");
-		builder.setHoogte(1.8);
-		builder.setLengte(50.0);
-		builder.setGps(false);
-		builder.setMax_snelheid(180.0);
-		builder.setStoelen(5);
-		Locomotief locomotief = builder.build();
-		
-		Factory factory = new WagonFactory();
-		Wagon wagon = factory.createWagon("wag1on1", 98, 0);
-		locomotief.setWagon(wagon);
-		
-		Spoor spoor = new Spoor(1, 300.0);
-		Spoor spoor4 = new Spoor(6, 300.0);
-		spoor.addLocomotief(locomotief);
-		
-		SpoorDao spoorDaoImpl = new SpoorDaoImpl();
-		List<Spoor> sporen = new ArrayList<Spoor>();
-		sporen.add(spoor);
-		sporen.add(spoor4);
-		spoorDaoImpl.opslaan(sporen);
-		
-		
-		for(Spoor spoor1 : spoorDaoImpl.lezen()) {
-			System.out.println(spoor1.getNummer());
-		}
-		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
-		locomotiefDao.getWagonsFromLocomotief(locomotief);
-		
-		System.out.println("========================================");
 		
 //		database.getWagonsFromLocomotief(spoor.getLocomotiefen().get(0));
 		
 		RichRailUitvoerListener richrail;
 		//newcommand 
-		richrail = RichRailCli.voerCommandUit("new train tr2");
-		System.out.println(richrail.getMessage());
-		Locomotief l1 = (Locomotief) richrail.getObject();
-		System.out.println(l1.getNaam());
-		System.out.println("");
+//		richrail = RichRailCli.voerCommandUit("new train tr2");
+//		System.out.println(richrail.getMessage());
+//		Locomotief l1 = (Locomotief) richrail.getObject();
+//		System.out.println(l1.getNaam());
+//		System.out.println("");
 		
-		richrail =RichRailCli.voerCommandUit("new wagon w1");
-		Wagon w1 = (Wagon) richrail.getObject();
-		System.out.println(richrail.getMessage());
-		System.out.println(w1.getNaam());
-		System.out.println("");
+//		richrail =RichRailCli.voerCommandUit("new wagon w1");
+//		Wagon w1 = (Wagon) richrail.getObject();
+//		System.out.println(richrail.getMessage());
+//		System.out.println(w1.getNaam());
+//		System.out.println("");
 		
 		//================================================================================
 //		richrail =RichRailCli.voerCommandUit("new wagon wg2 numseats 15");
@@ -81,25 +48,32 @@ public class CommandTest {
 //		System.out.println(w1.getNaam());
 //		System.out.println("");
 
-		//addcommand 
-		richrail =RichRailCli.voerCommandUit("add w1 to l1");
-		l1 = (Locomotief) richrail.getObject();
-		System.out.println(richrail.getMessage());
-		System.out.println(w1.getNaam());
-		System.out.println("");
+
 		
 		//remove command
-		richrail =RichRailCli.voerCommandUit("remove w1 from l1");
+		richrail =RichRailCli.voerCommandUit("remove wag1on1 from trein121");
+		Locomotief l1 = (Locomotief) richrail.getObject();
+		System.out.println(richrail.getMessage());
+		System.out.println(l1.getNaam());
+		System.out.println("");
 		
-		//getcommand 
-		richrail =RichRailCli.voerCommandUit("getnumseats train l1");
-
-		richrail =RichRailCli.voerCommandUit("getnumseats wagon w1");
 		
-		//delete command
-		richrail =RichRailCli.voerCommandUit("delete wagon w1");
-
-		richrail =RichRailCli.voerCommandUit("delete wagon w1");
-		
+//		//addcommand 
+//		richrail =RichRailCli.voerCommandUit("add w1 to l1");
+//		l1 = (Locomotief) richrail.getObject();
+//		System.out.println(richrail.getMessage());
+//		System.out.println(w1.getNaam());
+//		System.out.println("");
+//		
+//		//getcommand 
+//		richrail =RichRailCli.voerCommandUit("getnumseats train l1");
+//
+//		richrail =RichRailCli.voerCommandUit("getnumseats wagon w1");
+//		
+//		//delete command
+//		richrail =RichRailCli.voerCommandUit("delete wagon w1");
+//
+//		richrail =RichRailCli.voerCommandUit("delete wagon w1");
+//		
 	}
 }

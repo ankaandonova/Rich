@@ -1,12 +1,7 @@
 package hu.pafr.richrail.database;
 
-import java.io.FileNotFoundException;
-import java.util.Iterator;
-
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.wagon.Factory;
 import hu.pafr.richrail.wagon.Wagon;
 import hu.pafr.richrail.wagon.WagonFactory;
