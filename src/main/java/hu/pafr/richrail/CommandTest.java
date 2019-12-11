@@ -11,9 +11,6 @@ public class CommandTest {
 		
 		database.getWagonsFromLocomotief(spoor.getLocomotiefen().get(0));
 		
-		
-		//RichRailCli.voerCommandUit("new train id");
-	
-		
+		//RichRailCli.voerCommandUit("new train id");	
 	}
 }

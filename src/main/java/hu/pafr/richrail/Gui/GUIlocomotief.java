@@ -1,5 +1,10 @@
 package hu.pafr.richrail.Gui;
 
+import hu.pafr.richrail.database.Database;
+import hu.pafr.richrail.locomotief.Builder;
+import hu.pafr.richrail.locomotief.Locomotief;
+import hu.pafr.richrail.locomotief.LocomotiefBuilder;
+import hu.pafr.richrail.spoor.Spoor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -45,21 +50,27 @@ public class GUIlocomotief {
 				new Label("Stoelen"), 
 				locomotiefStoelen = new TextField(),
 				addLocomotief = new Button("Add"));
-		LocomotiefEventHanler();
+		Spoor spoor = new Spoor(0, 0.0);
+		LocomotiefEventHanler(spoor);
 		return Locomotief_VBox;
 
 	}
 
-	protected static void LocomotiefEventHanler() {
-		choiceLocomotief.getItems().addAll("5", "2", "3");
-		choiceLocomotief.setValue("5");
+	protected static void LocomotiefEventHanler(Spoor spoor) {
+		choiceLocomotief.getItems().clear();
+		Database database = Database.getDatabase();
+		database.getLocomotiefFromSpoor(spoor);
+		for(Locomotief locomotief : spoor.getLocomotiefen()) {
+			System.out.println("locomotief " + locomotief.getNaam());
+			choiceLocomotief.setValue(locomotief.getNaam());
+			choiceLocomotief.getItems().add(locomotief.getNaam());
+		}
+		
 		selectLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				getChoiceLocomotief(choiceLocomotief);
 				GUItest.creatTrain();
-				
-
 			}
 		});
 		deleteLocomotief.setOnAction(e -> deleteChoiceLocomotief(choiceLocomotief));
@@ -95,8 +106,14 @@ public class GUIlocomotief {
 	}
 
 	protected static void getChoiceLocomotief(ChoiceBox<String> choiceLocmotief) {
-		String locomotief = choiceLocmotief.getValue();
-		System.out.print(locomotief);
+		String naam = choiceLocmotief.getValue();
+		
+		Builder builder = new LocomotiefBuilder();
+		builder.setNaam(naam);
+		Locomotief locomotief1 = builder.build();
+		System.out.print(locomotief1);
+
+		GUIWagon.WagonEventHandler(locomotief1);	
 	}
 
 	protected static void deleteChoiceLocomotief(ChoiceBox<String> choiceLocmotief) {

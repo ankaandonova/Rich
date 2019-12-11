@@ -3,7 +3,9 @@ package hu.pafr.richrail.Gui;
 import java.util.List;
 
 import hu.pafr.richrail.database.Database;
+import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
+import hu.pafr.richrail.locomotief.LocomotiefBuilder;
 import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Factory;
 import hu.pafr.richrail.wagon.Wagon;
@@ -48,17 +50,21 @@ public class GUIWagon {
 				new Label("Bedden"),
 				wagonBedden = new TextField(), 
 				addWagon = new Button("Add"));
-		Spoor spoor1 = new Spoor(0, 0.0);
-		WagonEventHandler(spoor1);
+		Builder builder = new LocomotiefBuilder();
+		Locomotief locomotief= builder.build();
+		WagonEventHandler(locomotief);
 		return Wagon_VBox;
 	}
 
 	
-	protected static void WagonEventHandler(Spoor spoor) {
+	protected static void WagonEventHandler(Locomotief locomotief) {
+		choiceWagon.getItems().clear();
+
 		Database database = Database.getDatabase();
-		
-		for(Locomotief locomotief : database.getLocomotiefFromSpoor(spoor)) {
-			choiceWagon.getItems().add(locomotief.getNaam());
+		database.getWagonsFromLocomotief(locomotief);
+		for(Wagon wagon : locomotief.getWagons()) {
+			choiceWagon.setValue(wagon.getNaam());
+			choiceWagon.getItems().add(wagon.getNaam());
 		}
 		
 
