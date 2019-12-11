@@ -90,9 +90,9 @@ public class Database {
 	@SuppressWarnings({ "rawtypes" })
 	public List<Spoor> lezen() {
 		JSONParser jsonParser = new JSONParser();
+		List<Spoor> sporen = new ArrayList<Spoor>();
 		try (FileReader reader = new FileReader("database.json")) {
 			Object obj = jsonParser.parse(reader);
-			List<Spoor> sporen = new ArrayList<Spoor>();
 			JSONArray alleSporen = (JSONArray) obj;
 			Iterator iterator = alleSporen.iterator();
 			while (iterator.hasNext()) {
@@ -105,7 +105,7 @@ public class Database {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sporen;
 	}
 
 	@SuppressWarnings("rawtypes")
