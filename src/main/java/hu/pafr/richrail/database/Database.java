@@ -165,4 +165,9 @@ public class Database {
 		Factory factory = new WagonFactory();
 		return factory.createWagon(naam, stoelen, bedden);
 	}
+
+	public List<Locomotief> getLocomotiefFromSpoor(Spoor spoor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

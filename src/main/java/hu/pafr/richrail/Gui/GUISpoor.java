@@ -82,8 +82,11 @@ public class GUISpoor {
 	}
 
 	public static void getChoiceSpoor(ChoiceBox<String> choiceSpoor) {
-		String spoor = choiceSpoor.getValue();
-		System.out.print(spoor);
+		String nummer = choiceSpoor.getValue();
+		System.out.print("spooornummer "+nummer);
+		Spoor spoor1 = new Spoor(Integer.parseInt(nummer), 0.0);
+	
+		GUIWagon.WagonEventHandler(spoor1);
 	}
 
 	public static void deleteChoiceSpoor(ChoiceBox<String> choiceSpoor) {

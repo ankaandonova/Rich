@@ -48,21 +48,17 @@ public class GUIWagon {
 				new Label("Bedden"),
 				wagonBedden = new TextField(), 
 				addWagon = new Button("Add"));
-		WagonEventHandler();
+		Spoor spoor1 = new Spoor(0, 0.0);
+		WagonEventHandler(spoor1);
 		return Wagon_VBox;
 	}
 
-	private static List<Spoor> getDataFromDataBase() {
+	
+	protected static void WagonEventHandler(Spoor spoor) {
 		Database database = Database.getDatabase();
-		return database.lezen();
-	}
-
-	protected static void WagonEventHandler() {
-		List<Spoor> sporen1 = getDataFromDataBase();
-		for (Spoor spoor: sporen1) {
-			for(Locomotief locomotief:spoor.getLocomotiefen()) {
-				choiceWagon.getItems().add(locomotief.getNaam());
-			}
+		
+		for(Locomotief locomotief : database.getLocomotiefFromSpoor(spoor)) {
+			choiceWagon.getItems().add(locomotief.getNaam());
 		}
 		
 
