@@ -16,7 +16,7 @@ import hu.pafr.richrail.wagon.WagonFactory;
 public class App {
 	public static void main(String[] args) throws CloneNotSupportedException {
 		
-		RichRailCli.voerCommandUit("new train 1");
+		RichRailCli.voerCommandUit("new train id");
 		System.out.println("dsfhdjsbfjkdsjkfn");
 		
 		List<Spoor> sporen = new ArrayList<Spoor>();
