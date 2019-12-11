@@ -1,6 +1,8 @@
 package hu.pafr.richrail;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import hu.pafr.richrail.database.LocomotiefDao;
 import hu.pafr.richrail.database.LocomotiefDaoImpl;
@@ -37,24 +39,22 @@ public class CommandTest {
 		Wagon wagon = factory.createWagon("wag1on1", 98, 0);
 		locomotief.setWagon(wagon);
 		
-		LocomotiefDao LocomotiefDaoImpl = new LocomotiefDaoImpl();
-		LocomotiefDaoImpl.save(locomotief);
-		
-		WagonDao wagonDaoImpl = new WagonDaoImpl();
-		wagonDaoImpl.save(wagon);
-		
 		Spoor spoor = new Spoor(1, 300.0);
 		Spoor spoor4 = new Spoor(6, 300.0);
 		spoor.addLocomotief(locomotief);
 		
 		SpoorDao spoorDaoImpl = new SpoorDaoImpl();
-		spoorDaoImpl.save(spoor);
-		spoorDaoImpl.save(spoor4);
+		List<Spoor> sporen = new ArrayList<Spoor>();
+		sporen.add(spoor);
+		sporen.add(spoor4);
+		spoorDaoImpl.opslaan(sporen);
 		
 		
-		for(Spoor spoor1 : spoorDaoImpl.getSporen()) {
+		for(Spoor spoor1 : spoorDaoImpl.lezen()) {
 			System.out.println(spoor1.getNummer());
 		}
+		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
+		locomotiefDao.getWagonsFromLocomotief(locomotief);
 		
 		System.out.println("========================================");
 		
