@@ -1,1 +1,69 @@
-[{"locomotiefen":[{"type_moter":"diesel","stoelen":"20","hoogte":2.0,"eindpunt":"Utrecht","gps":true,"max_snelheid":150.0,"naam":"grote trein","vertrekpunt":"Amsterdam","lengte":20.0,"wagons":[{"stoelen":"98","bedden":"0","naam":"sinterklaas"},{"stoelen":"98","bedden":"0","naam":"sinterklaas"},{"stoelen":"98","bedden":"0","naam":"sinterklaas"}]},{"type_moter":"diesel","stoelen":"20","hoogte":2.0,"eindpunt":"Utrecht","gps":true,"max_snelheid":150.0,"naam":"grote trein","vertrekpunt":"Amsterdam","lengte":20.0,"wagons":[{"stoelen":"98","bedden":"0","naam":"sinterklaas"},{"stoelen":"98","bedden":"0","naam":"sinterklaas"},{"stoelen":"98","bedden":"0","naam":"sinterklaas"}]}],"nummer":"1","lengte":12.0},{"locomotiefen":[],"nummer":"16","lengte":312.2}]
+[
+	{
+		"locomotiefen": [
+			{
+				"type_moter": "diesel",
+				"stoelen": "20",
+				"hoogte": 2.0,
+				"eindpunt": "Utrecht",
+				"gps": true,
+				"max_snelheid": 150.0,
+				"naam": "grote trein",
+				"vertrekpunt": "Amsterdam",
+				"lengte": 20.0,
+				"wagons": [
+					{
+						"stoelen": "98",
+						"bedden": "0",
+						"naam": "sinterklaas"
+					},
+					{
+						"stoelen": "98",
+						"bedden": "0",
+						"naam": "sinterklaas"
+					},
+					{
+						"stoelen": "98",
+						"bedden": "0",
+						"naam": "sinterklaas"
+					}
+				]
+			},
+			{
+				"type_moter": "diesel",
+				"stoelen": "20",
+				"hoogte": 2.0,
+				"eindpunt": "Utrecht",
+				"gps": true,
+				"max_snelheid": 150.0,
+				"naam": "grote trein",
+				"vertrekpunt": "Amsterdam",
+				"lengte": 20.0,
+				"wagons": [
+					{
+						"stoelen": "98",
+						"bedden": "0",
+						"naam": "sinterklaas"
+					},
+					{
+						"stoelen": "98",
+						"bedden": "0",
+						"naam": "sinterklaas"
+					},
+					{
+						"stoelen": "98",
+						"bedden": "0",
+						"naam": "sinterklaas"
+					}
+				]
+			}
+		],
+		"nummer": "1",
+		"lengte": 12.0
+	},
+	{
+		"locomotiefen": [],
+		"nummer": "16",
+		"lengte": 312.2
+	}
+]

@@ -1,5 +1,13 @@
 package hu.pafr.richrail.Gui;
 
+import java.util.List;
+
+import hu.pafr.richrail.database.Database;
+import hu.pafr.richrail.locomotief.Locomotief;
+import hu.pafr.richrail.spoor.Spoor;
+import hu.pafr.richrail.wagon.Factory;
+import hu.pafr.richrail.wagon.Wagon;
+import hu.pafr.richrail.wagon.WagonFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -23,14 +31,15 @@ public class GUIWagon {
 	protected static TextField wagonStoel;
 	protected static TextField wagonBedden;
 	protected static HBox spoor;
-	
+	protected static Wagon Wagon;
+
 	public static VBox createWagonKeuzeMenu() {
-		
+
 		VBox Wagon_VBox = creatVBox();
 		Wagon_VBox.getChildren().addAll(
 				new Label("Kies een wagon"), 
 				choiceWagon = new ChoiceBox<>(),
-				selectWagon = new Button("select"), 
+				selectWagon = new Button("select"),
 				deleteWagon = new Button("delete"), 
 				new Label("Naam"),
 				wagonNaam = new TextField(), 
@@ -42,21 +51,36 @@ public class GUIWagon {
 		WagonEventHandler();
 		return Wagon_VBox;
 	}
+
+	private static List<Spoor> getDataFromDataBase() {
+		Database database = Database.getDatabase();
+		return database.lezen();
+	}
+
 	protected static void WagonEventHandler() {
-		choiceWagon.getItems().addAll("1", "2", "3");
-		choiceWagon.setValue("1");
+		List<Spoor> sporen1 = getDataFromDataBase();
+		for (Spoor spoor: sporen1) {
+			for(Locomotief locomotief:spoor.getLocomotiefen()) {
+				choiceWagon.getItems().add(locomotief.getNaam());
+			}
+		}
+		
+
 		selectWagon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				getChoiceWagon(choiceWagon);
-
+				// Locomotief locomotief = new LocomotiefFactory.createLocomotief();
+				Factory factory = new WagonFactory();
+				Wagon wagon = factory.createWagon(null, 0, 0);
+				GUItest.createWagon(Wagon);
 			}
 		});
-		
-		//wagon verwijderen
+
+		// wagon verwijderen
 		deleteWagon.setOnAction(e -> deleteChoiceWagon(choiceWagon));
-		
-		//nieuwe wagon toevoegen
+
+		// nieuwe wagon toevoegen
 		addWagon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {

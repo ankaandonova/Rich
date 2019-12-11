@@ -7,7 +7,7 @@ import hu.pafr.richrail.locomotief.Locomotief;
 
 public class Spoor {
 
-	private List<Locomotief> locomotiefen = new ArrayList<Locomotief>();
+	List<Locomotief> locomotiefen = new ArrayList<Locomotief>();
 	
 	private int nummer;
 	private Double lengte;

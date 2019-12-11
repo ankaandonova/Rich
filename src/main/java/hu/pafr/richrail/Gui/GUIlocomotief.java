@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
 import javafx.scene.layout.VBox;
 
 public class GUIlocomotief {
@@ -58,7 +57,8 @@ public class GUIlocomotief {
 			@Override
 			public void handle(ActionEvent e) {
 				getChoiceLocomotief(choiceLocomotief);
-				// Locomotief locomotief = new LocomotiefFactory.createLocomotief();
+				GUItest.creatTrain();
+				
 
 			}
 		});
@@ -82,6 +82,8 @@ public class GUIlocomotief {
 		});
 
 	}
+
+
 
 	protected static VBox creatVBox() {
 		VBox vbox = new VBox();

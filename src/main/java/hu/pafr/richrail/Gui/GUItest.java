@@ -4,9 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import hu.pafr.richrail.database.Database;
-import hu.pafr.richrail.locomotief.Locomotief;
+
 
 import hu.pafr.richrail.spoor.Spoor;
+import hu.pafr.richrail.wagon.Wagon;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,14 +16,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class GUItest extends Application {
 
 	private Scene scene;
 	private BorderPane schermBorder;
-	private HBox spoor;
+	private static HBox spoor;
 
 	@Override
 	public void start(Stage window) throws Exception, InvocationTargetException {
@@ -52,32 +52,32 @@ public class GUItest extends Application {
 
 	public List<Spoor> getDataFromDataBase() {
 		Database database = Database.getDatabase();
+		System.out.println(database.lezen());
 		return database.lezen();
+		
+	}
+	
+	static void creatTrain() {
+		Image benzineLocomotiefImg = new Image("locomotief.jpg");
+		spoor.getChildren().add(new ImageView(benzineLocomotiefImg));
 	}
 
-	private void createLocomotief(Locomotief locomotief) {
-		switch (locomotief.getType_moter()) {
-		case "electrisch":
-			Image electrisheLocomotiefImg = new Image("electrisch.jpg");
-			spoor.getChildren().add(new ImageView(electrisheLocomotiefImg));
-			break;
-		case "benzine":
-			Image benzineLocomotiefImg = new Image("benzine.jpg");
-			spoor.getChildren().add(new ImageView(benzineLocomotiefImg));
-			break;
-		case "diesel":
-			Image dieselLocomotiefImg = new Image("diesel.jpg");
-			spoor.getChildren().add(new ImageView(dieselLocomotiefImg));
-			break;
+	static void createWagon(Wagon wagon) {
+		if (wagon.getBedden()> 0) {
+		
+			Image slaapWagonImg = new Image("slaapwagon.jpg");
+			spoor.getChildren().add(new ImageView(slaapWagonImg));
+		}else if (wagon.getStoelen() >0) {
+			Image personenWagonImg = new Image("peronenwagon.jpg");
+			spoor.getChildren().add(new ImageView(personenWagonImg));
+		}else {
+			Image transportWagonfImg = new Image("transportwagon.jpg");
+			spoor.getChildren().add(new ImageView(transportWagonfImg));	
 		}
 
 	}
 	
-	private void creatTrain() {
-		Image benzineLocomotiefImg = new Image("benzine.jpg");
-		spoor.getChildren().add(new ImageView(benzineLocomotiefImg));
-	}
-
+	
 
 	@SuppressWarnings("static-access")
 	private HBox creatHBox() {

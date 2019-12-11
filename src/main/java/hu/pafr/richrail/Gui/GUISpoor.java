@@ -1,5 +1,9 @@
 package hu.pafr.richrail.Gui;
 
+import java.util.List;
+
+import hu.pafr.richrail.database.Database;
+import hu.pafr.richrail.spoor.Spoor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -34,8 +38,18 @@ public class GUISpoor {
 		SpoorEventHandler();
 		return Spoor_VBox;
 	}
+	private static List<Spoor> getDataFromDataBase() {
+		Database database = Database.getDatabase();
+		return database.lezen();
+	}
 	
 	protected static void SpoorEventHandler() {
+		List<Spoor> spoor = getDataFromDataBase();
+		for (Spoor sporen: spoor) {
+			choiceSpoor.getItems().add(Integer.toString(sporen.getNummer()));
+			System.out.println(choiceSpoor.getValue());
+		}
+
 		//spoor kiezen
 		selectSpoor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
