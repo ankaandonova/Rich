@@ -21,26 +21,16 @@ public class LocomotiefDaoImpl implements LocomotiefDao {
 	
 	@SuppressWarnings({ "rawtypes" })
 	public Locomotief getLocomotiefenFromJsonObject(JSONObject locomotiefJson) {
-		String naam = (String) locomotiefJson.get("naam");
-		String type_motor = (String) locomotiefJson.get("type_moter");
-		int stoelen = Integer.parseInt((String) locomotiefJson.get("stoelen"));
-		String vertrekpunt = (String) locomotiefJson.get("vertrekpunt");
-		String eindBestemming = (String) locomotiefJson.get("eindpunt");
-		Double lengte = (Double) locomotiefJson.get("lengte");
-		Double hoogte = (Double) locomotiefJson.get("hoogte");
-		boolean gps = (boolean) locomotiefJson.get("gps");
-		Double max_snelheid = (Double) locomotiefJson.get("max_snelheid");
-
 		Builder locomotiefBuilder = new LocomotiefBuilder();
-		locomotiefBuilder.setNaam(naam);
-		locomotiefBuilder.setVertrekPunt(vertrekpunt);
-		locomotiefBuilder.setEindBestemming(eindBestemming);
-		locomotiefBuilder.setType_moter(type_motor);
-		locomotiefBuilder.setHoogte(hoogte);
-		locomotiefBuilder.setLengte(lengte);
-		locomotiefBuilder.setGps(gps);
-		locomotiefBuilder.setMax_snelheid(max_snelheid);
-		locomotiefBuilder.setStoelen(stoelen);
+		locomotiefBuilder.setNaam((String) locomotiefJson.get("naam"));
+		locomotiefBuilder.setVertrekPunt((String) locomotiefJson.get("vertrekpunt"));
+		locomotiefBuilder.setEindBestemming((String) locomotiefJson.get("eindpunt"));
+		locomotiefBuilder.setType_moter((String) locomotiefJson.get("type_moter"));
+		locomotiefBuilder.setHoogte((Double) locomotiefJson.get("hoogte"));
+		locomotiefBuilder.setLengte((Double) locomotiefJson.get("lengte"));
+		locomotiefBuilder.setGps((boolean) locomotiefJson.get("gps"));
+		locomotiefBuilder.setMax_snelheid((Double) locomotiefJson.get("max_snelheid"));
+		locomotiefBuilder.setStoelen(Integer.parseInt((String) locomotiefJson.get("stoelen")));
 		Locomotief locomotief = locomotiefBuilder.build();
 
 		List<Wagon> wagons = new ArrayList<Wagon>();
@@ -98,18 +88,30 @@ public class LocomotiefDaoImpl implements LocomotiefDao {
 	public void getWagonsFromLocomotief(Locomotief locomotief) throws FileNotFoundException {
 		JSONArray alleSporen = database.getDatabaseJson();
 		Iterator iterator = alleSporen.iterator();
+		System.out.println("==============================================");
+		System.out.println("==============================================");
+		System.out.println("==============================================");
+		System.out.println("==============================================");
+		System.out.println("==============================================");
+		System.out.println("==============================================");
+		
+		System.out.println(locomotief.getNaam());
 		while (iterator.hasNext()) {
 			// gaat elk spoor langs
 			JSONObject spoorJson = (JSONObject) iterator.next();
 			SpoorDao spoorDao = new SpoorDaoImpl();
 			Spoor spoor = spoorDao.getSporenFromJsonObject(spoorJson);
+			System.out.println("spoor "+spoor.getNummer());
+			System.out.println("locomotief: "+ locomotief.getNaam());
 			controleerLocomotieven(locomotief, spoor);
 		}
 	}
 	
 	@SuppressWarnings("rawtypes")
 	private void controleerLocomotieven(Locomotief locomotief, Spoor spoor) {
+		
 		for(Locomotief locomotief1 : spoor.getLocomotiefen()) {
+			System.out.println("naam " + locomotief1.getNaam());
 			// locomotieven van het spoor uit de database worden doorgegaan
 			if (locomotief1.getNaam().equals(locomotief.getNaam())) {
 				// de locomotief is gevonden in de database

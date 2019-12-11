@@ -49,7 +49,6 @@ public class App {
 		List<Spoor> sporen = new ArrayList<Spoor>();
 		sporen.add(spoor);
 		sporen.add(spoor4);
-		spoorDaoImpl.opslaan(sporen);
 		
 		
 		for(Spoor spoor1 : spoorDaoImpl.lezen()) {
@@ -68,8 +67,6 @@ public class App {
 		
 		// locomotief maken
 
-		// spoor aangemaakt
-		sporen.add(spoor);
 
 		Spoor spoor1 = new Spoor(16, 312.2);
 		sporen.add(spoor1);

@@ -65,19 +65,19 @@ public class GUItest extends Application {
 		for (Locomotief locomotief : sporen.getLocomotiefen()) {
 			Image benzineLocomotiefImg = new Image("locomotief.jpg");
 			scherm1.getChildren().add(new ImageView(benzineLocomotiefImg));
+			GUItest.createWagon(locomotief.getNaam());
 		}
 	}
 
-	static void createWagon(String locomotief) throws FileNotFoundException {
+	static void createWagon(String locomotiefNaam) throws FileNotFoundException {
 		System.out.println("==============================");
 		Builder builder = new LocomotiefBuilder();
-		Locomotief locomotiefen= builder.build();
-		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl() ;
-		locomotiefDao.getWagonsFromLocomotief(locomotiefen);
+		builder.setNaam(locomotiefNaam);
+		Locomotief locomotief= builder.build();
+		locomotief.getWagonnenFromDatabase();
 		
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + locomotiefen.getWagons());
-		for (Wagon wagon : locomotiefen.getWagons()) {
-			
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + locomotief.getWagons());
+		for (Wagon wagon : locomotief.getWagons()) {
 			if (wagon.getBedden() > 0) {
 			
 				Image slaapWagonImg = new Image("slaapwagon.jpg");

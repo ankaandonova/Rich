@@ -43,7 +43,6 @@ public class SpoorDaoImpl implements SpoorDao{
 		while (iterator.hasNext()) {
 			sporen.add(getSporenFromJsonObject((JSONObject) iterator.next()));
 		}
-
 		return sporen;
 	}
 

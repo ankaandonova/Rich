@@ -84,12 +84,6 @@ public class GUISpoor {
 				} catch (NumberFormatException | FileNotFoundException e2) {
 					e2.printStackTrace();
 				}
-				try {
-					GUItest.createWagon(choiceSpoor.getValue());
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-		
 			}
 		});
 
