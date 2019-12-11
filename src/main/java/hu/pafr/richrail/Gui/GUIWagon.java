@@ -1,15 +1,13 @@
 package hu.pafr.richrail.Gui;
 
-import java.util.List;
+import java.io.FileNotFoundException;
 
-import hu.pafr.richrail.database.Database;
+import hu.pafr.richrail.database.LocomotiefDao;
+import hu.pafr.richrail.database.LocomotiefDaoImpl;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
-import hu.pafr.richrail.spoor.Spoor;
-import hu.pafr.richrail.wagon.Factory;
 import hu.pafr.richrail.wagon.Wagon;
-import hu.pafr.richrail.wagon.WagonFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -35,7 +33,7 @@ public class GUIWagon {
 	protected static HBox spoor;
 	protected static Wagon Wagon;
 
-	public static VBox createWagonKeuzeMenu() {
+	public static VBox createWagonKeuzeMenu() throws FileNotFoundException {
 
 		VBox Wagon_VBox = creatVBox();
 		Wagon_VBox.getChildren().addAll(
@@ -57,12 +55,13 @@ public class GUIWagon {
 	}
 
 	
-	protected static void WagonEventHandler(Locomotief locomotief) {
-		choiceWagon.getItems().clear();
+	protected static void WagonEventHandler(Locomotief locomotief) throws FileNotFoundException {
+		//choiceWagon.getItems().clear();
 
-		Database database = Database.getDatabase();
-		database.getWagonsFromLocomotief(locomotief);
+		LocomotiefDao locomotiefDao= new LocomotiefDaoImpl();
+		locomotiefDao.getWagonsFromLocomotief(locomotief);
 		for(Wagon wagon : locomotief.getWagons()) {
+			System.out.println("wagon in de database  " + wagon.getNaam());
 			choiceWagon.setValue(wagon.getNaam());
 			choiceWagon.getItems().add(wagon.getNaam());
 		}
@@ -72,10 +71,7 @@ public class GUIWagon {
 			@Override
 			public void handle(ActionEvent e) {
 				getChoiceWagon(choiceWagon);
-				// Locomotief locomotief = new LocomotiefFactory.createLocomotief();
-				Factory factory = new WagonFactory();
-				Wagon wagon = factory.createWagon(null, 0, 0);
-				GUItest.createWagon(Wagon);
+			
 			}
 		});
 
@@ -106,7 +102,7 @@ public class GUIWagon {
 
 	public static void getChoiceWagon(ChoiceBox<String> choiceWagon) {
 		String wagon = choiceWagon.getValue();
-		System.out.print(wagon);
+		System.out.print("choice wagon" +wagon);
 	}
 
 	public static void deleteChoiceWagon(ChoiceBox<String> choiceWagon) {

@@ -1,8 +1,11 @@
 package hu.pafr.richrail.Gui;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import hu.pafr.richrail.database.Database;
+import hu.pafr.richrail.database.SpoorDao;
+import hu.pafr.richrail.database.SpoorDaoImpl;
 import hu.pafr.richrail.spoor.Spoor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,7 +25,7 @@ public class GUISpoor {
 	protected static TextField lengteSpoor;
 
 
-	public static VBox createSpoorKeuzeMenu() {
+	public static VBox createSpoorKeuzeMenu() throws FileNotFoundException {
 		VBox Spoor_VBox = creatVBox();
 		Spoor_VBox.getChildren().addAll(
 				new Label("Kies een spoor"), 
@@ -34,19 +37,36 @@ public class GUISpoor {
 				new Label("Lengte"), 
 				lengteSpoor = new TextField(),
 				addSpoor = new Button("Add"));
-				
-		SpoorEventHandler();
+		Spoor spoor = new Spoor(1, 0.0);
+		SpoorEventHandler(spoor);
 		return Spoor_VBox;
 	}
-	private static List<Spoor> getDataFromDataBase() {
-		Database database = Database.getDatabase();
-		return database.lezen();
+	private static List<Spoor> getDataFromDataBase() throws FileNotFoundException {
+		
+		SpoorDao spoorImpl = new SpoorDaoImpl();
+		return spoorImpl.lezen();
 	}
 	
-	protected static void SpoorEventHandler() {
-		List<Spoor> spoor = getDataFromDataBase();
-		for (Spoor sporen: spoor) {
+	protected static void SpoorEventHandler(Spoor spoor) throws FileNotFoundException {
+		//nieuwe spoor toevoegen
+	
+		List<Spoor> spoor1 = getDataFromDataBase();
+		for (Spoor sporen: spoor1) {
+			addSpoor.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent e) {
+					Spoor spoor2 = new Spoor(0,0.0);
+					lengteSpoor.getText();
+					spoorNummer.getText();
+					spoor2.setNummer(Integer.parseInt(spoorNummer.getText()));
+					spoor2.setLengte(Double.parseDouble(lengteSpoor.getText()));
+					System.out.println("nieuwe spoor nummer  "+ spoor2.getNummer());
+					System.out.println("nieuwe spoor  " +spoor2);
+				}
+			});
+			
 			choiceSpoor.getItems().add(Integer.toString(sporen.getNummer()));
+
 			System.out.println(choiceSpoor.getValue());
 		}
 
@@ -54,20 +74,26 @@ public class GUISpoor {
 		selectSpoor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				getChoiceSpoor(choiceSpoor);
-
+				try {
+					getChoiceSpoor(choiceSpoor);
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					GUItest.createTrain(Integer.parseInt(choiceSpoor.getValue()));
+				} catch (NumberFormatException | FileNotFoundException e2) {
+					e2.printStackTrace();
+				}
+				try {
+					GUItest.createWagon(choiceSpoor.getValue());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+		
 			}
 		});
 
-		//nieuwe spoor toevoegen
-		addSpoor.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				lengteSpoor.getText();
-				spoorNummer.getText();
-				System.out.println(lengteSpoor.getText() + spoorNummer.getText());
-			}
-		});
+
 		
 		//spoor verweijderen
 		deleteSpoor.setOnAction(e -> deleteChoiceSpoor(choiceSpoor));
@@ -81,13 +107,11 @@ public class GUISpoor {
 		return vbox;
 	}
 
-	public static void getChoiceSpoor(ChoiceBox<String> choiceSpoor) {
+	public static void getChoiceSpoor(ChoiceBox<String> choiceSpoor) throws FileNotFoundException {
 		String nummer = choiceSpoor.getValue();
 		
 		System.out.print("spooornummer "+nummer);
-		
 		Spoor spoor1 = new Spoor(Integer.parseInt(nummer), 0.0);
-		
 		GUIlocomotief.LocomotiefEventHanler(spoor1);
 	}
 

@@ -1,6 +1,8 @@
 package hu.pafr.richrail.Gui;
 
-import hu.pafr.richrail.database.Database;
+import java.io.FileNotFoundException;
+import hu.pafr.richrail.database.LocomotiefDao;
+import hu.pafr.richrail.database.LocomotiefDaoImpl;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
@@ -28,51 +30,46 @@ public class GUIlocomotief {
 	protected static TextField locomotiefLengte;
 	protected static TextField locomotiefNaam;
 
-	protected static VBox createLocomotiefKeuzeMenu() {
+	protected static VBox createLocomotiefKeuzeMenu() throws FileNotFoundException {
 
 		VBox Locomotief_VBox = creatVBox();
-		Locomotief_VBox.getChildren().addAll(
-				new Label("Kies een locomotief"), 
-				choiceLocomotief = new ChoiceBox<>(),
-				selectLocomotief = new Button("select"), 
-				deleteLocomotief = new Button("delete"), 
-				new Label("Naam"),
-				locomotiefNaam = new TextField(), 
-				new Label("Vertrek punt"), 
-				vertrekPunt = new TextField(),
-				new Label("Eind bestemming"), 
-				eindBestemming = new TextField(), 
-				new Label("Type motor"),
-				typeMotor = new TextField(), 
-				new Label("GPS"), gps = new TextField(), 
-				new Label("Lengte"),
-				locomotiefLengte = new TextField(), 
-				new Label("Stoelen"), 
-				locomotiefStoelen = new TextField(),
+		Locomotief_VBox.getChildren().addAll(new Label("Kies een locomotief"), choiceLocomotief = new ChoiceBox<>(),
+				selectLocomotief = new Button("select"), deleteLocomotief = new Button("delete"), new Label("Naam"),
+				locomotiefNaam = new TextField(), new Label("Vertrek punt"), vertrekPunt = new TextField(),
+				new Label("Eind bestemming"), eindBestemming = new TextField(), new Label("Type motor"),
+				typeMotor = new TextField(), new Label("GPS"), gps = new TextField(), new Label("Lengte"),
+				locomotiefLengte = new TextField(), new Label("Stoelen"), locomotiefStoelen = new TextField(),
 				addLocomotief = new Button("Add"));
+
 		Spoor spoor = new Spoor(0, 0.0);
 		LocomotiefEventHanler(spoor);
 		return Locomotief_VBox;
 
 	}
 
-	protected static void LocomotiefEventHanler(Spoor spoor) {
+	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
 		choiceLocomotief.getItems().clear();
-		Database database = Database.getDatabase();
-		database.getLocomotiefFromSpoor(spoor);
-		for(Locomotief locomotief : spoor.getLocomotiefen()) {
+		LocomotiefDao locomotiefdDao = new LocomotiefDaoImpl();
+		locomotiefdDao.getLocomotiefFromSpoor(spoor);
+
+		for (Locomotief locomotief : spoor.getLocomotiefen()) {
 			System.out.println("locomotief " + locomotief.getNaam());
 			choiceLocomotief.setValue(locomotief.getNaam());
 			choiceLocomotief.getItems().add(locomotief.getNaam());
 		}
-		
+
 		selectLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				getChoiceLocomotief(choiceLocomotief);
-				GUItest.creatTrain();
+				try {
+					getChoiceLocomotief(choiceLocomotief);
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+
 			}
 		});
+
 		deleteLocomotief.setOnAction(e -> deleteChoiceLocomotief(choiceLocomotief));
 
 		addLocomotief.setOnAction(new EventHandler<ActionEvent>() {
@@ -94,8 +91,6 @@ public class GUIlocomotief {
 
 	}
 
-
-
 	protected static VBox creatVBox() {
 		VBox vbox = new VBox();
 		vbox.setPrefWidth(450);
@@ -105,20 +100,21 @@ public class GUIlocomotief {
 
 	}
 
-	protected static void getChoiceLocomotief(ChoiceBox<String> choiceLocmotief) {
+	protected static void getChoiceLocomotief(ChoiceBox<String> choiceLocmotief) throws FileNotFoundException {
 		String naam = choiceLocmotief.getValue();
-		
+
 		Builder builder = new LocomotiefBuilder();
 		builder.setNaam(naam);
 		Locomotief locomotief1 = builder.build();
 		System.out.print(locomotief1);
 
-		GUIWagon.WagonEventHandler(locomotief1);	
+		GUIWagon.WagonEventHandler(locomotief1);
 	}
 
 	protected static void deleteChoiceLocomotief(ChoiceBox<String> choiceLocmotief) {
-		String locomotief = choiceLocmotief.getValue();
-		choiceLocmotief.getItems().remove(locomotief);
+		String locomotieven = choiceLocmotief.getValue();
+	
+		choiceLocmotief.getItems().remove(locomotieven);
 	}
 
 }

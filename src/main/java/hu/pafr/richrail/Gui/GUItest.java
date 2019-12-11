@@ -1,11 +1,13 @@
 package hu.pafr.richrail.Gui;
 
-import java.lang.reflect.InvocationTargetException; 
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 
-import hu.pafr.richrail.database.Database;
-
-
+import hu.pafr.richrail.database.LocomotiefDao;
+import hu.pafr.richrail.database.LocomotiefDaoImpl;
+import hu.pafr.richrail.locomotief.Builder;
+import hu.pafr.richrail.locomotief.Locomotief;
+import hu.pafr.richrail.locomotief.LocomotiefBuilder;
 import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Wagon;
 import javafx.application.Application;
@@ -16,23 +18,27 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class GUItest extends Application {
 
 	private Scene scene;
 	private BorderPane schermBorder;
-	private static HBox spoor;
+	private static HBox scherm;
+	private static VBox scherm1;
 
 	@Override
 	public void start(Stage window) throws Exception, InvocationTargetException {
-		List<Spoor> sporen = getDataFromDataBase();
+
 		schermBorder = new BorderPane();
 
 		// draw
-		spoor = creatHBox();
-		schermBorder.setTop(spoor);
+		scherm = createHBox();
 
+		scherm1 = creatVBox();
+		schermBorder.setTop(scherm);
+		schermBorder.setTop(scherm1);
 		// spoor
 		schermBorder.setLeft(GUISpoor.createSpoorKeuzeMenu());
 
@@ -50,37 +56,48 @@ public class GUItest extends Application {
 
 	}
 
-	public List<Spoor> getDataFromDataBase() {
-		Database database = Database.getDatabase();
-		System.out.println(database.lezen());
-		return database.lezen();
+	static void createTrain(int spoor) throws FileNotFoundException {
+		Spoor sporen = new Spoor(spoor, 0.0);
 		
-	}
-	
-	static void creatTrain() {
-		Image benzineLocomotiefImg = new Image("locomotief.jpg");
-		spoor.getChildren().add(new ImageView(benzineLocomotiefImg));
-	}
-
-	static void createWagon(Wagon wagon) {
-		if (wagon.getBedden()> 0) {
+		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl() ;
+		locomotiefDao.getLocomotiefFromSpoor(sporen);
 		
-			Image slaapWagonImg = new Image("slaapwagon.jpg");
-			spoor.getChildren().add(new ImageView(slaapWagonImg));
-		}else if (wagon.getStoelen() >0) {
-			Image personenWagonImg = new Image("peronenwagon.jpg");
-			spoor.getChildren().add(new ImageView(personenWagonImg));
-		}else {
-			Image transportWagonfImg = new Image("transportwagon.jpg");
-			spoor.getChildren().add(new ImageView(transportWagonfImg));	
+		for (Locomotief locomotief : sporen.getLocomotiefen()) {
+			System.out.println("=======locomotief " + locomotief.getNaam());
+			Image benzineLocomotiefImg = new Image("locomotief.jpg");
+			scherm1.getChildren().add(new ImageView(benzineLocomotiefImg));
 		}
 
 	}
-	
-	
+
+	static void createWagon(String locomotief) throws FileNotFoundException {
+		
+		Builder builder = new LocomotiefBuilder();
+		Locomotief locomotiefen= builder.build();
+		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl() ;
+		locomotiefDao.getWagonsFromLocomotief(locomotiefen);
+		
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + locomotiefen.getWagons());
+		for (Wagon wagon : locomotiefen.getWagons()) {
+			
+			if (wagon.getBedden() > 0) {
+			
+				Image slaapWagonImg = new Image("slaapwagon.jpg");
+				scherm1.getChildren().add(new ImageView(slaapWagonImg));
+			} else if (wagon.getStoelen() > 0) {
+		
+				Image personenWagonImg = new Image("personenwagon.jpg");
+				scherm1.getChildren().add(new ImageView(personenWagonImg));
+			} else {
+				
+				Image transportWagonfImg = new Image("transportwagon.jpg");
+				scherm1.getChildren().add(new ImageView(transportWagonfImg));
+			}
+		}
+	}
 
 	@SuppressWarnings("static-access")
-	private HBox creatHBox() {
+	private HBox createHBox() {
 		HBox hbox = new HBox();
 		schermBorder.setMargin(hbox, new Insets(5));
 		hbox.prefWidthProperty().bind(schermBorder.widthProperty());
@@ -90,9 +107,16 @@ public class GUItest extends Application {
 		return hbox;
 	}
 
-
+	protected static VBox creatVBox() {
+		VBox vbox = new VBox();
+		vbox.setPrefWidth(450);
+		vbox.setStyle(" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold;");
+		vbox.setAlignment(Pos.BASELINE_LEFT);
+		return vbox;
+	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
+
 }
