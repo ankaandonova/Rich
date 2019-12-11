@@ -114,11 +114,11 @@ public class Database {
 		Double lengte = (Double) spoorJson.get("lengte");
 		Spoor spoor = new Spoor(nummer, lengte);
 
-		List<Locomotief> locomotiefen = new ArrayList<Locomotief>();
 		JSONArray alleLocomotiefen = (JSONArray) spoorJson.get("locomotiefen");
 		Iterator iterator = alleLocomotiefen.iterator();
 		while (iterator.hasNext()) {
-			locomotiefen.add(getLocomotiefenFromJsonObject((JSONObject) iterator.next()));
+			Locomotief locomotief = getLocomotiefenFromJsonObject((JSONObject) iterator.next());
+			spoor.addLocomotief(locomotief);
 		}
 		return spoor;
 	}

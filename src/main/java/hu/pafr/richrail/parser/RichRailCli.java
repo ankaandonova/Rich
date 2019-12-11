@@ -11,17 +11,19 @@ import parser.RichRailLexer;
 import parser.RichRailParser;
 
 public class RichRailCli {
-    public static void main(String[] args) {
-		String input = "new train 1";
-	    CharStream stream = CharStreams.fromString(input);
-	    
+    public static void voerCommandUit(String command) {
+		System.out.println(command);
+	    CharStream stream = CharStreams.fromString(command);
 	    Lexer lexer = new RichRailLexer(stream);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+	    CommonTokenStream tokens = new CommonTokenStream(lexer);
         RichRailParser parser = new RichRailParser(tokens);
+	    System.out.println("s");
         ParseTree tree = parser.command();
 
         RichRailUitvoerListener richrail = new RichRailUitvoerListener();
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(richrail, tree);
+        
 	}
 }

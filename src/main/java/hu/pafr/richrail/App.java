@@ -7,6 +7,7 @@ import hu.pafr.richrail.database.Database;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
+import hu.pafr.richrail.parser.RichRailCli;
 import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Factory;
 import hu.pafr.richrail.wagon.Wagon;
@@ -14,6 +15,10 @@ import hu.pafr.richrail.wagon.WagonFactory;
 
 public class App {
 	public static void main(String[] args) throws CloneNotSupportedException {
+		
+		RichRailCli.voerCommandUit("new train 1");
+		System.out.println("dsfhdjsbfjkdsjkfn");
+		
 		List<Spoor> sporen = new ArrayList<Spoor>();
 		// locomotief maken
 		Factory factory = new WagonFactory();
@@ -65,7 +70,6 @@ public class App {
 
 		
 		//clone locmotief
-		System.out.println(locomotief1.getNaam());
 		System.out.println(locomotief1);
 		Locomotief locomotief3 = (Locomotief) locomotief1.clone();
 		System.out.println(locomotief3.getNaam());
@@ -95,10 +99,24 @@ public class App {
 		Database database2 = Database.getDatabase();
 		System.out.println(database2);
 		
+		System.out.println(database2);
+
 		//opslaan in database
 		database.opslaan(sporen);
-		
+		System.out.println("test");
+
 		//uit database lezen
-		database.lezen();
+		List <Spoor> sporen1 = database.lezen();
+		for(Spoor spoor3 : sporen1) {
+			System.out.println("spoor "+ spoor3.getNummer());
+			for(Locomotief locomotief : spoor3.getLocomotiefen()) {
+				System.out.println("locomotief: "+ locomotief.getNaam());
+				for(Wagon wagon1 : locomotief.getWagons()) {
+					System.out.println("Wagon: "+ wagon1.getNaam());
+				}
+			}
+		}
+		System.out.println("test");
+		
 	}
 }
