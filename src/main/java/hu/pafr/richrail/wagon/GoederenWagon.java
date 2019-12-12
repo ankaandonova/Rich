@@ -39,4 +39,9 @@ public class GoederenWagon implements Cloneable, Wagon {
 	public void setBedden(int bedden) {
 		this.bedden = bedden;
 	}
+
+	@Override
+	public void remove() {
+		System.out.println("remove uit ddb");
+	}
 }

@@ -25,6 +25,9 @@ import parser.RichRailParser.TypeContext;
 
 public class RichRailUitvoerListener implements RichRailListener {
 
+	Builder builder = new LocomotiefBuilder();
+	Factory factory = new WagonFactory();
+	
 	private String message;
 	private Object object;
 
@@ -95,6 +98,8 @@ public class RichRailUitvoerListener implements RichRailListener {
 	@Override
 	public void exitNewwagoncommand(NewwagoncommandContext ctx) {
 		String id = ctx.ID().getText();
+	//	String NUMBER = ctx.NUMBER().getText();
+	//	System.out.println(NUMBER);
 		int stoelen = 20;
 		int bedden = 0;
 
@@ -110,7 +115,20 @@ public class RichRailUitvoerListener implements RichRailListener {
 
 	@Override
 	public void exitAddcommand(AddcommandContext ctx) {
-
+		String locomotiefId = ctx.ID(1).getText();
+		TerminalNode wagonId = ctx.ID().get(0);
+		
+		Builder builder = new LocomotiefBuilder();
+		builder.setNaam(locomotiefId);
+		Locomotief locomotief = builder.build();
+		
+		Factory factory = new WagonFactory();
+		Wagon wagon = factory.createWagon(wagonId.toString(), 0, 0);
+		
+		locomotief.setWagon(wagon);
+		
+		message = "Wagon "+ wagon.getNaam() + " is toegevoegd aan "+ locomotief.getNaam();
+		this.object = locomotief;	
 	}
 
 	@Override
@@ -121,8 +139,23 @@ public class RichRailUitvoerListener implements RichRailListener {
 
 	@Override
 	public void exitGetcommand(GetcommandContext ctx) {
-		System.out.println("exitGetcommand");
+		String id = ctx.ID().getText();
+		String type = ctx.type().getText();
 
+		switch(type) {
+		case "train":
+			Builder builder = new LocomotiefBuilder();
+			builder.setNaam(id);
+			Locomotief locomotief = builder.build();
+			this.message = "Er zijn "+locomotief.getStoelen()+" stoelen in deze trein.";
+			break;
+		case "wagon":
+			Factory factory = new WagonFactory();
+			Wagon wagon = factory.createWagon(id, 0, 0);
+			this.message = "Er zijn "+wagon.getStoelen()+" stoelen in deze wagon.";
+			break;
+		}
+		
 	}
 
 	@Override
@@ -133,8 +166,23 @@ public class RichRailUitvoerListener implements RichRailListener {
 
 	@Override
 	public void exitDelcommand(DelcommandContext ctx) {
-		System.out.println("exitDelcommand");
-
+		String id = ctx.ID().getText();
+		String type = ctx.type().getText();
+		switch(type) {
+		case "train":
+			Builder builder = new LocomotiefBuilder();
+			builder.setNaam(id);
+			Locomotief locomotief = builder.build();
+			locomotief.remove();
+			this.message = "train "+locomotief.getNaam()+" is succesvol verwijderd.";
+			break;
+		case "wagon":
+			Factory factory = new WagonFactory();
+			Wagon wagon = factory.createWagon(id, 0, 0);
+			wagon.remove();
+			this.message = "wagon "+wagon.getNaam()+" is succesvol verwijderd.";
+			break;
+		}
 	}
 
 	@Override
@@ -147,20 +195,21 @@ public class RichRailUitvoerListener implements RichRailListener {
 	public void exitRemcommand(RemcommandContext ctx) throws FileNotFoundException {
 		String locomotiefId = ctx.ID(1).getText();
 		TerminalNode wagonId = ctx.ID().get(0);
-		
-		Builder builder = new LocomotiefBuilder();
+
 		builder.setNaam(locomotiefId);
 		Locomotief locomotief = builder.build();
 		
-		Factory factory = new WagonFactory();
 		Wagon wagon = factory.createWagon(wagonId.toString(), 0, 0);
 		
-		if(locomotief.removeWagon(wagon)) {
-			message = "Wagon "+ wagonId +" is verwijderd uit locomotief "+ locomotiefId;
-		} else {
-			message = "Wagon "+ wagonId +" is niet gevonden in locomotief "+ locomotiefId;
-		}
+		locomotief.verwijderWagon(wagon);
+		message = "Wagon "+ wagonId +" is verwijderd uit locomotief "+ locomotiefId;
 		object = locomotief;
+		
+	//  if(locomotief.removeWagon(wagon)) {
+	//		message = "Wagon "+ wagonId +" is verwijderd uit locomotief "+ locomotiefId;
+	//	} else {
+	//		message = "Wagon "+ wagonId +" is niet gevonden in locomotief "+ locomotiefId;
+	//	}
 	}
 
 	@Override

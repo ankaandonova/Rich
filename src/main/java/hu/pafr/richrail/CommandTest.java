@@ -23,57 +23,65 @@ import hu.pafr.richrail.wagon.WagonFactory;
 public class CommandTest {
 	public static void main(String[] args) throws CloneNotSupportedException, FileNotFoundException {
 
-		
-		
-//		database.getWagonsFromLocomotief(spoor.getLocomotiefen().get(0));
-		
 		RichRailUitvoerListener richrail;
-		//newcommand 
-//		richrail = RichRailCli.voerCommandUit("new train tr2");
-//		System.out.println(richrail.getMessage());
-//		Locomotief l1 = (Locomotief) richrail.getObject();
-//		System.out.println(l1.getNaam());
-//		System.out.println("");
-		
-//		richrail =RichRailCli.voerCommandUit("new wagon w1");
-//		Wagon w1 = (Wagon) richrail.getObject();
-//		System.out.println(richrail.getMessage());
-//		System.out.println(w1.getNaam());
-//		System.out.println("");
-		
-		//================================================================================
-//		richrail =RichRailCli.voerCommandUit("new wagon wg2 numseats 15");
-//		w1 = (Wagon) richrail.getObject();
-//		System.out.println(richrail.getMessage());
-//		System.out.println(w1.getNaam());
-//		System.out.println("");
+		// newcommand
+		richrail = RichRailCli.voerCommandUit("new train tr2");
+		System.out.println(richrail.getMessage());
+		Locomotief tr2 = (Locomotief) richrail.getObject();
+		System.out.println(tr2.getNaam());
+		System.out.println("");
 
+		richrail = RichRailCli.voerCommandUit("new wagon w1");
+		Wagon w1 = (Wagon) richrail.getObject();
+		System.out.println(richrail.getMessage());
+		System.out.println(w1.getNaam());
+		System.out.println("");
 
-		
-		//remove command
-		richrail =RichRailCli.voerCommandUit("remove wag1on1 from trein121");
+		// remove command
+		richrail = RichRailCli.voerCommandUit("remove w1 from tr2");
 		Locomotief l1 = (Locomotief) richrail.getObject();
 		System.out.println(richrail.getMessage());
 		System.out.println(l1.getNaam());
 		System.out.println("");
-		
-		
+
 //		//addcommand 
-//		richrail =RichRailCli.voerCommandUit("add w1 to l1");
-//		l1 = (Locomotief) richrail.getObject();
-//		System.out.println(richrail.getMessage());
-//		System.out.println(w1.getNaam());
-//		System.out.println("");
-//		
+		richrail =RichRailCli.voerCommandUit("add w1 to l1");
+		l1 = (Locomotief) richrail.getObject();
+		System.out.println(richrail.getMessage());
+		System.out.println(w1.getNaam());
+		System.out.println("");
+		
 //		//getcommand 
-//		richrail =RichRailCli.voerCommandUit("getnumseats train l1");
-//
-//		richrail =RichRailCli.voerCommandUit("getnumseats wagon w1");
-//		
+		richrail =RichRailCli.voerCommandUit("getnumseats train l1");
+		System.out.println(richrail.getMessage());
+		System.out.println("");
+		
+		richrail =RichRailCli.voerCommandUit("getnumseats wagon w1");
+		System.out.println(richrail.getMessage());
+		System.out.println("");
+		
 //		//delete command
-//		richrail =RichRailCli.voerCommandUit("delete wagon w1");
-//
-//		richrail =RichRailCli.voerCommandUit("delete wagon w1");
-//		
+		richrail =RichRailCli.voerCommandUit("delete wagon w1");
+		System.out.println(richrail.getMessage());
+		System.out.println("");
+		
+		richrail =RichRailCli.voerCommandUit("delete train t1");
+		System.out.println(richrail.getMessage());
+		System.out.println("");
+		
+		// ================================================================================
+		// ================================================================================
+		// ================================================================================
+		// ================================================================================
+		// ================================================================================
+		// ================================================================================
+		// ================================================================================
+		// ================================================================================
+		// ================================================================================
+		richrail =RichRailCli.voerCommandUit("new wagon wg2 numseats 15");
+		w1 = (Wagon) richrail.getObject();
+		System.out.println(richrail.getMessage());
+		System.out.println(w1.getNaam());
+		System.out.println("");
 	}
 }

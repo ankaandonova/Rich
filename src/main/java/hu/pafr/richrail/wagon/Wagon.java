@@ -15,4 +15,6 @@ public interface Wagon {
 	public int getBedden();
 
 	public void setBedden(int bedden);
+
+	public void remove();
 }

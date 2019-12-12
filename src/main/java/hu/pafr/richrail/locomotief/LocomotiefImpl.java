@@ -55,6 +55,10 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 	public void getWagonnenFromDatabase() throws FileNotFoundException {
 		locomotiefDao.getWagonsFromLocomotief(this);
 	}
+	@Override
+	public void remove() {
+		System.out.println("remove uit ddb");
+	}
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
