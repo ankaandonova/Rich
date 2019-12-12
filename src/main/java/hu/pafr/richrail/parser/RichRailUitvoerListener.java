@@ -128,7 +128,7 @@ public class RichRailUitvoerListener implements RichRailListener {
 		locomotief.setWagon(wagon);
 		
 		message = "Wagon "+ wagon.getNaam() + " is toegevoegd aan "+ locomotief.getNaam();
-		this.object = locomotief;	
+		this.object = locomotief;
 	}
 
 	@Override
