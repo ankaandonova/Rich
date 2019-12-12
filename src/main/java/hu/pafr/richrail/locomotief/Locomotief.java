@@ -1,15 +1,18 @@
 package hu.pafr.richrail.locomotief;
 
-import java.io.FileNotFoundException;
+import java.io.FileNotFoundException; 
 import java.util.List;
 
+import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Wagon;
 
 public interface Locomotief {
 	public Object clone() throws CloneNotSupportedException;
 
 	public String getNaam();
-
+	
+	public Spoor getSpoor();
+	
 	public void setNaam(String naam);
 
 	public String getVertrekPunt();
@@ -28,7 +31,6 @@ public interface Locomotief {
 
 	public List<Wagon> getWagons();
 
-	// subklasse
 	public String getType_moter();
 
 	public void setType_moter(String type_moter);
@@ -58,5 +60,7 @@ public interface Locomotief {
 	public boolean removeWagon(Wagon wagon) throws FileNotFoundException;
 
 	public void remove();
+
+	public void setSpoor(Spoor spoor);
 
 }

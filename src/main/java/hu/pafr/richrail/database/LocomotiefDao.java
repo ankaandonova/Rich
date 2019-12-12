@@ -14,7 +14,7 @@ public interface LocomotiefDao {
 
 	public List<Locomotief> getAlleLocomotiefen() throws FileNotFoundException;
 	
-	public void getLocomotiefFromSpoor(Spoor spoor) throws FileNotFoundException;
+	public Locomotief getLocomotiefFromSpoor(Spoor spoor) throws FileNotFoundException;
 
 	public JSONObject createLocomotiefJSONObject(Locomotief locomotief);
 
