@@ -18,27 +18,35 @@ public class SpoorDaoImpl implements SpoorDao{
 	Database database = Database.getDatabase();
 	
 	@SuppressWarnings("unchecked")
-	public void opslaan(List<Spoor> sporen) {
-		LocomotiefDao LocomotiefDaoImpl = new LocomotiefDaoImpl();
-		JSONArray sporenJson = new JSONArray();
-		for (Spoor spoor : sporen) {
-			JSONObject spoorObject = new JSONObject();
-			spoorObject.put("nummer", Integer.toString(spoor.getNummer()));
-			spoorObject.put("lengte", spoor.getLengte());
-			JSONArray locomotiefen = new JSONArray();
-			for (Locomotief locomotief : spoor.getLocomotiefen()) {
-				locomotiefen.add(LocomotiefDaoImpl.createLocomotiefJSONObject(locomotief));
-			}
-			spoorObject.put("locomotiefen", locomotiefen);
-			sporenJson.add(spoorObject);
+	public void saveSporen(List<Spoor> sporen) throws FileNotFoundException {
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleSporen = new JSONArray();
+		for(Spoor spoor : sporen) {
+			alleSporen.add(spoorToJson(spoor));
 		}
-		database.setDatabaseJson(sporenJson);
+		databaseObject.put("sporen", alleSporen);
+		database.setDatabaseJson(databaseObject);
 	}
 
+	@SuppressWarnings("unchecked")
+	public JSONObject spoorToJson(Spoor spoor) {
+		LocomotiefDao LocomotiefDaoImpl = new LocomotiefDaoImpl();
+		JSONObject spoorObject = new JSONObject();
+		spoorObject.put("nummer", Integer.toString(spoor.getNummer()));
+		spoorObject.put("lengte", spoor.getLengte());
+		JSONArray locomotiefen = new JSONArray();
+		for (Locomotief locomotief : spoor.getLocomotiefen()) {
+			locomotiefen.add(LocomotiefDaoImpl.createLocomotiefJSONObject(locomotief));
+		}
+		spoorObject.put("locomotiefen", locomotiefen);	
+		return spoorObject;
+	}
+	
 	@SuppressWarnings({ "rawtypes" })
-	public List<Spoor> lezen() throws FileNotFoundException {
+	public List<Spoor> getSporen() throws FileNotFoundException {
 		List<Spoor> sporen = new ArrayList<Spoor>();
-		JSONArray alleSporen = database.getDatabaseJson();
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleSporen = (JSONArray) databaseObject.get("sporen");
 		Iterator iterator = alleSporen.iterator();
 		while (iterator.hasNext()) {
 			sporen.add(getSporenFromJsonObject((JSONObject) iterator.next()));

@@ -1,86 +1,155 @@
-[
-	{
-		"locomotiefen": [
-			{
-				"type_moter": "bezsine",
-				"stoelen": "5",
-				"hoogte": 1.8,
-				"eindpunt": "amsterdam",
-				"gps": false,
-				"max_snelheid": 180.0,
-				"naam": "trein121",
-				"vertrekpunt": "utrecht",
-				"lengte": 50.0,
-				"wagons": [
-					{
-						"stoelen": "98",
-						"bedden": "0",
-						"naam": "wag1on1"
-					},
-					{
-						"stoelen": "98",
-						"bedden": "5",
-						"naam": "wag1on1"
-					},
-					{
-						"stoelen": "98",
-						"bedden": "0",
-						"naam": "wag1on1"
-					}
-				]
-			},
-			{
-				"type_moter": "diesel",
-				"stoelen": "20",
-				"hoogte": 2.0,
-				"eindpunt": "Utrecht",
-				"gps": true,
-				"max_snelheid": 150.0,
-				"naam": "grote trein",
-				"vertrekpunt": "Amsterdam",
-				"lengte": 20.0,
-				"wagons": [
-					{
-						"stoelen": "98",
-						"bedden": "0",
-						"naam": "sinterklaas"
-					},
-					{
-						"stoelen": "98",
-						"bedden": "0",
-						"naam": "sinterklaas"
-					},
-					{
-						"stoelen": "98",
-						"bedden": "0",
-						"naam": "wag1on1"
-					}
-				]
-			},
-			{
-				"type_moter": "bezine",
-				"stoelen": "5",
-				"hoogte": 1.8,
-				"eindpunt": "amsterdam",
-				"gps": false,
-				"max_snelheid": 180.0,
-				"naam": "trein 1",
-				"vertrekpunt": "utrecht",
-				"lengte": 50.0,
-				"wagons": []
-			}
-		],
-		"nummer": "1",
-		"lengte": 300.0
-	},
-	{
-		"locomotiefen": [],
-		"nummer": "6",
-		"lengte": 300.0
-	},
-	{
-		"locomotiefen": [],
-		"nummer": "16",
-		"lengte": 312.2
-	}
-]
+{
+	"wagonnen": [
+		{
+			"stoelen": "98",
+			"bedden": "0",
+			"naam": "wag1on1"
+		},
+		{
+			"stoelen": "98",
+			"bedden": "0",
+			"naam": "1"
+		}
+	],
+	"sporen": [
+		{
+			"locomotiefen": [
+				{
+					"type_moter": "bezsine",
+					"stoelen": "5",
+					"hoogte": 1.8,
+					"eindpunt": "amsterdam",
+					"gps": false,
+					"max_snelheid": 180.0,
+					"naam": "trein121",
+					"vertrekpunt": "utrecht",
+					"lengte": 50.0,
+					"wagons": [
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "1"
+						},
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "1"
+						},
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "wag1on1"
+						},
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "wag1on1"
+						},
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "wag1on1"
+						},
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "wag1on1"
+						},
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "wag1on1"
+						},
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "wag1on1"
+						}
+					]
+				},
+				{
+					"type_moter": "diesel",
+					"stoelen": "20",
+					"hoogte": 2.0,
+					"eindpunt": "Utrecht",
+					"gps": true,
+					"max_snelheid": 150.0,
+					"naam": "grote trein",
+					"vertrekpunt": "Amsterdam",
+					"lengte": 20.0,
+					"wagons": [
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "sinterklaas"
+						},
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "sinterklaas"
+						},
+						{
+							"stoelen": "98",
+							"bedden": "0",
+							"naam": "1"
+						}
+					]
+				},
+				{
+					"type_moter": "bezine",
+					"stoelen": "5",
+					"hoogte": 1.8,
+					"eindpunt": "amsterdam",
+					"gps": false,
+					"max_snelheid": 180.0,
+					"naam": "trein 1",
+					"vertrekpunt": "utrecht",
+					"lengte": 50.0,
+					"wagons": []
+				}
+			],
+			"nummer": "1",
+			"lengte": 300.0
+		},
+		{
+			"locomotiefen": [],
+			"nummer": "6",
+			"lengte": 300.0
+		},
+		{
+			"locomotiefen": [],
+			"nummer": "16",
+			"lengte": 312.2
+		}
+	],
+	"locomotiefen": [
+		{
+			"type_moter": "bezsine",
+			"stoelen": "5",
+			"hoogte": 1.8,
+			"eindpunt": "amsterdam",
+			"gps": false,
+			"max_snelheid": 180.0,
+			"naam": "trein121",
+			"vertrekpunt": "utrecht",
+			"lengte": 50.0,
+			"wagons": [
+				{
+					"stoelen": "98",
+					"bedden": "0",
+					"naam": "wag1on1"
+				},
+				{
+					"stoelen": "98",
+					"bedden": "0",
+					"naam": "wag1on1"
+				},
+				{
+					"stoelen": "98",
+					"bedden": "0",
+					"naam": "wag1on1"
+				}
+			]
+		}
+	]
+}

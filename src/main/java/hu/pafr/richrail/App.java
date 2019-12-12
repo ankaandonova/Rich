@@ -9,6 +9,8 @@ import hu.pafr.richrail.database.LocomotiefDao;
 import hu.pafr.richrail.database.LocomotiefDaoImpl;
 import hu.pafr.richrail.database.SpoorDao;
 import hu.pafr.richrail.database.SpoorDaoImpl;
+import hu.pafr.richrail.database.WagonDao;
+import hu.pafr.richrail.database.WagonDaoImpl;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
@@ -20,10 +22,6 @@ import hu.pafr.richrail.wagon.WagonFactory;
 
 public class App {
 	public static void main(String[] args) throws CloneNotSupportedException, FileNotFoundException {
-		
-		
-		
-		
 		
 		Builder builder = new LocomotiefBuilder();
 		builder.setNaam("trein121");
@@ -51,16 +49,21 @@ public class App {
 		sporen.add(spoor4);
 		
 		
-		for(Spoor spoor1 : spoorDaoImpl.lezen()) {
+		for(Spoor spoor1 : spoorDaoImpl.getSporen()) {
 			System.out.println(spoor1.getNummer());
 		}
 		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
 		locomotiefDao.getWagonsFromLocomotief(locomotief);
 		
+		locomotiefDao.saveLocomotief(locomotief);
 		
 		
-		
-		
+		WagonDao wagonDao = new WagonDaoImpl();
+		wagonDao.saveWagon(wagon);
+		wagon.setNaam("1");
+		wagonDao.saveWagon(wagon);
+		wagonDao.saveWagon(wagon);
+
 		
 		RichRailCli.voerCommandUit("new train id");
 		System.out.println("dsfhdjsbfjkdsjkfn");
@@ -133,11 +136,11 @@ public class App {
 
 		//opslaan in database
 		SpoorDao spoorDao = new SpoorDaoImpl();
-		spoorDao.opslaan(sporen);
+		spoorDao.saveSporen(sporen);
 		System.out.println("test");
 
 		//uit database lezen
-		List <Spoor> sporen1 = spoorDao.lezen();
+		List <Spoor> sporen1 = spoorDao.getSporen();
 		for(Spoor spoor3 : sporen1) {
 			System.out.println("spoor "+ spoor3.getNummer());
 			for(Locomotief locomotieft : spoor3.getLocomotiefen()) {
@@ -148,6 +151,8 @@ public class App {
 			}
 		}
 		System.out.println("test");
-		
+		for (Locomotief locomotie : locomotiefDao.getAlleLocomotiefen()) {
+			System.out.println(locomotie.getNaam());
+		}
 	}
 }
