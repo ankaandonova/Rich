@@ -1,12 +1,15 @@
 package hu.pafr.richrail.database;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import hu.pafr.richrail.locomotief.Locomotief;
+import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Factory;
 import hu.pafr.richrail.wagon.Wagon;
 import hu.pafr.richrail.wagon.WagonFactory;
@@ -35,7 +38,7 @@ public class WagonDaoImpl implements WagonDao {
 	public void saveWagon(Wagon wagon) throws FileNotFoundException {
 		JSONObject databaseObject = database.getDatabaseJson();
 		JSONArray alleWagonnen = (JSONArray) databaseObject.get("wagonnen");
-		Wagon databaseWagon = (Wagon) findLosseWagon(wagon, alleWagonnen);
+		Wagon databaseWagon = (Wagon) findLosseWagon(wagon);
 		if(databaseWagon == null) {
 			System.out.println("de locomotief is al in de database");
 			alleWagonnen.add(createWagonJSONObject(wagon));
@@ -47,7 +50,9 @@ public class WagonDaoImpl implements WagonDao {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public Wagon findLosseWagon(Wagon wagon, JSONArray alleWagonnen) {
+	public Wagon findLosseWagon(Wagon wagon) throws FileNotFoundException {
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleWagonnen = (JSONArray) databaseObject.get("wagonnen");
 		Iterator iterator = alleWagonnen.iterator();
 		while (iterator.hasNext()) {
 			Wagon wagonInDatabase = getWagonsFromJsonObject((JSONObject) iterator.next());
@@ -56,5 +61,40 @@ public class WagonDaoImpl implements WagonDao {
 			}
 		}
 		return null;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public boolean removeWagonFromLocomotief(Locomotief locomotief, Wagon wagon) throws FileNotFoundException {
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleSporen = (JSONArray) databaseObject.get("sporen");
+		SpoorDao spoorDao = new SpoorDaoImpl();
+		
+		Iterator iterator = alleSporen.iterator();
+		while (iterator.hasNext()) {
+			Spoor spoor = spoorDao.getSporenFromJsonObject((JSONObject) iterator.next());
+			if(spoor.getLocomotiefen().equals(o)) {
+				
+			}
+		}
+		return false;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public boolean removeLosseWagon(Wagon wagon) throws FileNotFoundException {
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleWagonnen = (JSONArray) databaseObject.get("wagonnen");		
+		Iterator iterator = alleWagonnen.iterator();
+		while (iterator.hasNext()) {
+			JSONObject wagonJSONObject = (JSONObject) iterator.next();
+			Wagon wagonInDatabase = getWagonsFromJsonObject(wagonJSONObject);
+			if(wagonInDatabase.getNaam().equals(wagon.getNaam())) {
+				wagonJSONObject.put("naam", "removed");
+				wagonJSONObject.remove("bedden");
+				wagonJSONObject.remove("stoelen");
+				database.setDatabaseJson(databaseObject);
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -12,4 +12,7 @@ public interface WagonDao {
 	public Wagon getWagonsFromJsonObject(JSONObject wagonJson);
 	
 	public void saveWagon(Wagon wagon) throws FileNotFoundException;
+	
+	public boolean removeLosseWagon(Wagon wagon) throws FileNotFoundException;
+
 }

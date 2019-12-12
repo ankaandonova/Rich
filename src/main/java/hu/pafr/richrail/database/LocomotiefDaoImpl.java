@@ -116,38 +116,6 @@ public class LocomotiefDaoImpl implements LocomotiefDao {
 		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void removeWagon(Locomotief locomotief, Wagon wagon) throws FileNotFoundException {
-		JSONObject databaseObject = database.getDatabaseJson();
-		JSONArray alleSporen = (JSONArray) databaseObject.get("sporen");
-		Iterator iterator = alleSporen.iterator();
-		while (iterator.hasNext()) {
-			// gaat elk spoor langs
-			JSONObject spoorJson = (JSONObject) iterator.next();
-			JSONArray alleLocomotiefen = (JSONArray) spoorJson.get("locomotiefen");
-			controleerLocomotieven(locomotief, alleLocomotiefen);
-			Iterator iterator2 = alleLocomotiefen.iterator();
-			while (iterator2.hasNext()) {
-				// locomotieven van het spoor uit de database worden doorgegaan
-				JSONObject locomotiefJson = (JSONObject) iterator2.next();
-				Locomotief locomotief1 = getLocomotiefenFromJsonObject(locomotiefJson);
-				if (locomotief1.getNaam().equals(locomotief.getNaam())) {
-					// de locomotief is gevonden in de database
-					JSONArray alleWagonsVanLocomotief = (JSONArray) locomotiefJson.get("wagons");
-					Iterator iterator3 = alleWagonsVanLocomotief.iterator();
-					while (iterator3.hasNext()) {
-						JSONObject wagonJson = (JSONObject) iterator2.next();
-						Wagon wagon1 = wagonDaoImpl.getWagonsFromJsonObject(wagonJson);
-						if (wagon1.getNaam().equals(wagon.getNaam())) {
-							alleWagonsVanLocomotief.remove(wagonJson);
-						}
-					}
-				}
-			}
-		}
-		databaseObject.put("sporen", alleSporen);
-	}
-
 	@SuppressWarnings("unchecked")
 	public void saveLocomotief(Locomotief locomotief) throws FileNotFoundException {
 		JSONObject databaseObject = database.getDatabaseJson();
@@ -211,4 +179,6 @@ public class LocomotiefDaoImpl implements LocomotiefDao {
 		}
 		return locomotiefen;
 	}
+
+
 }
