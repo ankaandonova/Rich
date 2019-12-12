@@ -45,7 +45,8 @@ public class LocomotiefDaoImpl implements LocomotiefDao {
 
 	@SuppressWarnings({ "rawtypes" })
 	public void getLocomotiefFromSpoor(Spoor spoor) throws FileNotFoundException {
-		JSONArray alleSporen = database.getDatabaseJson();
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleSporen = (JSONArray) databaseObject.get("sporen");
 		Iterator iterator = alleSporen.iterator();
 		while (iterator.hasNext()) {
 			// gaat elk spoor langs
