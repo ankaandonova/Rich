@@ -110,9 +110,12 @@ public class GUIlocomotief {
 	}
 
 	protected static void deleteChoiceLocomotief(ChoiceBox<String> choiceLocmotief) {
-		String locomotieven = choiceLocmotief.getValue();
-	
-		choiceLocmotief.getItems().remove(locomotieven);
+		String locomotiefNaam = choiceLocmotief.getValue();
+		choiceLocmotief.getItems().remove(locomotiefNaam);
+		Builder builder = new LocomotiefBuilder();
+		builder.setNaam(locomotiefNaam);
+		Locomotief locomotief = builder.build();
+		locomotief.remove();
 	}
 
 }

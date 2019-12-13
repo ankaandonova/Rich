@@ -84,7 +84,11 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 
 	@Override
 	public void remove() {
-		System.out.println("remove uit ddb");
+		try {
+			locomotiefDao.remove(this);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
