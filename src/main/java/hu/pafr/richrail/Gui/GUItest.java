@@ -56,13 +56,12 @@ public class GUItest extends Application {
 
 	}
 
-	static void createTrain(int spoor) throws FileNotFoundException {
-		Spoor sporen = new Spoor(spoor, 0.0);
+	static void createTrain(int spoorNummer) throws FileNotFoundException {
+		Spoor spoor = new Spoor(spoorNummer, 0.0);
 		
-		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl() ;
-		locomotiefDao.getLocomotiefFromSpoor(sporen);
+		spoor.getLocomotiefenFromDatabase();
 		
-		for (Locomotief locomotief : sporen.getLocomotiefen()) {
+		for (Locomotief locomotief : spoor.getLocomotiefen()) {
 			Image benzineLocomotiefImg = new Image("locomotief.jpg");
 			scherm1.getChildren().add(new ImageView(benzineLocomotiefImg));
 			GUItest.createWagon(locomotief.getNaam());

@@ -6,11 +6,14 @@ import java.util.List;
 
 import hu.pafr.richrail.database.LocomotiefDao;
 import hu.pafr.richrail.database.LocomotiefDaoImpl;
+import hu.pafr.richrail.database.WagonDao;
+import hu.pafr.richrail.database.WagonDaoImpl;
 import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Wagon;
 
 public class LocomotiefImpl implements Locomotief, Cloneable {
 	private LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
+	private WagonDao wagonDao = new WagonDaoImpl();
 	
 	private Spoor spoor;
 	private List<Wagon> wagons = new ArrayList<Wagon>();
@@ -63,7 +66,11 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 	
 	@Override
 	public void getWagonnenFromDatabase() throws FileNotFoundException {
-		locomotiefDao.getWagonsFromLocomotief(this);
+		for(Wagon wagon : wagonDao.getWagonnen()) {
+			if(wagon.getLocomotief().getNaam().equals(naam)) {
+				wagons.add(wagon);
+			}
+		}
 	}
 	@Override
 	public void remove() {
@@ -162,10 +169,4 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 	public void setStoelen(int stoelen) {
 		this.stoelen = stoelen;
 	}
-
-
-
-
-
-
 }

@@ -57,9 +57,7 @@ public class GUIWagon {
 	
 	protected static void WagonEventHandler(Locomotief locomotief) throws FileNotFoundException {
 		//choiceWagon.getItems().clear();
-
-		LocomotiefDao locomotiefDao= new LocomotiefDaoImpl();
-		locomotiefDao.getWagonsFromLocomotief(locomotief);
+		locomotief.getWagonnenFromDatabase();
 		for(Wagon wagon : locomotief.getWagons()) {
 			System.out.println("wagon in de database  " + wagon.getNaam());
 			choiceWagon.setValue(wagon.getNaam());

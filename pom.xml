@@ -34,7 +34,27 @@
 			<artifactId>antlr4</artifactId>
 			<version>4.7.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>11</version>
+		</dependency>
+		<!-- fava fx en fxml import -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-media</artifactId>
+			<version>11</version>
+			<classifier>win</classifier>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-graphics</artifactId>
+			<version>11</version>
+			<classifier>win</classifier>
+		</dependency>
+
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-fxml</artifactId>
@@ -70,6 +90,14 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-maven-plugin</artifactId>
+				<version>0.0.3</version>
+				<configuration>
+					<mainClass>nl.notes.Main</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -49,8 +49,7 @@ public class GUIlocomotief {
 
 	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
 		choiceLocomotief.getItems().clear();
-		LocomotiefDao locomotiefdDao = new LocomotiefDaoImpl();
-		locomotiefdDao.getLocomotiefFromSpoor(spoor);
+		spoor.getLocomotiefenFromDatabase();
 
 		for (Locomotief locomotief : spoor.getLocomotiefen()) {
 			System.out.println("locomotief " + locomotief.getNaam());

@@ -41,17 +41,13 @@ public class GUISpoor {
 		SpoorEventHandler(spoor);
 		return Spoor_VBox;
 	}
-	private static List<Spoor> getDataFromDataBase() throws FileNotFoundException {
-		
-		SpoorDao spoorImpl = new SpoorDaoImpl();
-		return spoorImpl.lezen();
-	}
+	
+
 	
 	protected static void SpoorEventHandler(Spoor spoor) throws FileNotFoundException {
 		//nieuwe spoor toevoegen
-	
-		List<Spoor> spoor1 = getDataFromDataBase();
-		for (Spoor sporen: spoor1) {
+		
+		for (Spoor sporen: spoor.getSporen()) {
 			addSpoor.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
