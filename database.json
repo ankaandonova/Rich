@@ -61,7 +61,7 @@
 			"gps": true,
 			"max_snelheid": 1520.0,
 			"naam": "trein1",
-			"spoor": "3",
+			"spoor": "2",
 			"vertrekpunt": "sssssterdam",
 			"lengte": 20.0
 		}
