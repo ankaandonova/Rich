@@ -1,8 +1,14 @@
 package hu.pafr.richrail.wagon;
 
+import java.io.FileNotFoundException;
+
+import hu.pafr.richrail.database.WagonDao;
+import hu.pafr.richrail.database.WagonDaoImpl;
 import hu.pafr.richrail.locomotief.Locomotief;
 
 public class GoederenWagon implements Cloneable, Wagon {
+	private WagonDao wagonDao = new WagonDaoImpl();
+	
 	private String naam;
 	private int stoelen;
 	private int bedden;
@@ -14,6 +20,13 @@ public class GoederenWagon implements Cloneable, Wagon {
 		this.bedden = bedden;
 	}
 
+	public boolean moveWagon(Locomotief locomotief) throws FileNotFoundException {
+		this.setLocomotief(locomotief);
+		wagonDao.update(this);
+		return false;
+	}
+
+	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();

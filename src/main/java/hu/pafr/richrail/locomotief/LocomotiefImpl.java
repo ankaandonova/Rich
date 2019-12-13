@@ -14,7 +14,7 @@ import hu.pafr.richrail.wagon.Wagon;
 public class LocomotiefImpl implements Locomotief, Cloneable {
 	private LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
 	private WagonDao wagonDao = new WagonDaoImpl();
-	
+
 	private Spoor spoor;
 	private List<Wagon> wagons = new ArrayList<Wagon>();
 
@@ -28,10 +28,8 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 	private Double max_snelheid;
 	private int stoelen;
 
-	
-	
-	public LocomotiefImpl(String naam, String vertrekPunt, String eindBestemming, String type_moter,
-			Double hoogte, Double lengte, boolean gps, Double max_snelheid, int stoelen) {
+	public LocomotiefImpl(String naam, String vertrekPunt, String eindBestemming, String type_moter, Double hoogte,
+			Double lengte, boolean gps, Double max_snelheid, int stoelen) {
 		this.naam = naam;
 		this.vertrekPunt = vertrekPunt;
 		this.eindBestemming = eindBestemming;
@@ -43,40 +41,52 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 		this.stoelen = stoelen;
 	}
 
-
 	@Override
 	public boolean removeWagon(Wagon wagon) throws FileNotFoundException {
-		getWagonnenFromDatabase();
-		for(Wagon wagon1 : wagons) {
-			if(wagon1.getNaam() == wagon.getNaam()) {
-				locomotiefDao.removeWagon(this, wagon);
-				return true;
+		for (Wagon wagonDatabase : wagonDao.getWagonnen()) {
+			if (wagonDatabase.getLocomotief().getNaam().equals(naam)) {
+				// wagon is in de locomotief en word gverwijderd uit de database
+				wagonDao.remove(wagonDatabase);
+				wagons.clear();
+				for (Wagon wagonInList : wagons) {
+					// wagon word verwijder uit
+					if (!wagonInList.getNaam().equals(wagon.getNaam())) {
+						wagons.add(wagonInList);
+					}
+				}
 			}
 		}
 		return false;
 	}
 	
+	public boolean moveLocomotief(Spoor spoor) throws FileNotFoundException {
+		this.setSpoor(spoor);
+		return locomotiefDao.update(this);
+	}
+
+	
 	public Spoor getSpoor() {
 		return this.spoor;
 	}
-	
-	public void setSpoor(Spoor spoor){
+
+	public void setSpoor(Spoor spoor) {
 		this.spoor = spoor;
-	}	
-	
+	}
+
 	@Override
 	public void getWagonnenFromDatabase() throws FileNotFoundException {
-		for(Wagon wagon : wagonDao.getWagonnen()) {
-			if(wagon.getLocomotief().getNaam().equals(naam)) {
+		for (Wagon wagon : wagonDao.getWagonnen()) {
+			if (wagon.getLocomotief().getNaam().equals(naam)) {
 				wagons.add(wagon);
 			}
 		}
 	}
+
 	@Override
 	public void remove() {
 		System.out.println("remove uit ddb");
 	}
-	
+
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();

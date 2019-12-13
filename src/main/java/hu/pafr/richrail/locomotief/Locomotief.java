@@ -63,4 +63,5 @@ public interface Locomotief {
 
 	public void setSpoor(Spoor spoor);
 
+	public boolean moveLocomotief(Spoor spoor) throws FileNotFoundException;
 }

@@ -8,7 +8,7 @@
 		},
 		{
 			"stoelen": "9228",
-			"locomotief": "",
+			"locomotief": "trein1",
 			"bedden": "0",
 			"naam": "wagon2"
 		}
@@ -49,6 +49,18 @@
 			"gps": true,
 			"max_snelheid": 1520.0,
 			"naam": "grote treisn2",
+			"spoor": "3",
+			"vertrekpunt": "sssssterdam",
+			"lengte": 20.0
+		},
+		{
+			"type_moter": "diesel",
+			"stoelen": "20",
+			"hoogte": 2.0,
+			"eindpunt": "sdadsahjdbashjdsrecht",
+			"gps": true,
+			"max_snelheid": 1520.0,
+			"naam": "trein1",
 			"spoor": "3",
 			"vertrekpunt": "sssssterdam",
 			"lengte": 20.0

@@ -28,7 +28,7 @@ public class App {
 		
 		Spoor spoor = new Spoor(3, 302.0);
 		
-		builder.setNaam("grote treisn2");
+		builder.setNaam("trein1");
 		builder.setVertrekPunt("sssssterdam");
 		builder.setEindBestemming("sdadsahjdbashjdsrecht");
 		builder.setType_moter( "diesel");
@@ -45,8 +45,10 @@ public class App {
 		
 		locomotief.setWagon(wagon);
 		
+
+		
 	//save 
-		//spoorDao.save(spoor)
+		spoorDao.save(spoor);
 		//locomotiefDao.save(locomotief);
 		//wagonDao.save(wagon);
 
@@ -74,6 +76,9 @@ public class App {
 		//System.out.println(locomotiefDao.update(locomotief));
 		//System.out.println(wagonDao.update(wagon));
 
-
+		//move
+		System.out.println(wagon.moveWagon(locomotief));
+		System.out.println(locomotief.moveLocomotief());
+		
 	}
 }
