@@ -24,49 +24,50 @@ public class GUISpoor {
 	protected static TextField spoorNummer;
 	protected static TextField lengteSpoor;
 
-
 	public static VBox createSpoorKeuzeMenu() throws FileNotFoundException {
 		VBox Spoor_VBox = creatVBox();
-		Spoor_VBox.getChildren().addAll(
-				new Label("Kies een spoor"), 
-				choiceSpoor = new ChoiceBox<>(),
-				selectSpoor = new Button("select"), 
-				deleteSpoor = new Button("delete"), 
-				new Label("Spoor nummer"),
-				spoorNummer = new TextField(), 
-				new Label("Lengte"), 
-				lengteSpoor = new TextField(),
-				addSpoor = new Button("Add"));
+		Spoor_VBox.getChildren().addAll(new Label("Kies een spoor"), choiceSpoor = new ChoiceBox<>(),
+				selectSpoor = new Button("select"), deleteSpoor = new Button("delete"), new Label("Spoor nummer"),
+				spoorNummer = new TextField(), new Label("Lengte"), lengteSpoor = new TextField(),
+				addSpoor = new Button("Toevoegen/wijzigen"));
 		Spoor spoor = new Spoor(1, 0.0);
 		SpoorEventHandler(spoor);
 		return Spoor_VBox;
 	}
-	
 
-	
-	protected static void SpoorEventHandler(Spoor spoor) throws FileNotFoundException {
-		//nieuwe spoor toevoegen
-		
-		for (Spoor sporen: spoor.getSporen()) {
-			addSpoor.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent e) {
-					Spoor spoor2 = new Spoor(0,0.0);
-					lengteSpoor.getText();
-					spoorNummer.getText();
-					spoor2.setNummer(Integer.parseInt(spoorNummer.getText()));
-					spoor2.setLengte(Double.parseDouble(lengteSpoor.getText()));
-					System.out.println("nieuwe spoor nummer  "+ spoor2.getNummer());
-					System.out.println("nieuwe spoor  " +spoor2);
+	private void addSpoor() {
+		// nieuwe spoor toevoegen
+		addSpoor.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				Spoor spoor2 = new Spoor(0, 0.0);
+				lengteSpoor.getText();
+				spoorNummer.getText();
+
+				spoor2.setNummer(Integer.parseInt(spoorNummer.getText()));
+				spoor2.setLengte(Double.parseDouble(lengteSpoor.getText()));
+				System.out.println("nieuwe spoor nummer  " + spoor2.getNummer());
+				System.out.println("nieuwe spoor  " + spoor2);
+
+				try {
+					spoor2.save();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-			});
-			
+			}
+		});
+	}
+
+	protected static void SpoorEventHandler(Spoor spoor) throws FileNotFoundException {
+		for (Spoor sporen : spoor.getSporen()) {
+
 			choiceSpoor.getItems().add(Integer.toString(sporen.getNummer()));
 
 			System.out.println(choiceSpoor.getValue());
 		}
 
-		//spoor kiezen
+		// spoor kiezen
 		selectSpoor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -83,11 +84,17 @@ public class GUISpoor {
 			}
 		});
 
-
-		//spoor verweijderen
-		deleteSpoor.setOnAction(e -> deleteChoiceSpoor(choiceSpoor));
+		// spoor verwijderen
+		deleteSpoor.setOnAction(e -> {
+			try {
+				deleteChoiceSpoor(choiceSpoor);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 	}
-	
+
 	protected static VBox creatVBox() {
 		VBox vbox = new VBox();
 		vbox.setPrefWidth(450);
@@ -98,14 +105,16 @@ public class GUISpoor {
 
 	public static void getChoiceSpoor(ChoiceBox<String> choiceSpoor) throws FileNotFoundException {
 		String nummer = choiceSpoor.getValue();
-		
-		System.out.print("spooornummer "+nummer);
+
+		System.out.print("spooornummer " + nummer);
 		Spoor spoor1 = new Spoor(Integer.parseInt(nummer), 0.0);
 		GUIlocomotief.LocomotiefEventHanler(spoor1);
 	}
 
-	public static void deleteChoiceSpoor(ChoiceBox<String> choiceSpoor) {
-		String spoor = choiceSpoor.getValue();
-		choiceSpoor.getItems().remove(spoor);
+	public static void deleteChoiceSpoor(ChoiceBox<String> choiceSpoor) throws FileNotFoundException {
+		String spoorNummerString = choiceSpoor.getValue();
+		choiceSpoor.getItems().remove(spoorNummerString);
+		Spoor spoor = new Spoor(Integer.parseInt(spoorNummerString), 0.0);
+		spoor.remove();
 	}
 }

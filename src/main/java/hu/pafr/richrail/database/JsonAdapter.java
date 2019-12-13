@@ -13,10 +13,15 @@ import hu.pafr.richrail.wagon.WagonFactory;
 public class JsonAdapter {
 
 	public Spoor getSpoorFromJsonObject(JSONObject spoorJson) {
-		int nummer = Integer.parseInt((String) spoorJson.get("nummer"));
-		Double lengte = (Double) spoorJson.get("lengte");
-		Spoor spoor = new Spoor(nummer, lengte);
-		return spoor;
+		String spornummerString = (String) spoorJson.get("nummer");
+		if(spornummerString != null) {
+			int nummer = Integer.parseInt(spornummerString);
+			Double lengte = (Double) spoorJson.get("lengte");
+			Spoor spoor = new Spoor(nummer, lengte);
+			return spoor;
+		} else {
+			return null;
+		}
 	}
 
 	@SuppressWarnings("unchecked")

@@ -27,6 +27,14 @@ public class Spoor {
 		return spoorDao.getSporen();
 	}
 
+	public void remove() throws FileNotFoundException {
+		spoorDao.remove(this);
+	}
+
+	public void save() throws FileNotFoundException {
+		spoorDao.save(this);
+	}
+	
 	public void getLocomotiefenFromDatabase() {
 		try {
 			for (Locomotief locomotef : locomotiefDao.getLocomotiefen()) {
@@ -77,5 +85,6 @@ public class Spoor {
 	public void setLengte(Double lengte) {
 		this.lengte = lengte;
 	}
+
 
 }

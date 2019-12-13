@@ -26,7 +26,7 @@ public class App {
 		Builder builder = new LocomotiefBuilder();
 		Factory factory = new WagonFactory();
 		
-		Spoor spoor = new Spoor(3, 302.0);
+		Spoor spoor = new Spoor(1, 302.0);
 		
 		builder.setNaam("trein1");
 		builder.setVertrekPunt("sssssterdam");
@@ -45,11 +45,11 @@ public class App {
 		
 		locomotief.setWagon(wagon);
 		
-
+		locomotief.setSpoor(spoor);
 		
 	//save 
-		spoorDao.save(spoor);
-		//locomotiefDao.save(locomotief);
+		//spoorDao.save(spoor);
+		locomotiefDao.save(locomotief);
 		//wagonDao.save(wagon);
 
 	//get hier word gwn het object opgehaalt met al zijn attributen
@@ -78,7 +78,7 @@ public class App {
 
 		//move
 		System.out.println(wagon.moveWagon(locomotief));
-		System.out.println(locomotief.moveLocomotief());
+//		System.out.println(locomotief.moveLocomotief());
 		
 	}
 }

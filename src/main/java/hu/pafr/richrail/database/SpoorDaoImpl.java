@@ -37,6 +37,27 @@ public class SpoorDaoImpl implements SpoorDao {
 		}
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public boolean remove(Spoor spoor) throws FileNotFoundException {
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray sporen = (JSONArray) databaseObject.get("sporen");
+		
+		Iterator iterator = sporen.iterator();
+		while (iterator.hasNext()) {
+			JSONObject spoorObject = (JSONObject) iterator.next();
+			Spoor spoorFromDatabase = adapter.getSpoorFromJsonObject(spoorObject);
+			if (spoorFromDatabase != null) {
+				if (spoorFromDatabase.getNummer() == spoor.getNummer()) {
+					spoorObject.remove("nummer");
+					spoorObject.remove("lengte");
+					database.setDatabaseJson(databaseObject);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void update(Spoor spoor) throws FileNotFoundException {
 		JSONObject databaseObject = database.getDatabaseJson();
@@ -60,8 +81,10 @@ public class SpoorDaoImpl implements SpoorDao {
 		Iterator iterator = alleSporen.iterator();
 		while (iterator.hasNext()) {
 			Spoor spoorUitDatabase = adapter.getSpoorFromJsonObject((JSONObject) iterator.next());
-			if (spoorUitDatabase.getNummer() == spoor.getNummer()) {
-				return spoorUitDatabase;
+			if(spoorUitDatabase != null) {
+				if (spoorUitDatabase.getNummer() == spoor.getNummer()) {
+					return spoorUitDatabase;
+				}	
 			}
 		}
 		return null;
@@ -76,7 +99,9 @@ public class SpoorDaoImpl implements SpoorDao {
 		Iterator iterator = alleSporen.iterator();
 		while (iterator.hasNext()) {
 			Spoor spoorUitDatabase = adapter.getSpoorFromJsonObject((JSONObject) iterator.next());
-			sporen.add(spoorUitDatabase);
+			if(spoorUitDatabase != null) {
+				sporen.add(spoorUitDatabase);
+			} 
 		}
 		return sporen;
 	}
