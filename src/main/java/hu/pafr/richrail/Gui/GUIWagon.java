@@ -57,7 +57,10 @@ public class GUIWagon {
 	
 	protected static void WagonEventHandler(Locomotief locomotief) throws FileNotFoundException {
 		//choiceWagon.getItems().clear();
-		locomotief.getWagonnenFromDatabase();
+		if(locomotief.getNaam() != null) {
+			locomotief.getWagonnenFromDatabase();			
+		}
+		
 		for(Wagon wagon : locomotief.getWagons()) {
 			System.out.println("wagon in de database  " + wagon.getNaam());
 			choiceWagon.setValue(wagon.getNaam());

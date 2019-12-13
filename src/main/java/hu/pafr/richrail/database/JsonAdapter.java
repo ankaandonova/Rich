@@ -45,7 +45,7 @@ public class JsonAdapter {
 			locomotiefBuilder.setStoelen(Integer.parseInt((String) locomotiefJson.get("stoelen")));
 			Locomotief locomotief = locomotiefBuilder.build();
 			String spoornummer = (String) locomotiefJson.get("spoor");
-			if (spoornummer == "") {
+			if (spoornummer != "") {
 				Spoor spoor = new Spoor(Integer.parseInt(spoornummer), 0.00);
 				locomotief.setSpoor(spoor);
 			}

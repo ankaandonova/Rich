@@ -30,8 +30,16 @@ public class Spoor {
 	public void getLocomotiefenFromDatabase() {
 		try {
 			for (Locomotief locomotef : locomotiefDao.getLocomotiefen()) {
-				if (locomotef.getSpoor().getNummer() == nummer) {
-					locomotiefen.add(locomotef);
+				System.out.println("=================="+nummer);
+				System.out.println(locomotef.getNaam());
+				if(locomotef.getSpoor() != null) {
+					// de locomotief heeft een spoor
+					System.out.println(locomotef.getSpoor().getNummer());
+					if (locomotef.getSpoor().getNummer() == nummer) {
+						
+						//de locomotief hoort bij het spoor 
+						locomotiefen.add(locomotef);
+					}	
 				}
 			}
 		} catch (FileNotFoundException e) {

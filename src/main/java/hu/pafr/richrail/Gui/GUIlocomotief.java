@@ -1,15 +1,12 @@
 package hu.pafr.richrail.Gui;
 
 import java.io.FileNotFoundException;
-import hu.pafr.richrail.database.LocomotiefDao;
-import hu.pafr.richrail.database.LocomotiefDaoImpl;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
 import hu.pafr.richrail.spoor.Spoor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -49,7 +46,10 @@ public class GUIlocomotief {
 
 	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
 		choiceLocomotief.getItems().clear();
-		spoor.getLocomotiefenFromDatabase();
+		if(spoor.getNummer() != 0) {
+			System.out.println( spoor.getNummer());
+			spoor.getLocomotiefenFromDatabase();
+		}
 
 		for (Locomotief locomotief : spoor.getLocomotiefen()) {
 			System.out.println("locomotief " + locomotief.getNaam());
@@ -105,7 +105,6 @@ public class GUIlocomotief {
 		Builder builder = new LocomotiefBuilder();
 		builder.setNaam(naam);
 		Locomotief locomotief1 = builder.build();
-		System.out.print(locomotief1);
 
 		GUIWagon.WagonEventHandler(locomotief1);
 	}

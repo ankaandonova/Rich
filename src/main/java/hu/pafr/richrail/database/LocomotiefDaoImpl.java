@@ -131,7 +131,10 @@ public class LocomotiefDaoImpl implements LocomotiefDao {
 
 		Iterator iterator = alleLocomotiefen.iterator();
 		while (iterator.hasNext()) {
-			locomotiefen.add(adapter.getLocomotiefFromJsonObject((JSONObject) iterator.next()));
+			Locomotief locomotiefJson = (Locomotief) adapter.getLocomotiefFromJsonObject((JSONObject) iterator.next());
+			if(locomotiefJson != null) {
+				locomotiefen.add((Locomotief) locomotiefJson);
+			}
 		}
 		return locomotiefen;
 	}
