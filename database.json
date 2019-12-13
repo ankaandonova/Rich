@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 {
 	"wagonnen": [
 		{
@@ -68,6 +68,4 @@
 		}
 	]
 }
-=======
-{"wagonnen":[{},{},{"stoelen":"9228","locomotief":"trein1","bedden":"0","naam":"wagon2"}],"sporen":[{},{},{"nummer":"11","lengte":200.0},{"nummer":"111","lengte":111.0}],"locomotiefen":[{},{},{},{},{"type_moter":"diesel","stoelen":"20","hoogte":2.0,"eindpunt":"sdadsahjdbashjdsrecht","gps":true,"max_snelheid":1520.0,"naam":"grote treisn2","spoor":"3","vertrekpunt":"sssssterdam","lengte":20.0},{}]}
->>>>>>> 7a611a2660a64420b938cca6aa512e998810de33
+
