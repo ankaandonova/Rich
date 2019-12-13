@@ -16,71 +16,105 @@ import hu.pafr.richrail.wagon.WagonFactory;
 
 public class WagonDaoImpl implements WagonDao {
 	Database database = Database.getDatabase();
-	
-
-
+	JsonAdapter adapter = new JsonAdapter();
 
 	@SuppressWarnings("unchecked")
-	public void saveWagon(Wagon wagon) throws FileNotFoundException {
+	public void save(Wagon wagon) throws FileNotFoundException {
 		JSONObject databaseObject = database.getDatabaseJson();
 		JSONArray alleWagonnen = (JSONArray) databaseObject.get("wagonnen");
-		Wagon databaseWagon = (Wagon) findLosseWagon(wagon);
-		if(databaseWagon == null) {
-			System.out.println("de locomotief is al in de database");
-			alleWagonnen.add(createWagonJSONObject(wagon));
+		if (getWagon(wagon) == null) {
+			System.out.println("er is een nieuwe wagon aangemaakt");
+			JSONObject wagonObject = adapter.createWagonJSONObject(wagon);
+			System.out.println("wagonObject " + wagonObject);
+			alleWagonnen.add(wagonObject);
 		} else {
-			System.out.println("schrijf vnog een verander functie want hij bestaat al");
+			System.out.println("de wagon is al in de database en wordt geupdate");
+			update(wagon);
 		}
 		databaseObject.put("wagonnen", alleWagonnen);
+		System.out.println("alleWagonnen " + alleWagonnen);
 		database.setDatabaseJson(databaseObject);
 	}
-	
-	@SuppressWarnings("rawtypes")
-	public Wagon findLosseWagon(Wagon wagon) throws FileNotFoundException {
+
+	@SuppressWarnings({ "unchecked", "rawtypes", "null" })
+	public boolean update(Wagon wagon) throws FileNotFoundException {
 		JSONObject databaseObject = database.getDatabaseJson();
 		JSONArray alleWagonnen = (JSONArray) databaseObject.get("wagonnen");
 		Iterator iterator = alleWagonnen.iterator();
 		while (iterator.hasNext()) {
-			Wagon wagonInDatabase = getWagonsFromJsonObject((JSONObject) iterator.next());
-			if(wagonInDatabase.getNaam().equals(wagon.getNaam())) {
-				return wagonInDatabase;
+			JSONObject wagonObject = (JSONObject) iterator.next();
+			Wagon wagonFromDatabase = adapter.getWagonsFromJsonObject(wagonObject);
+			if (wagonFromDatabase != null) {
+				if (wagonFromDatabase.getNaam().equals(wagon.getNaam())) {
+					Locomotief locomotief = wagon.getLocomotief();
+					if (locomotief != null) {
+						wagonObject.put("locomotief", locomotief.getNaam());
+					} else {
+						wagonObject.put("locomotief", "");
+					}
+
+					wagonObject.put("stoelen", Integer.toString(wagon.getStoelen()));
+					wagonObject.put("bedden", Integer.toString(wagon.getBedden()));
+					wagonObject.put("naam", wagon.getNaam());
+					databaseObject.put("wagonnen", alleWagonnen);
+					database.setDatabaseJson(databaseObject);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public boolean remove(Wagon wagon) throws FileNotFoundException {
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleWagonnen = (JSONArray) databaseObject.get("wagonnen");
+		Iterator iterator = alleWagonnen.iterator();
+		while (iterator.hasNext()) {
+			JSONObject wagonJSONObject = (JSONObject) iterator.next();
+			Wagon wagonInDatabase = adapter.getWagonsFromJsonObject(wagonJSONObject);
+			if (wagonInDatabase != null) {
+				if (wagonInDatabase.getNaam().equals(wagon.getNaam())) {
+					wagonJSONObject.remove("naam");
+					wagonJSONObject.remove("bedden");
+					wagonJSONObject.remove("locomotief");
+					wagonJSONObject.remove("stoelen");
+					database.setDatabaseJson(databaseObject);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public Wagon getWagon(Wagon wagon) throws FileNotFoundException {
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleWagonnen = (JSONArray) databaseObject.get("wagonnen");
+		Iterator iterator = alleWagonnen.iterator();
+		while (iterator.hasNext()) {
+			Wagon wagonInDatabase = adapter.getWagonsFromJsonObject((JSONObject) iterator.next());
+			if (wagonInDatabase != null) {
+				if (wagonInDatabase.getNaam().equals(wagon.getNaam())) {
+					return wagonInDatabase;
+				}
 			}
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
-	public boolean removeWagonFromLocomotief(Locomotief locomotief, Wagon wagon) throws FileNotFoundException {
+	public List<Wagon> getWagonnen() throws FileNotFoundException {
+		List<Wagon> wagonnen = new ArrayList<Wagon>();
+
 		JSONObject databaseObject = database.getDatabaseJson();
-		JSONArray alleSporen = (JSONArray) databaseObject.get("sporen");
-		SpoorDao spoorDao = new SpoorDaoImpl();
-		
-		Iterator iterator = alleSporen.iterator();
-		while (iterator.hasNext()) {
-			Spoor spoor = spoorDao.getSporenFromJsonObject((JSONObject) iterator.next());
-			if(spoor.getLocomotiefen().equals(o)) {
-				
-			}
-		}
-		return false;
-	}
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public boolean removeLosseWagon(Wagon wagon) throws FileNotFoundException {
-		JSONObject databaseObject = database.getDatabaseJson();
-		JSONArray alleWagonnen = (JSONArray) databaseObject.get("wagonnen");		
+		JSONArray alleWagonnen = (JSONArray) databaseObject.get("wagonnen");
+
 		Iterator iterator = alleWagonnen.iterator();
 		while (iterator.hasNext()) {
-			JSONObject wagonJSONObject = (JSONObject) iterator.next();
-			Wagon wagonInDatabase = getWagonsFromJsonObject(wagonJSONObject);
-			if(wagonInDatabase.getNaam().equals(wagon.getNaam())) {
-				wagonJSONObject.put("naam", "removed");
-				wagonJSONObject.remove("bedden");
-				wagonJSONObject.remove("stoelen");
-				database.setDatabaseJson(databaseObject);
-				return true;
-			}
+			Wagon wagon = adapter.getWagonsFromJsonObject((JSONObject) iterator.next());
+			wagonnen.add(wagon);
 		}
-		return false;
+		return wagonnen;
 	}
 }

@@ -1,14 +1,25 @@
 package hu.pafr.richrail.wagon;
 
+import hu.pafr.richrail.locomotief.Locomotief;
+
 public class SlaapWagon implements Cloneable, Wagon {
 	private String naam;
 	private int stoelen;
 	private int bedden;
+	private Locomotief locomotief;
 
 	public SlaapWagon(String naam, int stoelen, int bedden) {
 		this.naam = naam;
 		this.stoelen = stoelen;
 		this.bedden = bedden;
+	}
+	
+	public Locomotief getLocomotief() {
+		return locomotief;
+	}
+	
+	public void setLocomotief(Locomotief locomotief) {
+		this.locomotief = locomotief;
 	}
 
 	@Override
@@ -43,4 +54,6 @@ public class SlaapWagon implements Cloneable, Wagon {
 	public void remove() {
 		System.out.println("remove uit ddb");
 	}
+
+
 }

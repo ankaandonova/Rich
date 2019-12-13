@@ -14,33 +14,116 @@ import hu.pafr.richrail.locomotief.LocomotiefBuilder;
 import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Wagon;
 
-public class LocomotiefDaoImpl implements LocomotiefDao{
+public class LocomotiefDaoImpl implements LocomotiefDao {
 
 	Database database = Database.getDatabase();
 	WagonDao wagonDaoImpl = new WagonDaoImpl();
 	JsonAdapter adapter = new JsonAdapter();
-	
+
 	@SuppressWarnings("unchecked")
-	public void saveLocomotief(Locomotief locomotief) throws FileNotFoundException { 
+	public void save(Locomotief locomotief) throws FileNotFoundException {
 		JSONObject databaseObject = database.getDatabaseJson();
 		JSONArray alleLocomotiefen = (JSONArray) databaseObject.get("locomotiefen");
-		Locomotief databaseLocomotief = findLosseLocomotief(locomotief);
-		if (databaseLocomotief == null) {
-			System.out.println("de locomotief is al in de database");
-			alleLocomotiefen.add(createLocomotiefJSONObject(locomotief));
+		if (getLocomotief(locomotief) == null) {
+			System.out.println("er word een nieuwe locomotief in de database aangemaakt");
+			alleLocomotiefen.add(adapter.createLocomotiefJSONObject(locomotief));
 		} else {
-			alleLocomotiefen.add(createLocomotiefJSONObject(locomotief));
-			System.out.println("schrijf vnog een verander functie want hij bestaat al");
+			System.out.println("de locotief word geupdate");
+			update(locomotief);
 		}
 		databaseObject.put("locomotiefen", alleLocomotiefen);
 		database.setDatabaseJson(databaseObject);
+
+		// wagons worden opgeslagen
+		for (Wagon wagon : locomotief.getWagons()) {
+			wagon.setLocomotief(locomotief);
+			wagonDaoImpl.save(wagon);
+		}
 	}
-	
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public boolean update(Locomotief locomotief) throws FileNotFoundException {
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleLocomotiefen = (JSONArray) databaseObject.get("locomotiefen");
+		Iterator iterator = alleLocomotiefen.iterator();
+		while (iterator.hasNext()) {
+			JSONObject locomotiefObject = (JSONObject) iterator.next();
+			Locomotief locomotiefFromDatabase = adapter.getLocomotiefFromJsonObject(locomotiefObject);
+			if (locomotiefFromDatabase != null) {
+				if (locomotiefFromDatabase.getNaam().equals(locomotief.getNaam())) {
+					Spoor spoor = locomotief.getSpoor();
+					if (spoor == null) {
+						locomotiefObject.put("spoor", "");
+					} else {
+						locomotiefObject.put("spoor", Integer.toString(spoor.getNummer()));
+					}
 
-	
+					locomotiefObject.put("naam", locomotief.getNaam());
+					locomotiefObject.put("vertrekpunt", locomotief.getVertrekPunt());
+					locomotiefObject.put("eindpunt", locomotief.getEindBestemming());
+					locomotiefObject.put("lengte", locomotief.getLengte());
+					locomotiefObject.put("hoogte", locomotief.getHoogte());
+					locomotiefObject.put("gps", locomotief.isGps());
+					locomotiefObject.put("max_snelheid", locomotief.getMax_snelheid());
+					locomotiefObject.put("stoelen", Integer.toString(locomotief.getStoelen()));
+					locomotiefObject.put("type_moter", locomotief.getType_moter());
+					databaseObject.put("locomotiefen", alleLocomotiefen);
+					database.setDatabaseJson(databaseObject);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public boolean remove(Locomotief locomotief) throws FileNotFoundException {
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleLocomotiefen = (JSONArray) databaseObject.get("locomotiefen");
+		Iterator iterator = alleLocomotiefen.iterator();
+		while (iterator.hasNext()) {
+			JSONObject locomotiefObject = (JSONObject) iterator.next();
+			Locomotief locomotiefFromDatabase = adapter.getLocomotiefFromJsonObject(locomotiefObject);
+			if (locomotiefFromDatabase != null) {
+				if (locomotiefFromDatabase.getNaam().equals(locomotief.getNaam())) {
+					locomotiefObject.remove("naam");
+					locomotiefObject.remove("vertrekpunt");
+					locomotiefObject.remove("eindpunt");
+					locomotiefObject.remove("lengte");
+					locomotiefObject.remove("hoogte");
+					locomotiefObject.remove("gps");
+					locomotiefObject.remove("max_snelheid");
+					locomotiefObject.remove("stoelen");
+					locomotiefObject.remove("type_moter");
+					locomotiefObject.remove("spoor");
+				}
+			}
+		}
+		databaseObject.put("locomotiefen", alleLocomotiefen);
+		database.setDatabaseJson(databaseObject);
+		return false;
+	}
+
 	@SuppressWarnings("rawtypes")
-	public List<Locomotief> getLocomotiefen() throws FileNotFoundException { 
+	public Locomotief getLocomotief(Locomotief locomotief) throws FileNotFoundException {
+		JSONObject databaseObject = database.getDatabaseJson();
+		JSONArray alleLocomotiefen = (JSONArray) databaseObject.get("locomotiefen");
+
+		Iterator iterator = alleLocomotiefen.iterator();
+		while (iterator.hasNext()) {
+			JSONObject locomotiefJson = (JSONObject) iterator.next();
+			Locomotief locoomotiefFromDb = adapter.getLocomotiefFromJsonObject(locomotiefJson);
+			if (locoomotiefFromDb != null) {
+				if (locoomotiefFromDb.getNaam().equals(locomotief.getNaam())) {
+					return locoomotiefFromDb;
+				}
+			}
+		}
+		return null;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List<Locomotief> getLocomotiefen() throws FileNotFoundException {
 		List<Locomotief> locomotiefen = new ArrayList<Locomotief>();
 
 		JSONObject databaseObject = database.getDatabaseJson();
@@ -52,95 +135,5 @@ public class LocomotiefDaoImpl implements LocomotiefDao{
 		}
 		return locomotiefen;
 	}
-	
-	
-
-
-	@SuppressWarnings({ "rawtypes" })
-	public Locomotief getLocomotiefFromSpoor(Spoor spoor) throws FileNotFoundException { 
-		JSONObject databaseObject = database.getDatabaseJson();
-		JSONArray alleLocomotiefen = (JSONArray) databaseObject.get("locomotiefen");
-		Iterator iterator = alleLocomotiefen.iterator();
-		while (iterator.hasNext()) {
-			JSONObject locomotiefJson = (JSONObject) iterator.next();
-			Locomotief locoomotiefFromDb = adapter.getLocomotiefFromJsonObject(locomotiefJson);
-			if(locoomotiefFromDb.getSpoor().getNummer() == spoor.getNummer()) {
-				return locoomotiefFromDb;
-			}
-		}
-		return null;
-	}
-
-
-
-	@SuppressWarnings({ "rawtypes" })
-	public void getWagonsFromLocomotief(Locomotief locomotief) throws FileNotFoundException {
-		JSONObject databaseObject = database.getDatabaseJson();
-		JSONArray alleSporen = (JSONArray) databaseObject.get("sporen");
-		Iterator iterator = alleSporen.iterator();
-
-		while (iterator.hasNext()) {
-			// gaat elk spoor langs
-			JSONObject spoorJson = (JSONObject) iterator.next();
-			SpoorDao spoorDao = new SpoorDaoImpl();
-			Spoor spoor = spoorDao.getSporenFromJsonObject(spoorJson);
-			System.out.println("spoor " + spoor.getNummer());
-			System.out.println("locomotief: " + locomotief.getNaam());
-			controleerLocomotieven(locomotief, spoor);
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	private void controleerLocomotieven(Locomotief locomotief, Spoor spoor) {
-		for (Locomotief locomotief1 : spoor.getLocomotiefen()) {
-			System.out.println("naam " + locomotief1.getNaam());
-			// locomotieven van het spoor uit de database worden doorgegaan
-			if (locomotief1.getNaam().equals(locomotief.getNaam())) {
-				// de locomotief is gevonden in de database
-				for (Wagon wagon : locomotief1.getWagons()) {
-					locomotief.setWagon(wagon);
-				}
-			}
-		}
-	}
-
-
-	@SuppressWarnings("rawtypes")
-	private Locomotief findLosseLocomotief(Locomotief locomotief) throws FileNotFoundException {
-		for (Locomotief locomotiefInDatabase : getLosseLocomotiefen()) {
-			if (locomotiefInDatabase.getNaam().equals(locomotief.getNaam())) {
-				return locomotiefInDatabase;
-			}
-		}
-		return null;
-	}
-
-	public List<Locomotief> getAlleLocomotiefen() throws FileNotFoundException {
-		List<Locomotief> locomotiefen = new ArrayList<Locomotief>();
-
-		for (Locomotief locomotief : getLosseLocomotiefen()) {
-			locomotiefen.add(locomotief);
-		}
-		for (Locomotief locomotief : getLocomotiefenInSpoor()) {
-			locomotiefen.add(locomotief);
-		}
-		return locomotiefen;
-	}
-
-
-
-	public List<Locomotief> getLocomotiefenInSpoor() throws FileNotFoundException { 
-		List<Locomotief> locomotiefen = new ArrayList<Locomotief>();
-
-		SpoorDao spoorDao = new SpoorDaoImpl();
-		List<Spoor> sporen = spoorDao.getSporen();
-		for (Spoor spoor : sporen) {
-			for (Locomotief locomotief : spoor.getLocomotiefen()) {
-				locomotiefen.add(locomotief);
-			}
-		}
-		return locomotiefen;
-	}
-
 
 }

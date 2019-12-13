@@ -1,9 +1,12 @@
 package hu.pafr.richrail.wagon;
 
+import hu.pafr.richrail.locomotief.Locomotief;
+
 public class GoederenWagon implements Cloneable, Wagon {
 	private String naam;
 	private int stoelen;
 	private int bedden;
+	private Locomotief locomotief;
 
 	public GoederenWagon(String naam, int stoelen, int bedden) {
 		this.naam = naam;
@@ -16,6 +19,14 @@ public class GoederenWagon implements Cloneable, Wagon {
 		return super.clone();
 	}
 
+	public Locomotief getLocomotief() {
+		return locomotief;
+	}
+	
+	public void setLocomotief(Locomotief locomotief) {
+		this.locomotief = locomotief;
+	}
+	
 	public String getNaam() {
 		return naam;
 	}
