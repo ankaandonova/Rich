@@ -66,6 +66,11 @@ public class GoederenWagon implements Cloneable, Wagon {
 
 	@Override
 	public void remove() {
-		System.out.println("remove uit ddb");
+		try {
+			wagonDao.remove(this);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

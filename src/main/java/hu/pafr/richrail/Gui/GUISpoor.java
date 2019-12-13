@@ -35,7 +35,7 @@ public class GUISpoor {
 		return Spoor_VBox;
 	}
 
-	private void addSpoor() {
+	protected static void SpoorEventHandler(Spoor spoor) throws FileNotFoundException {
 		// nieuwe spoor toevoegen
 		addSpoor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -50,16 +50,16 @@ public class GUISpoor {
 				System.out.println("nieuwe spoor  " + spoor2);
 
 				try {
-					spoor2.save();
+					if(!spoor2.update()) {
+						spoor2.save();
+						choiceSpoor.getItems().add(Integer.toString(spoor2.getNummer()));
+					} 
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-	}
-
-	protected static void SpoorEventHandler(Spoor spoor) throws FileNotFoundException {
 		for (Spoor sporen : spoor.getSporen()) {
 
 			choiceSpoor.getItems().add(Integer.toString(sporen.getNummer()));
@@ -76,23 +76,28 @@ public class GUISpoor {
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
-				/*
-				 * try { //GUItest.createTrain(Integer.parseInt(choiceSpoor.getValue())); }
-				 * catch (NumberFormatException | FileNotFoundException e2) {
-				 * e2.printStackTrace(); }
-				 */
+				
+//				try {
+//					GUItest.createTrain(Integer.parseInt(choiceSpoor.getValue())); 
+//				}
+//				catch (NumberFormatException | FileNotFoundException e2) {
+//				e2.printStackTrace(); 
+//				}
+				
 			}
 		});
 
-		// spoor verwijderen
-		deleteSpoor.setOnAction(e -> {
-			try {
-				deleteChoiceSpoor(choiceSpoor);
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
+	// spoor verwijderen
+	deleteSpoor.setOnAction(e->
+
+	{
+		try {
+			deleteChoiceSpoor(choiceSpoor);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	});
 	}
 
 	protected static VBox creatVBox() {

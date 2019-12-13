@@ -1,6 +1,6 @@
 package hu.pafr.richrail.locomotief;
 
-import java.io.FileNotFoundException; 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import hu.pafr.richrail.spoor.Spoor;
@@ -10,9 +10,13 @@ public interface Locomotief {
 	public Object clone() throws CloneNotSupportedException;
 
 	public String getNaam();
-	
+
+	public boolean update() throws FileNotFoundException;
+
+	public void save() throws FileNotFoundException;
+
 	public Spoor getSpoor();
-	
+
 	public void setNaam(String naam);
 
 	public String getVertrekPunt();

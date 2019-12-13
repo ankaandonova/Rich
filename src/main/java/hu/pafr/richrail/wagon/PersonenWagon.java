@@ -23,6 +23,16 @@ public class PersonenWagon implements Cloneable, Wagon {
 	public Locomotief getLocomotief() {
 		return locomotief;
 	}
+	
+	@Override
+	public void remove() {
+		try {
+			wagonDao.remove(this);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public boolean moveWagon(Locomotief locomotief) throws FileNotFoundException {
 		this.setLocomotief(locomotief);
 		wagonDao.update(this);
@@ -61,10 +71,7 @@ public class PersonenWagon implements Cloneable, Wagon {
 	public void setBedden(int bedden) {
 		this.bedden = bedden;
 	}
-	@Override
-	public void remove() {
-		System.out.println("remove uit ddb");
-	}
+
 
 
 }

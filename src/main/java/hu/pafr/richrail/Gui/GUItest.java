@@ -30,21 +30,16 @@ public class GUItest extends Application {
 
 	@Override
 	public void start(Stage window) throws Exception, InvocationTargetException {
-
 		schermBorder = new BorderPane();
-
 		// draw
 		scherm = createHBox();
-
 		scherm1 = creatVBox();
 		schermBorder.setTop(scherm);
 		schermBorder.setTop(scherm1);
 		// spoor
 		schermBorder.setLeft(GUISpoor.createSpoorKeuzeMenu());
-
 		// trein
 		schermBorder.setCenter(GUIlocomotief.createLocomotiefKeuzeMenu());
-
 		// wagon
 		schermBorder.setRight(GUIWagon.createWagonKeuzeMenu());
 
@@ -56,36 +51,38 @@ public class GUItest extends Application {
 
 	}
 
-	/*
-	 * static void createTrain(int spoorNummer) throws FileNotFoundException { Spoor
-	 * spoor = new Spoor(spoorNummer, 0.0);
-	 * 
-	 * spoor.getLocomotiefenFromDatabase();
-	 * 
-	 * for (Locomotief locomotief : spoor.getLocomotiefen()) { Image
-	 * benzineLocomotiefImg = new Image("locomotief.jpg");
-	 * scherm1.getChildren().add(new ImageView(benzineLocomotiefImg));
-	 * //.createWagon(locomotief.getNaam()); } }
-	 */
+//	static void createTrain(int spoorNummer) throws FileNotFoundException {
+//		Spoor spoor = new Spoor(spoorNummer, 0.0);
+//
+//		spoor.getLocomotiefenFromDatabase();
+//
+//		for (Locomotief locomotief : spoor.getLocomotiefen()) {
+//			Image benzineLocomotiefImg = new Image("locomotief.jpg");
+//			scherm1.getChildren().add(new ImageView(benzineLocomotiefImg));
+//			createWagon(locomotief.getNaam());
+//		}
+//	}
+
 	static void createWagon(String locomotiefNaam) throws FileNotFoundException {
 		System.out.println("==============================");
+		
 		Builder builder = new LocomotiefBuilder();
 		builder.setNaam(locomotiefNaam);
-		Locomotief locomotief= builder.build();
+		Locomotief locomotief = builder.build();
 		locomotief.getWagonnenFromDatabase();
-		
+
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + locomotief.getWagons());
 		for (Wagon wagon : locomotief.getWagons()) {
 			if (wagon.getBedden() > 0) {
-			
+
 				Image slaapWagonImg = new Image("slaapwagon.jpg");
 				scherm1.getChildren().add(new ImageView(slaapWagonImg));
 			} else if (wagon.getStoelen() > 0) {
-		
+
 				Image personenWagonImg = new Image("personenwagon.jpg");
 				scherm1.getChildren().add(new ImageView(personenWagonImg));
 			} else {
-				
+
 				Image transportWagonfImg = new Image("transportwagon.jpg");
 				scherm1.getChildren().add(new ImageView(transportWagonfImg));
 			}

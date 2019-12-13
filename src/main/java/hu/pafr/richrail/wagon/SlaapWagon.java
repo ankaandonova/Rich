@@ -19,17 +19,17 @@ public class SlaapWagon implements Cloneable, Wagon {
 		this.stoelen = stoelen;
 		this.bedden = bedden;
 	}
-	
+
 	public Locomotief getLocomotief() {
 		return locomotief;
 	}
-	
+
 	public boolean moveWagon(Locomotief locomotief) throws FileNotFoundException {
 		this.setLocomotief(locomotief);
 		wagonDao.update(this);
 		return false;
 	}
-	
+
 	public void setLocomotief(Locomotief locomotief) {
 		this.locomotief = locomotief;
 	}
@@ -62,10 +62,15 @@ public class SlaapWagon implements Cloneable, Wagon {
 	public void setBedden(int bedden) {
 		this.bedden = bedden;
 	}
+
 	@Override
 	public void remove() {
-		System.out.println("remove uit ddb");
+		try {
+			wagonDao.remove(this);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
 
 }

@@ -63,7 +63,14 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 		this.setSpoor(spoor);
 		return locomotiefDao.update(this);
 	}
-
+	
+	public boolean update() throws FileNotFoundException {
+		return locomotiefDao.update(this);
+	}
+	
+	public void save() throws FileNotFoundException {
+		locomotiefDao.save(this);
+	}
 	
 	public Spoor getSpoor() {
 		return this.spoor;

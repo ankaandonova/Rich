@@ -25,10 +25,8 @@ public class LocomotiefDaoImpl implements LocomotiefDao {
 		JSONObject databaseObject = database.getDatabaseJson();
 		JSONArray alleLocomotiefen = (JSONArray) databaseObject.get("locomotiefen");
 		if (getLocomotief(locomotief) == null) {
-			System.out.println("er word een nieuwe locomotief in de database aangemaakt");
 			alleLocomotiefen.add(adapter.createLocomotiefJSONObject(locomotief));
 		} else {
-			System.out.println("de locotief word geupdate");
 			update(locomotief);
 		}
 		databaseObject.put("locomotiefen", alleLocomotiefen);
@@ -36,6 +34,7 @@ public class LocomotiefDaoImpl implements LocomotiefDao {
 
 		// wagons worden opgeslagen
 		for (Wagon wagon : locomotief.getWagons()) {
+			System.out.println("wagon "+wagon.getNaam());
 			wagon.setLocomotief(locomotief);
 			wagonDaoImpl.save(wagon);
 		}

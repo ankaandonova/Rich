@@ -9,7 +9,7 @@ public interface SpoorDao {
 
 	public boolean remove(Spoor spoor) throws FileNotFoundException;
 
-	public void update(Spoor spoor) throws FileNotFoundException;
+	public boolean update(Spoor spoor) throws FileNotFoundException;
 
 	public Spoor getSpoor(Spoor spoor) throws FileNotFoundException;
 

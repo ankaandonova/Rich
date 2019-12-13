@@ -74,20 +74,26 @@ public class GUIlocomotief {
 		addLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-
-				locomotiefNaam.getText();
-				vertrekPunt.getText();
-				eindBestemming.getText();
-				typeMotor.getText();
-				gps.getText();
-				locomotiefLengte.getText();
-				locomotiefStoelen.getText();
-				System.out.println(locomotiefNaam.getText() + vertrekPunt.getText() + eindBestemming.getText()
-						+ typeMotor.getText() + gps.getText() + locomotiefLengte.getText()
-						+ locomotiefStoelen.getText());
+				Builder builder = new LocomotiefBuilder();
+				builder.setNaam(locomotiefNaam.getText());
+				builder.setVertrekPunt(vertrekPunt.getText());
+				builder.setEindBestemming(eindBestemming.getText());
+				builder.setType_moter(typeMotor.getText());
+				builder.setGps(Boolean.parseBoolean(gps.getText()));	
+				builder.setLengte(Double.parseDouble(locomotiefLengte.getText()));
+				builder.setStoelen(Integer.parseInt(locomotiefStoelen.getText()));
+				Locomotief locomotief = builder.build();
+				
+				try {
+					if(!locomotief.update()) {
+						locomotief.save();						
+						choiceLocomotief.getItems().add(locomotief.getNaam());
+					}
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
-
 	}
 
 	protected static VBox creatVBox() {

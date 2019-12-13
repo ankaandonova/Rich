@@ -7,7 +7,9 @@ import hu.pafr.richrail.database.LocomotiefDaoImpl;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
+import hu.pafr.richrail.wagon.Factory;
 import hu.pafr.richrail.wagon.Wagon;
+import hu.pafr.richrail.wagon.WagonFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -107,8 +109,10 @@ public class GUIWagon {
 	}
 
 	public static void deleteChoiceWagon(ChoiceBox<String> choiceWagon) {
-		String wagon = choiceWagon.getValue();
-		choiceWagon.getItems().remove(wagon);
+		String wagonNaam = choiceWagon.getValue();
+		choiceWagon.getItems().remove(wagonNaam);
+		Factory factory = new WagonFactory();
+		Wagon wagon = factory.createWagon(wagonNaam, 0, 0);
+		wagon.remove();
 	}
-
 }

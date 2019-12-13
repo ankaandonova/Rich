@@ -21,17 +21,16 @@ public class SpoorDaoImpl implements SpoorDao {
 		JSONArray alleSporen = (JSONArray) databaseObject.get("sporen");
 		System.out.println(getSpoor(spoor));
 		if(getSpoor(spoor) == null) {
-			System.out.println("nieuw spoor aangemaakt");
 			alleSporen.add(adapter.spoorToJson(spoor));
 		} else {	
-			System.out.println("spoor word geupdate");
 			update(spoor);
 		}
 		databaseObject.put("sporen", alleSporen);
 		database.setDatabaseJson(databaseObject);
-		
+		//locomotiefen van spoor opslaan
 		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
 		for(Locomotief locomotief : spoor.getLocomotiefen()) {
+			System.out.println("locomotief "+locomotief.getNaam());
 			locomotief.setSpoor(spoor);
 			locomotiefDao.save(locomotief);
 		}
@@ -59,19 +58,23 @@ public class SpoorDaoImpl implements SpoorDao {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void update(Spoor spoor) throws FileNotFoundException {
+	public boolean update(Spoor spoor) throws FileNotFoundException {
 		JSONObject databaseObject = database.getDatabaseJson();
 		JSONArray alleSporen = (JSONArray) databaseObject.get("sporen");
 		Iterator iterator = alleSporen.iterator();
 		while (iterator.hasNext()) {
 			JSONObject spoorObject = (JSONObject) iterator.next();
 			Spoor spoorFromDatabase = adapter.getSpoorFromJsonObject(spoorObject);
-			if(spoorFromDatabase.getNummer() == spoor.getNummer()) {
-				spoorObject.put("lengte", spoor.getLengte());
+			if(spoorFromDatabase != null) {
+				if(spoorFromDatabase.getNummer() == spoor.getNummer()) {
+					spoorObject.put("lengte", spoor.getLengte());
+					databaseObject.put("sporen", alleSporen);
+					database.setDatabaseJson(databaseObject);
+					return true;
+				}	
 			}
 		}
-		databaseObject.put("sporen", alleSporen);
-		database.setDatabaseJson(databaseObject);
+		return false;
 	}
 
 	@SuppressWarnings("rawtypes")

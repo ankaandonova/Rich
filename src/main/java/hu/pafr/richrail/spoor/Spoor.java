@@ -27,6 +27,10 @@ public class Spoor {
 		return spoorDao.getSporen();
 	}
 
+	public boolean update() throws FileNotFoundException {
+		return spoorDao.update(this);
+	}
+
 	public void remove() throws FileNotFoundException {
 		spoorDao.remove(this);
 	}
@@ -34,20 +38,20 @@ public class Spoor {
 	public void save() throws FileNotFoundException {
 		spoorDao.save(this);
 	}
-	
+
 	public void getLocomotiefenFromDatabase() {
 		try {
 			for (Locomotief locomotef : locomotiefDao.getLocomotiefen()) {
-				System.out.println("=================="+nummer);
+				System.out.println("==================" + nummer);
 				System.out.println(locomotef.getNaam());
-				if(locomotef.getSpoor() != null) {
+				if (locomotef.getSpoor() != null) {
 					// de locomotief heeft een spoor
 					System.out.println(locomotef.getSpoor().getNummer());
 					if (locomotef.getSpoor().getNummer() == nummer) {
-						
-						//de locomotief hoort bij het spoor 
+
+						// de locomotief hoort bij het spoor
 						locomotiefen.add(locomotef);
-					}	
+					}
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -85,6 +89,5 @@ public class Spoor {
 	public void setLengte(Double lengte) {
 		this.lengte = lengte;
 	}
-
 
 }

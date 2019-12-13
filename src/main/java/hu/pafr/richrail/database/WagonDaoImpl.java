@@ -23,16 +23,12 @@ public class WagonDaoImpl implements WagonDao {
 		JSONObject databaseObject = database.getDatabaseJson();
 		JSONArray alleWagonnen = (JSONArray) databaseObject.get("wagonnen");
 		if (getWagon(wagon) == null) {
-			System.out.println("er is een nieuwe wagon aangemaakt");
 			JSONObject wagonObject = adapter.createWagonJSONObject(wagon);
-			System.out.println("wagonObject " + wagonObject);
 			alleWagonnen.add(wagonObject);
 		} else {
-			System.out.println("de wagon is al in de database en wordt geupdate");
 			update(wagon);
 		}
 		databaseObject.put("wagonnen", alleWagonnen);
-		System.out.println("alleWagonnen " + alleWagonnen);
 		database.setDatabaseJson(databaseObject);
 	}
 
