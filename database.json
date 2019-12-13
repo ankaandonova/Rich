@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-{"wagonnen":[{},{},{"stoelen":"9228","locomotief":"trein2","bedden":"0","naam":"wagon2"}],"sporen":[{},{},{"nummer":"11","lengte":200.0},{"nummer":"111","lengte":111.0},{"nummer":"5","lengte":302.0},{"nummer":"100","lengte":9000.0},{"nummer":"101","lengte":9000.0}],"locomotiefen":[{},{},{},{},{"type_moter":"diesel","stoelen":"20","hoogte":2.0,"eindpunt":"sdadsahjdbashjdsrecht","gps":true,"max_snelheid":1520.0,"naam":"grote treisn2","spoor":"11","vertrekpunt":"sssssterdam","lengte":20.0},{},{"type_moter":"diesel","stoelen":"20","hoogte":2.0,"eindpunt":"sdadsahjdbashjdsrecht","gps":true,"max_snelheid":1520.0,"naam":"trein2","spoor":"1","vertrekpunt":"sssssterdam","lengte":20.0},{"type_moter":"asd","stoelen":"222","hoogte":null,"eindpunt":"asd","gps":true,"max_snelheid":null,"naam":"treinTest","spoor":"","vertrekpunt":"asd","lengte":200.0}]}
-=======
-
 {
 	"wagonnen": [
 		{
@@ -12,29 +8,34 @@
 		},
 		{
 			"stoelen": "9228",
-			"locomotief": "trein1",
+			"locomotief": "trein2",
 			"bedden": "0",
 			"naam": "wagon2"
 		}
 	],
 	"sporen": [
 		{
-			"nummer": "3",
-			"lengte": 301.0
+			
+		},
+		{
+			
+		},
+		{
+			"nummer": "11",
+			"lengte": 200.0
+		},
+		{
+			"nummer": "111",
+			"lengte": 111.0
+		},
+		{
+			"nummer": "5",
+			"lengte": 302.0
 		}
 	],
 	"locomotiefen": [
 		{
-			"type_moter": "diesel",
-			"stoelen": "20",
-			"hoogte": 2.0,
-			"eindpunt": "Utrecht",
-			"gps": true,
-			"max_snelheid": 150.0,
-			"naam": "grote trein2",
-			"spoor": "3",
-			"vertrekpunt": "Amsterdam",
-			"lengte": 20.0
+			
 		},
 		{
 			
@@ -53,9 +54,12 @@
 			"gps": true,
 			"max_snelheid": 1520.0,
 			"naam": "grote treisn2",
-			"spoor": "3",
+			"spoor": "11",
 			"vertrekpunt": "sssssterdam",
 			"lengte": 20.0
+		},
+		{
+			
 		},
 		{
 			"type_moter": "diesel",
@@ -64,12 +68,10 @@
 			"eindpunt": "sdadsahjdbashjdsrecht",
 			"gps": true,
 			"max_snelheid": 1520.0,
-			"naam": "trein1",
-			"spoor": "2",
+			"naam": "trein2",
+			"spoor": "1",
 			"vertrekpunt": "sssssterdam",
 			"lengte": 20.0
 		}
 	]
 }
-
->>>>>>> 19138eed7e0e35db95c778e5fcaf033ad78b3849

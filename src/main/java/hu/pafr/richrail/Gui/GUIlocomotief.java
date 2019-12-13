@@ -17,8 +17,11 @@ import javafx.scene.layout.VBox;
 public class GUIlocomotief {
 	protected static ChoiceBox<String> choiceLocomotief;
 	protected static Button selectLocomotief;
+	protected static ChoiceBox<String> choiceLosseLocomotief;
+	protected static Button selectLosseLocomotief;
 	protected static Button deleteLocomotief;
 	protected static Button addLocomotief;
+	protected static Button clone;
 	protected static TextField vertrekPunt;
 	protected static TextField eindBestemming;
 	protected static TextField typeMotor;
@@ -30,13 +33,18 @@ public class GUIlocomotief {
 	protected static VBox createLocomotiefKeuzeMenu() throws FileNotFoundException {
 
 		VBox Locomotief_VBox = creatVBox();
-		Locomotief_VBox.getChildren().addAll(new Label("Kies een locomotief"), choiceLocomotief = new ChoiceBox<>(),
-				selectLocomotief = new Button("select"), deleteLocomotief = new Button("delete"), new Label("Naam"),
+		Locomotief_VBox.getChildren().addAll(new Label("Kies een locomotief"), 
+				choiceLocomotief = new ChoiceBox<>(),
+				selectLocomotief = new Button("select"), 
+				deleteLocomotief = new Button("delete"), 
+				choiceLosseLocomotief = new ChoiceBox<>(),
+				selectLosseLocomotief = new Button("select"), new Label("Naam"),
 				locomotiefNaam = new TextField(), new Label("Vertrek punt"), vertrekPunt = new TextField(),
 				new Label("Eind bestemming"), eindBestemming = new TextField(), new Label("Type motor"),
 				typeMotor = new TextField(), new Label("GPS"), gps = new TextField(), new Label("Lengte"),
 				locomotiefLengte = new TextField(), new Label("Stoelen"), locomotiefStoelen = new TextField(),
-				addLocomotief = new Button("Add"));
+				addLocomotief = new Button("Add"),
+				addLocomotief = new Button("clone Pascal en Anka"));
 
 		Spoor spoor = new Spoor(0, 0.0);
 		LocomotiefEventHanler(spoor);
