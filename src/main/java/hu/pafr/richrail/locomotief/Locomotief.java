@@ -3,12 +3,19 @@ package hu.pafr.richrail.locomotief;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import hu.pafr.richrail.database.LocomotiefDao;
+import hu.pafr.richrail.database.LocomotiefDaoImpl;
 import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Wagon;
 
 public interface Locomotief {
 	public Object clone() throws CloneNotSupportedException;
 
+	public static Locomotief getLocomotiefFromDatabase(Locomotief locomotief) throws FileNotFoundException {
+		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
+		return locomotiefDao.getLocomotief(locomotief);
+	}
+	
 	public String getNaam();
 
 	public boolean update() throws FileNotFoundException;
@@ -68,4 +75,8 @@ public interface Locomotief {
 	public void setSpoor(Spoor spoor);
 
 	public boolean moveLocomotief(Spoor spoor) throws FileNotFoundException;
+
+	public List<Locomotief> getLosseLocomotieven();
+
+
 }

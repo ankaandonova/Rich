@@ -35,7 +35,6 @@ public class JsonAdapter {
 	public Locomotief getLocomotiefFromJsonObject(JSONObject locomotiefJson) {
 		Builder locomotiefBuilder = new LocomotiefBuilder();
 		String naam = (String) locomotiefJson.get("naam");
-		System.out.println("naam " + naam);
 		if (naam == null) {
 			return null;
 		} else {
@@ -50,7 +49,7 @@ public class JsonAdapter {
 			locomotiefBuilder.setStoelen(Integer.parseInt((String) locomotiefJson.get("stoelen")));
 			Locomotief locomotief = locomotiefBuilder.build();
 			String spoornummer = (String) locomotiefJson.get("spoor");
-			if (spoornummer != "") {
+			if (!spoornummer.equals("")) {
 				Spoor spoor = new Spoor(Integer.parseInt(spoornummer), 0.00);
 				locomotief.setSpoor(spoor);
 			}
@@ -87,7 +86,6 @@ public class JsonAdapter {
 	public JSONObject createWagonJSONObject(Wagon wagon) {
 		JSONObject wagonJson = new JSONObject();
 		wagonJson.put("naam", wagon.getNaam());
-		System.out.println("wagon naam " + wagon.getNaam());
 		Locomotief locomotief = wagon.getLocomotief();
 		if (locomotief == null) {
 			wagonJson.put("locomotief", "");
@@ -96,7 +94,6 @@ public class JsonAdapter {
 		}
 		wagonJson.put("bedden", Integer.toString(wagon.getBedden()));
 		wagonJson.put("stoelen", Integer.toString(wagon.getStoelen()));
-		System.out.println("wagonJson " + wagonJson);
 		return wagonJson;
 	}
 
@@ -109,11 +106,14 @@ public class JsonAdapter {
 			int stoelen = Integer.parseInt((String) wagonJson.get("stoelen"));
 			Factory factory = new WagonFactory();
 			Wagon wagon = factory.createWagon(naam, stoelen, bedden);
-
-			Builder locomotiefBuilder = new LocomotiefBuilder();
-			locomotiefBuilder.setNaam((String) wagonJson.get("locomotief"));
-			Locomotief locomotief = locomotiefBuilder.build();
-			wagon.setLocomotief(locomotief);
+			String locomotiefnaam =(String) wagonJson.get("locomotief");
+			
+			if(!locomotiefnaam.equals("")) {
+				Builder locomotiefBuilder = new LocomotiefBuilder();
+				locomotiefBuilder.setNaam(locomotiefnaam);
+				Locomotief locomotief = locomotiefBuilder.build();
+				wagon.setLocomotief(locomotief);
+			}
 			return wagon;
 		}
 	}

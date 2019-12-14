@@ -2,6 +2,10 @@ package hu.pafr.richrail.Gui;
 
 
 import java.lang.reflect.InvocationTargetException;
+
+import hu.pafr.richrail.locomotief.Locomotief;
+import hu.pafr.richrail.parser.RichRailCli;
+import hu.pafr.richrail.parser.RichRailUitvoerListener;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.geometry.Insets;
@@ -33,7 +37,7 @@ public class GUIcmd extends Application {
 		vbox = new VBox();
 		text = new TextField();
 		commit = new Button("commit");
-		label = new Label("messeg");
+		label = new Label("messege");
 		commit.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -82,9 +86,11 @@ public class GUIcmd extends Application {
 	}
 
 	public static void setText(Label label, TextField text) {
-		String text1 = text.getText();
-		label.setText(text1);
-		
+		String invoer = text.getText();
+		RichRailUitvoerListener richrail =RichRailCli.voerCommandUit(invoer);
+		Object object = richrail.getObject();
+		String responseMessage = richrail.getMessage();
+		label.setText(responseMessage);
 	}
 
 }

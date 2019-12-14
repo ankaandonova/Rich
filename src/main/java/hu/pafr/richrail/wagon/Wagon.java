@@ -1,7 +1,10 @@
 package hu.pafr.richrail.wagon;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
+import hu.pafr.richrail.database.WagonDao;
+import hu.pafr.richrail.database.WagonDaoImpl;
 import hu.pafr.richrail.locomotief.Locomotief;
 
 public interface Wagon {
@@ -27,4 +30,11 @@ public interface Wagon {
 	public Locomotief getLocomotief();
 
 	public void setLocomotief(Locomotief locomotief);
+
+	public List<Wagon> getLosseWagonnen();
+
+	public static Wagon getWagonDromDatabase(Wagon wagon) throws FileNotFoundException {
+		WagonDao wagonDao= new WagonDaoImpl();
+		return wagonDao.getWagon(wagon);
+	}
 }

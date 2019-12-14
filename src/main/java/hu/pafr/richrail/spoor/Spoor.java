@@ -23,6 +23,11 @@ public class Spoor {
 		this.lengte = lengte;
 	}
 
+	public static Spoor getSpoorFromDatabase(Spoor spoor) throws FileNotFoundException {
+		SpoorDao spoorDao = new SpoorDaoImpl();
+		return spoorDao.getSpoor(spoor);
+	}
+
 	public List<Spoor> getSporen() throws FileNotFoundException {
 		return spoorDao.getSporen();
 	}

@@ -60,17 +60,15 @@ public class GUIlocomotief {
 
 	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
 		choiceLocomotief.getItems().clear();
+		//zet de locomotieven van het geselcteerde spoor in de lijst
 		if (spoor.getNummer() != 0) {
-			System.out.println(spoor.getNummer());
 			spoor.getLocomotiefenFromDatabase();
+			for (Locomotief locomotief : spoor.getLocomotiefen()) {
+				choiceLocomotief.setValue(locomotief.getNaam());
+				choiceLocomotief.getItems().add(locomotief.getNaam());
+			}
 		}
-
-		for (Locomotief locomotief : spoor.getLocomotiefen()) {
-			System.out.println("locomotief " + locomotief.getNaam());
-			choiceLocomotief.setValue(locomotief.getNaam());
-			choiceLocomotief.getItems().add(locomotief.getNaam());
-		}
-
+		
 		selectLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {

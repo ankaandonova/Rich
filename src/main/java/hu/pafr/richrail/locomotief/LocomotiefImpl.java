@@ -42,45 +42,6 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 	}
 
 	@Override
-	public boolean removeWagon(Wagon wagon) throws FileNotFoundException {
-		for (Wagon wagonDatabase : wagonDao.getWagonnen()) {
-			if (wagonDatabase.getLocomotief().getNaam().equals(naam)) {
-				// wagon is in de locomotief en word gverwijderd uit de database
-				wagonDao.remove(wagonDatabase);
-				wagons.clear();
-				for (Wagon wagonInList : wagons) {
-					// wagon word verwijder uit
-					if (!wagonInList.getNaam().equals(wagon.getNaam())) {
-						wagons.add(wagonInList);
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public boolean moveLocomotief(Spoor spoor) throws FileNotFoundException {
-		this.setSpoor(spoor);
-		return locomotiefDao.update(this);
-	}
-	
-	public boolean update() throws FileNotFoundException {
-		return locomotiefDao.update(this);
-	}
-	
-	public void save() throws FileNotFoundException {
-		locomotiefDao.save(this);
-	}
-	
-	public Spoor getSpoor() {
-		return this.spoor;
-	}
-
-	public void setSpoor(Spoor spoor) {
-		this.spoor = spoor;
-	}
-
-	@Override
 	public void getWagonnenFromDatabase() throws FileNotFoundException {
 		for (Wagon wagon : wagonDao.getWagonnen()) {
 			if (wagon.getLocomotief().getNaam().equals(naam)) {
@@ -100,7 +61,68 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
+		Locomotief locomotief = (Locomotief) super.clone();
+		String naamLocomotief = locomotief.getNaam() + ".1";
+		locomotief.setNaam(naamLocomotief);
+		try {
+			locomotief.save();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return locomotief;
+	}
+
+	public List<Locomotief> getLosseLocomotieven() {
+		List<Locomotief> locomotieven = new ArrayList<Locomotief>();
+		try {
+			for (Locomotief locomotief : locomotiefDao.getLocomotiefen()) {
+				if (locomotief.getSpoor() == null) {
+					locomotieven.add(locomotief);
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return locomotieven;
+	}
+
+	@Override
+	public boolean removeWagon(Wagon wagon) throws FileNotFoundException {
+		for (Wagon wagonDatabase : wagonDao.getWagonnen()) {
+			if (wagonDatabase.getLocomotief().getNaam().equals(naam)) {
+				// wagon is in de locomotief en word gverwijderd uit de database
+				wagonDao.remove(wagonDatabase);
+				wagons.clear();
+				for (Wagon wagonInList : wagons) {
+					// wagon word verwijder uit
+					if (!wagonInList.getNaam().equals(wagon.getNaam())) {
+						wagons.add(wagonInList);
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean moveLocomotief(Spoor spoor) throws FileNotFoundException {
+		this.setSpoor(spoor);
+		return locomotiefDao.update(this);
+	}
+
+	public boolean update() throws FileNotFoundException {
+		return locomotiefDao.update(this);
+	}
+
+	public void save() throws FileNotFoundException {
+		locomotiefDao.save(this);
+	}
+
+	public Spoor getSpoor() {
+		return this.spoor;
+	}
+
+	public void setSpoor(Spoor spoor) {
+		this.spoor = spoor;
 	}
 
 	public String getNaam() {

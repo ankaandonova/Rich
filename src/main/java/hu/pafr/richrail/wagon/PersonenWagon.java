@@ -1,6 +1,8 @@
 package hu.pafr.richrail.wagon;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import hu.pafr.richrail.database.WagonDao;
 import hu.pafr.richrail.database.WagonDaoImpl;
@@ -22,6 +24,22 @@ public class PersonenWagon implements Cloneable, Wagon {
 	
 	public Locomotief getLocomotief() {
 		return locomotief;
+	}
+	
+	public List<Wagon> getLosseWagonnen(){
+		List<Wagon> wagonnen = new ArrayList<Wagon>();
+		try {
+			for(Wagon wagon : wagonDao.getWagonnen()) {
+				System.out.println(wagon.getNaam());
+				System.out.println("loco "+wagon.getLocomotief().getStoelen());
+				if(wagon.getLocomotief() == null) {
+					wagonnen.add(wagon);
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return wagonnen;
 	}
 	
 	@Override

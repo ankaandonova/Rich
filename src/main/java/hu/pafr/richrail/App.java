@@ -26,7 +26,7 @@ public class App {
 		Builder builder = new LocomotiefBuilder();
 		Factory factory = new WagonFactory();
 		
-		Spoor spoor = new Spoor(5, 302.0);
+		Spoor spoor = new Spoor(5, 3022.0);
 		
 		builder.setNaam("trein2");
 		builder.setVertrekPunt("sssssterdam");
@@ -36,18 +36,38 @@ public class App {
 		builder.setLengte(20.00);
 		builder.setGps(true);
 		builder.setMax_snelheid(1520.00);
-		builder.setStoelen(20);
+		builder.setStoelen(220);
 		Locomotief locomotief = builder.build();
-		locomotief.setSpoor(spoor);
 		
-		Wagon wagon = factory.createWagon("wagon2", 9228, 0);
-		locomotief.setWagon(wagon);
+		Wagon wagon = factory.createWagon("wagon2", 132, 0);
+		//System.out.println(wagon.getLocomotief());
+		//locomotief.setWagon(wagon);
+		//spoor.addLocomotief(locomotief);
+		//locomotief.setSpoor(spoor);
+
+		//losse objecten		
+//		for(Locomotief losseLocomotief : locomotief.getLosseLocomotieven()) {
+//			System.out.println(losseLocomotief.getNaam());
+//		}
+//		for(Wagon losseWagon : wagon.getLosseWagonnen()) {
+//			System.out.println("los "+losseWagon.getNaam());
+//		}
 		
-		spoor.addLocomotief(locomotief);
+		//loskoppelen
+		//locomotief.moveLocomotief(null);
+		//wagon.moveWagon(null);
 		
 		
-	//save 
-		spoorDao.save(spoor);
+		//locomotief.clone();
+		wagon.clone();
+		
+		
+		//System.out.println(Spoor.getSpoorFromDatabase(spoor).getLengte());
+		//System.out.println(Locomotief.getLocomotiefFromDatabase(locomotief));
+		//System.out.println(Wagon.getWagonDromDatabase(wagon).getStoelen());
+		
+		//save 
+		//spoorDao.save(spoor);
 		//locomotiefDao.save(locomotief);
 		//wagonDao.save(wagon);
 
@@ -68,6 +88,7 @@ public class App {
 			//List<Wagon> wagonnen = wagonDao.getWagonnen();
 		
 	//remove
+		//spoor.remove();
 		//System.out.println(wagonDao.remove(wagon));
 		//System.out.println(locomotiefDao.remove(locomotief));
 		
@@ -76,7 +97,7 @@ public class App {
 		//System.out.println(wagonDao.update(wagon));
 
 		//move
-		System.out.println(wagon.moveWagon(locomotief));
+		//System.out.println(wagon.moveWagon(locomotief));
 //		System.out.println(locomotief.moveLocomotief());
 		
 	}
