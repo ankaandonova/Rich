@@ -72,20 +72,6 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 		return locomotief;
 	}
 
-	public List<Locomotief> getLosseLocomotieven() {
-		List<Locomotief> locomotieven = new ArrayList<Locomotief>();
-		try {
-			for (Locomotief locomotief : locomotiefDao.getLocomotiefen()) {
-				if (locomotief.getSpoor() == null) {
-					locomotieven.add(locomotief);
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return locomotieven;
-	}
-
 	@Override
 	public boolean removeWagon(Wagon wagon) throws FileNotFoundException {
 		for (Wagon wagonDatabase : wagonDao.getWagonnen()) {

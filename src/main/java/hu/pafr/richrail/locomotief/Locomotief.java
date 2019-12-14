@@ -1,6 +1,7 @@
 package hu.pafr.richrail.locomotief;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import hu.pafr.richrail.database.LocomotiefDao;
@@ -14,6 +15,21 @@ public interface Locomotief {
 	public static Locomotief getLocomotiefFromDatabase(Locomotief locomotief) throws FileNotFoundException {
 		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
 		return locomotiefDao.getLocomotief(locomotief);
+	}
+	
+	public static List<Locomotief> getLosseLocomotieven() {
+		List<Locomotief> locomotieven = new ArrayList<Locomotief>();
+		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
+		try {
+			for (Locomotief locomotief : locomotiefDao.getLocomotiefen()) {
+				if (locomotief.getSpoor() == null) {
+					locomotieven.add(locomotief);
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return locomotieven;
 	}
 	
 	public String getNaam();
@@ -75,8 +91,4 @@ public interface Locomotief {
 	public void setSpoor(Spoor spoor);
 
 	public boolean moveLocomotief(Spoor spoor) throws FileNotFoundException;
-
-	public List<Locomotief> getLosseLocomotieven();
-
-
 }

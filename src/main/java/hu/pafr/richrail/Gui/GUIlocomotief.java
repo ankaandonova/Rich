@@ -38,6 +38,8 @@ public class GUIlocomotief {
 	protected static Pane createLocomotiefKeuzeMenu() throws FileNotFoundException {
 		Pane paneLocomotief = createPane();
 
+
+
 		HBox HBox = HBox();
 		HBox Locomotief_HBox = Locomotief_HBox();
 		VBox vbox = vbox();
@@ -55,7 +57,14 @@ public class GUIlocomotief {
 		Spoor spoor = new Spoor(0, 0.0);
 		LocomotiefEventHanler(spoor);
 		return paneLocomotief;
-
+	}
+	
+	protected static void loadLosseLocomotieven() {
+		choiceLosseLocomotief.getItems().clear();
+		for(Locomotief locomotief : Locomotief.getLosseLocomotieven()) {
+			choiceLosseLocomotief.setValue(locomotief.getNaam());
+			choiceLosseLocomotief.getItems().add(locomotief.getNaam());
+		}
 	}
 
 	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
@@ -221,5 +230,4 @@ public class GUIlocomotief {
 		Locomotief locomotief = builder.build();
 		locomotief.remove();
 	}
-
 }
