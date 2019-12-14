@@ -1,19 +1,15 @@
 package hu.pafr.richrail.Gui;
 
 import java.io.FileNotFoundException;
-import java.util.List;
-
-import hu.pafr.richrail.database.Database;
-import hu.pafr.richrail.database.SpoorDao;
-import hu.pafr.richrail.database.SpoorDaoImpl;
 import hu.pafr.richrail.spoor.Spoor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class GUISpoor {
@@ -24,15 +20,18 @@ public class GUISpoor {
 	protected static TextField spoorNummer;
 	protected static TextField lengteSpoor;
 
-	public static VBox createSpoorKeuzeMenu() throws FileNotFoundException {
-		VBox Spoor_VBox = creatVBox();
-		Spoor_VBox.getChildren().addAll(new Label("Kies een spoor"), choiceSpoor = new ChoiceBox<>(),
-				selectSpoor = new Button("select"), deleteSpoor = new Button("delete"), new Label("Spoor nummer"),
-				spoorNummer = new TextField(), new Label("Lengte"), lengteSpoor = new TextField(),
-				addSpoor = new Button("Toevoegen/wijzigen"));
+	public static Pane createSpoorKeuzeMenu() throws FileNotFoundException {
+		Pane paneSpoor = createPane();
+
+		Label SpoorLbl = SpoorLbl();
+		HBox Spoor_HBox = Spoor_HBox();
+		VBox VBox = VBox();
+		HBox HBox = HBox();
+
+		paneSpoor.getChildren().addAll(SpoorLbl, Spoor_HBox, VBox, HBox);
 		Spoor spoor = new Spoor(1, 0.0);
 		SpoorEventHandler(spoor);
-		return Spoor_VBox;
+		return paneSpoor;
 	}
 
 	protected static void SpoorEventHandler(Spoor spoor) throws FileNotFoundException {
@@ -50,12 +49,11 @@ public class GUISpoor {
 				System.out.println("nieuwe spoor  " + spoor2);
 
 				try {
-					if(!spoor2.update()) {
+					if (!spoor2.update()) {
 						spoor2.save();
 						choiceSpoor.getItems().add(Integer.toString(spoor2.getNummer()));
-					} 
+					}
 				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -76,36 +74,67 @@ public class GUISpoor {
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
-				
-//				try {
-//					GUItest.createTrain(Integer.parseInt(choiceSpoor.getValue())); 
-//				}
-//				catch (NumberFormatException | FileNotFoundException e2) {
-//				e2.printStackTrace(); 
-//				}
-				
+
+				try {
+					GUItest.createTrain(Integer.parseInt(choiceSpoor.getValue()));
+				} catch (NumberFormatException | FileNotFoundException e2) {
+					e2.printStackTrace();
+				}
+
 			}
 		});
 
-	// spoor verwijderen
-	deleteSpoor.setOnAction(e->
+		// spoor verwijderen
+		deleteSpoor.setOnAction(e ->
 
-	{
-		try {
-			deleteChoiceSpoor(choiceSpoor);
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	});
+		{
+			try {
+				deleteChoiceSpoor(choiceSpoor);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		});
 	}
 
-	protected static VBox creatVBox() {
-		VBox vbox = new VBox();
-		vbox.setPrefWidth(450);
-		vbox.setStyle(" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold;");
-		vbox.setAlignment(Pos.BASELINE_LEFT);
-		return vbox;
+	protected static Pane createPane() {
+		Pane pane = new Pane();
+		pane.setPrefWidth(450);
+		pane.setStyle(" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold;");
+		return pane;
+	}
+
+	protected static Label SpoorLbl() {
+		Label SpoorLbl = new Label("Kies een spoor");
+		SpoorLbl.setLayoutX(5);
+		SpoorLbl.setLayoutY(10);
+		return SpoorLbl;
+	}
+
+	protected static HBox Spoor_HBox() {
+		HBox Spoor_HBox = new HBox();
+		Spoor_HBox.getChildren().addAll(choiceSpoor = new ChoiceBox<>(), selectSpoor = new Button("select"));
+		Spoor_HBox.setLayoutX(5);
+		Spoor_HBox.setLayoutY(40);
+		return Spoor_HBox;
+	}
+
+	protected static VBox VBox() {
+		VBox VBox = new VBox();
+		VBox.getChildren().addAll(new Label("Spoor nummer"), spoorNummer = new TextField(), new Label("Lengte"),
+				lengteSpoor = new TextField());
+
+		VBox.setLayoutX(5);
+		VBox.setLayoutY(65);
+		return VBox;
+	}
+
+	protected static HBox HBox() {
+		HBox HBox = new HBox();
+		HBox.getChildren().addAll(deleteSpoor = new Button("delete"), addSpoor = new Button("Toevoegen/wijzigen"));
+
+		HBox.setLayoutX(5);
+		HBox.setLayoutY(170);
+		return HBox;
 	}
 
 	public static void getChoiceSpoor(ChoiceBox<String> choiceSpoor) throws FileNotFoundException {

@@ -2,9 +2,6 @@ package hu.pafr.richrail.Gui;
 
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
-
-import hu.pafr.richrail.database.LocomotiefDao;
-import hu.pafr.richrail.database.LocomotiefDaoImpl;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
@@ -51,27 +48,24 @@ public class GUItest extends Application {
 
 	}
 
-//	static void createTrain(int spoorNummer) throws FileNotFoundException {
-//		Spoor spoor = new Spoor(spoorNummer, 0.0);
-//
-//		spoor.getLocomotiefenFromDatabase();
-//
-//		for (Locomotief locomotief : spoor.getLocomotiefen()) {
-//			Image benzineLocomotiefImg = new Image("locomotief.jpg");
-//			scherm1.getChildren().add(new ImageView(benzineLocomotiefImg));
-//			createWagon(locomotief.getNaam());
-//		}
-//	}
+	static void createTrain(int spoorNummer) throws FileNotFoundException {
+		Spoor spoor = new Spoor(spoorNummer, 0.0);
+
+		spoor.getLocomotiefenFromDatabase();
+
+		for (Locomotief locomotief : spoor.getLocomotiefen()) {
+			Image benzineLocomotiefImg = new Image("personenwagon.jpg");
+			scherm1.getChildren().add(new ImageView(benzineLocomotiefImg));
+			createWagon(locomotief.getNaam());
+		}
+	}
 
 	static void createWagon(String locomotiefNaam) throws FileNotFoundException {
-		System.out.println("==============================");
-		
+
 		Builder builder = new LocomotiefBuilder();
 		builder.setNaam(locomotiefNaam);
 		Locomotief locomotief = builder.build();
 		locomotief.getWagonnenFromDatabase();
-
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + locomotief.getWagons());
 		for (Wagon wagon : locomotief.getWagons()) {
 			if (wagon.getBedden() > 0) {
 
