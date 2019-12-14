@@ -33,6 +33,7 @@ public class GUIWagon {
 	protected static TextField wagonNaam;
 	protected static TextField wagonStoel;
 	protected static TextField wagonBedden;
+	protected static Wagon geselecteerdeWagon;
 	protected static Label wagon;
 
 	public static Pane createWagonKeuzeMenu() throws FileNotFoundException {
@@ -64,19 +65,29 @@ public class GUIWagon {
 		choiceWagon.getItems().clear();
 		if (locomotief.getNaam() != null) {
 			locomotief.getWagonnenFromDatabase();
-		}
-
-		for (Wagon wagon : locomotief.getWagons()) {
-			System.out.println("wagon in de database  " + wagon.getNaam());
-			choiceWagon.setValue(wagon.getNaam());
-			choiceWagon.getItems().add(wagon.getNaam());
+			Wagon laatsteWagon = null; 
+			for (Wagon wagon : locomotief.getWagons()) {
+				System.out.println("wagon in de database  " + wagon.getNaam());
+				choiceWagon.setValue(wagon.getNaam());
+				choiceWagon.getItems().add(wagon.getNaam());
+				laatsteWagon = wagon;
+			}
+			if(laatsteWagon != null) {
+				choiceWagon.setValue(laatsteWagon.getNaam());
+				getGeselecteerdeWagon(choiceWagon);
+				getChoiceWagon(choiceWagon);
+			}
 		}
 
 		selectWagon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				getChoiceWagon(choiceWagon);
-				getGeselecteerdeWagon(wagon,choiceWagon);
+				try {
+					getGeselecteerdeWagon(choiceWagon);
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -196,9 +207,14 @@ public class GUIWagon {
 		return wagon;
 	}
 	
-	public static void getGeselecteerdeWagon(Label wagon, ChoiceBox<String> choiceWagon) {
-		String naam = choiceWagon.getValue();
-		wagon.setText(naam);
+	public static void getGeselecteerdeWagon(ChoiceBox<String> choiceWagon) throws FileNotFoundException {
+		String wagonNaamOuweGek = choiceWagon.getValue();
+		Factory factory = new WagonFactory();
+		geselecteerdeWagon = Wagon.getWagonDromDatabase(factory.createWagon(wagonNaamOuweGek, 0, 0));
+		wagonNaam.setText(wagonNaamOuweGek);
+		wagonStoel.setText(Integer.toString(geselecteerdeWagon.getStoelen()));
+		wagonBedden.setText(Integer.toString(geselecteerdeWagon.getBedden()));
+		wagon.setText(wagonNaamOuweGek);
 	}
 
 	public static void getChoiceWagon(ChoiceBox<String> choiceWagon) {

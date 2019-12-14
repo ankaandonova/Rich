@@ -33,6 +33,7 @@ public class GUIlocomotief {
 	protected static TextField locomotiefStoelen;
 	protected static TextField locomotiefLengte;
 	protected static TextField locomotiefNaam;
+	protected static Locomotief geselecteerdeLocomotief;
 	protected static Label locomotief;
 
 	protected static Pane createLocomotiefKeuzeMenu() throws FileNotFoundException {
@@ -75,11 +76,10 @@ public class GUIlocomotief {
 				try {
 					getChoiceLosseLocomotief(choiceLosseLocomotief);
 					GUItest.createLocomotief();
-					getGeselecteerdeLosseLocomotief(locomotief,choiceLosseLocomotief);
+					getGeselecteerdeLosseLocomotief(choiceLosseLocomotief);
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
-
 			}
 		});
 	}
@@ -88,15 +88,20 @@ public class GUIlocomotief {
 		Spoor.getSporenFromDatabase();
 	}
 
-
 	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
 		choiceLocomotief.getItems().clear();
 		//zet de locomotieven van het geselcteerde spoor in de lijst
 		if (spoor.getNummer() != 0) {
 			spoor.getLocomotiefenFromDatabase();
+			Locomotief laatsteLocomotief = null;
 			for (Locomotief locomotief : spoor.getLocomotiefen()) {
-				choiceLocomotief.setValue(locomotief.getNaam());
+				laatsteLocomotief = locomotief;
 				choiceLocomotief.getItems().add(locomotief.getNaam());
+			}
+			if(laatsteLocomotief != null) {
+				choiceLocomotief.setValue(laatsteLocomotief.getNaam());
+				getGeselecteerdeLosseLocomotief(choiceLocomotief);
+				getChoiceLocomotief(choiceLocomotief);
 			}
 		}
 		
@@ -104,6 +109,7 @@ public class GUIlocomotief {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
+					getGeselecteerdeLosseLocomotief(choiceLocomotief);
 					getChoiceLocomotief(choiceLocomotief);
 					getGeselecteerdeLocomotief(locomotief,choiceLocomotief);
 				} catch (FileNotFoundException e1) {
@@ -260,9 +266,19 @@ public class GUIlocomotief {
 	protected static void getChoiceLosseLocomotief(ChoiceBox<String> choiceLosseLocomotief) throws FileNotFoundException {
 		choiceLosseLocomotief.getValue();
 	}
-	public static void getGeselecteerdeLosseLocomotief(Label locomotief,ChoiceBox<String> choiceLosseLocomotief) {
-		String naam = choiceLosseLocomotief.getValue();
-		locomotief.setText(naam);
+	public static void getGeselecteerdeLosseLocomotief(ChoiceBox<String> choiceLosseLocomotief) throws FileNotFoundException {
+		String naamLocomotief = choiceLosseLocomotief.getValue();
+		Builder builder = new LocomotiefBuilder();
+		builder.setNaam(naamLocomotief);
+		geselecteerdeLocomotief = Locomotief.getLocomotiefFromDatabase(builder.build());
+		vertrekPunt.setText(geselecteerdeLocomotief.getVertrekPunt());
+		eindBestemming.setText(geselecteerdeLocomotief.getEindBestemming());
+		typeMotor.setText(geselecteerdeLocomotief.getType_moter());
+		gps.setText(Boolean.toString(geselecteerdeLocomotief.isGps()));
+		locomotiefStoelen.setText(Integer.toString(geselecteerdeLocomotief.getStoelen()));
+		locomotiefLengte.setText(Double.toString(geselecteerdeLocomotief.getLengte()));
+		locomotiefNaam.setText(geselecteerdeLocomotief.getNaam());
+		locomotief.setText(naamLocomotief);
 	}
 
 	protected static void deleteChoiceLocomotief(ChoiceBox<String> choiceLocmotief) {

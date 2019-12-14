@@ -19,6 +19,7 @@ public class GUISpoor {
 	protected static Button addSpoor;
 	protected static TextField spoorNummer;
 	protected static TextField lengteSpoor;
+	protected static Spoor geselecteerdeSpoor;
 	protected static Label spoorLbl;
 
 	public static Pane createSpoorKeuzeMenu() throws FileNotFoundException {
@@ -75,7 +76,7 @@ public class GUISpoor {
 			public void handle(ActionEvent e) {
 				try {
 					getChoiceSpoor(choiceSpoor);
-					getGeselecteerdeSpoor(spoorLbl, choiceSpoor);
+					getGeselecteerdeSpoor(choiceSpoor);
 					GUItest.createTrain(Integer.parseInt(choiceSpoor.getValue()));
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -143,8 +144,11 @@ public class GUISpoor {
 		return spoorLbl;
 	}
 	
-	public static void getGeselecteerdeSpoor(Label spoorLbl,ChoiceBox<String> choiceSpoor) {
+	public static void getGeselecteerdeSpoor(ChoiceBox<String> choiceSpoor) {
 		String nummer = choiceSpoor.getValue();
+		geselecteerdeSpoor = new Spoor(Integer.parseInt(nummer), 0.0);
+		spoorNummer.setText(Integer.toString(geselecteerdeSpoor.getNummer()));
+		lengteSpoor.setText(Double.toString(geselecteerdeSpoor.getLengte()));
 		spoorLbl.setText(nummer);
 	}
 
