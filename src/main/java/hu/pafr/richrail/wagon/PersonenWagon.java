@@ -48,7 +48,19 @@ public class PersonenWagon implements Cloneable, Wagon {
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
+		Wagon wagon = (Wagon) super.clone();
+		wagon.setNaam(naam+"(1)");
+		try {
+			wagon.save();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return wagon; 
+	}
+	
+	public void save() throws FileNotFoundException {
+		WagonDao wagonDao = new WagonDaoImpl();
+		wagonDao.save(this);
 	}
 
 	public String getNaam() {
@@ -74,7 +86,4 @@ public class PersonenWagon implements Cloneable, Wagon {
 	public void setBedden(int bedden) {
 		this.bedden = bedden;
 	}
-
-
-
 }

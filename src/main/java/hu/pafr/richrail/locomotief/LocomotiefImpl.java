@@ -64,7 +64,7 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Locomotief locomotief = (Locomotief) super.clone();
-		String naamLocomotief = locomotief.getNaam() + ".1";
+		String naamLocomotief = locomotief.getNaam() + "(1)";
 		locomotief.setNaam(naamLocomotief);
 		try {
 			locomotief.save();

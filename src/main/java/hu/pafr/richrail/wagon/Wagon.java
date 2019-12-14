@@ -12,6 +12,8 @@ import hu.pafr.richrail.locomotief.Locomotief;
 
 public interface Wagon {
 
+	public void save() throws FileNotFoundException;
+
 	public Object clone() throws CloneNotSupportedException;
 
 	public boolean moveWagon(Locomotief locomotief) throws FileNotFoundException;

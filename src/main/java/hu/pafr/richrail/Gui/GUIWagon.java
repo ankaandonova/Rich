@@ -91,6 +91,8 @@ public class GUIWagon {
 			}
 		});
 		
+		
+		
 		loskoppelen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -102,7 +104,6 @@ public class GUIWagon {
 				}
 			}
 		});
-
 	}
 	
 	protected static void WagonEventHandler(Locomotief locomotief) throws FileNotFoundException {
@@ -127,6 +128,17 @@ public class GUIWagon {
 		// wagon verwijderen
 		deleteWagon.setOnAction(e -> deleteChoiceWagon(choiceWagon));
 
+		clone.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					selectedWagon.clone();
+				} catch (CloneNotSupportedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		// nieuwe wagon toevoegen
 		addWagon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

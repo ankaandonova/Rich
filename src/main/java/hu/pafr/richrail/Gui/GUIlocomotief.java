@@ -34,11 +34,10 @@ public class GUIlocomotief {
 	protected static TextField locomotiefStoelen;
 	protected static TextField locomotiefLengte;
 	protected static TextField locomotiefNaam;
-
+	private static Locomotief selectedLocomotief;
+	
 	protected static Pane createLocomotiefKeuzeMenu() throws FileNotFoundException {
 		Pane paneLocomotief = createPane();
-
-
 
 		HBox HBox = HBox();
 		HBox Locomotief_HBox = Locomotief_HBox();
@@ -88,6 +87,34 @@ public class GUIlocomotief {
 			spoor.getNummer();
 			wisselVanSpoor.getItems().add(Integer.toString(spoor.getNummer()));
 		}
+		
+
+		spoorWisselen.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				int spoorNummer = Integer.parseInt(wisselVanSpoor.getValue());
+				Spoor spoor = new Spoor(spoorNummer, 0.0);
+				selectedLocomotief.setSpoor(spoor);
+				System.out.println(selectedLocomotief.getNaam() + " wisselt naar spoor "+ spoor.getNummer());
+				try {
+					selectedLocomotief.save();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		loskoppelenVanSpoor.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				selectedLocomotief.setSpoor(null);
+				try {
+					selectedLocomotief.save();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 
 
@@ -116,6 +143,17 @@ public class GUIlocomotief {
 
 		deleteLocomotief.setOnAction(e -> deleteChoiceLocomotief(choiceLocomotief));
 
+		clone.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					selectedLocomotief.clone();
+				} catch (CloneNotSupportedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		addLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
