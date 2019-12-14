@@ -98,7 +98,7 @@ public class GUIWagon {
 	protected static Pane createPane() {
 		Pane pane = new Pane();
 		pane.setPrefWidth(450);
-		pane.setStyle(" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold;");
+		pane.setStyle(" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
 		return pane;
 	}
 
