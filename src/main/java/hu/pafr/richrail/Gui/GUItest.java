@@ -102,6 +102,7 @@ public class GUItest extends Application {
 		return vbox;
 	}
 
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
