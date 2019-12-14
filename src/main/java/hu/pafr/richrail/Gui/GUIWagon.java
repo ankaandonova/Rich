@@ -92,6 +92,7 @@ public class GUIWagon {
 				wagonStoel.getText();
 				wagonBedden.getText();
 				System.out.println(wagonNaam.getText() + wagonStoel.getText() + wagonBedden.getText());
+				
 			}
 		});
 	}

@@ -52,11 +52,17 @@ public class GUItest extends Application {
 
 
 	static void createTrain(int spoorNummer) throws FileNotFoundException {
+		scherm1.getChildren().clear();
+		
 		Spoor spoor = new Spoor(spoorNummer, 0.0);
-
 		spoor.getLocomotiefenFromDatabase();
-
+		
 		for (Locomotief locomotief : spoor.getLocomotiefen()) {
+			System.out.println("locomotief "+ locomotief.getNaam());
+			locomotief.getWagonnenFromDatabase();
+			for(Wagon wagon : locomotief.getWagons()) {
+				System.out.println(wagon.getNaam());
+			}
 			Image LocomotiefImg = new Image("file:locomotief.jpg");
 			ImageView imgVw = new ImageView();
 			imgVw.setImage(LocomotiefImg);

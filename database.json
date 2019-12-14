@@ -26,7 +26,7 @@
 		},
 		{
 			"stoelen": "13",
-			"locomotief": "",
+			"locomotief": "trein3",
 			"bedden": "0",
 			"naam": "wagon4"
 		},
@@ -135,6 +135,18 @@
 			"spoor": "",
 			"vertrekpunt": "sssssterdam",
 			"lengte": 20.0
+		},
+		{
+			"type_moter": "benzine",
+			"stoelen": "22",
+			"hoogte": null,
+			"eindpunt": "ikjnsa",
+			"gps": false,
+			"max_snelheid": null,
+			"naam": "Teste",
+			"spoor": "",
+			"vertrekpunt": "sadn",
+			"lengte": 22.0
 		}
 	]
 }
