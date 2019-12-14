@@ -102,13 +102,13 @@
 		},
 		{
 			"type_moter": "diesel",
-			"stoelen": "20",
+			"stoelen": "220",
 			"hoogte": 2.0,
 			"eindpunt": "sdadsahjdbashjdsrecht",
 			"gps": true,
 			"max_snelheid": 1520.0,
 			"naam": "trein3",
-			"spoor": "",
+			"spoor": "11",
 			"vertrekpunt": "sssssterdam",
 			"lengte": 20.0
 		},

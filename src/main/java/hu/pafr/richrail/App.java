@@ -26,7 +26,7 @@ public class App {
 		Builder builder = new LocomotiefBuilder();
 		Factory factory = new WagonFactory();
 		
-		Spoor spoor = new Spoor(5, 3022.0);
+		Spoor spoor = new Spoor(11, 3022.0);
 		
 		builder.setNaam("trein3");
 		builder.setVertrekPunt("sssssterdam");
@@ -59,7 +59,7 @@ public class App {
 //		}
 		
 		//loskoppelen
-		//locomotief.moveLocomotief(null);
+		locomotief.moveLocomotief(spoor);
 		//wagon.moveWagon(null);
 		
 		
