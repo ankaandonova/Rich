@@ -19,7 +19,6 @@ public class GUIlocomotief {
 	protected static ChoiceBox<String> choiceLocomotief;
 	protected static ChoiceBox<String> choiceLosseLocomotief;
 	protected static ChoiceBox<String> wisselVanSpoor;
-	protected static ChoiceBox<String> loskoppelen;
 	protected static Button selectLocomotief;
 	protected static Button selectLosseLocomotief;
 	protected static Button deleteLocomotief;
@@ -34,10 +33,12 @@ public class GUIlocomotief {
 	protected static TextField locomotiefStoelen;
 	protected static TextField locomotiefLengte;
 	protected static TextField locomotiefNaam;
-	private static Locomotief selectedLocomotief;
-	
+	protected static Label locomotief;
+
 	protected static Pane createLocomotiefKeuzeMenu() throws FileNotFoundException {
 		Pane paneLocomotief = createPane();
+
+
 
 		HBox HBox = HBox();
 		HBox Locomotief_HBox = Locomotief_HBox();
@@ -49,9 +50,10 @@ public class GUIlocomotief {
 		Label kiesLosseLocomotief = kiesLosseLocomotief();
 		Label WisselVanSpoor = WisselVanSpoor();
 		Label Loskoppelen = Loskoppelen();
+		Label locomotief = locomotief();
 
 		paneLocomotief.getChildren().addAll(HBox, kiesLocomotief, kiesLosseLocomotief, Locomotief_HBox, vbox, hbox,
-				WisselVanSpoor, Wisselen_hbox, Loskoppelen, Loskoppelen_hbox);
+				WisselVanSpoor, Wisselen_hbox, Loskoppelen, Loskoppelen_hbox,locomotief);
 
 		Spoor spoor = new Spoor(0, 0.0);
 		LocomotiefEventHanler(spoor);
@@ -71,8 +73,9 @@ public class GUIlocomotief {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-					getChoiceLocomotief(choiceLocomotief);
+					getChoiceLosseLocomotief(choiceLosseLocomotief);
 					GUItest.createLocomotief();
+					getGeselecteerdeLosseLocomotief(locomotief,choiceLosseLocomotief);
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -82,39 +85,7 @@ public class GUIlocomotief {
 	}
 	
 	protected static void loadSporenSwitch() throws FileNotFoundException {
-		wisselVanSpoor.getItems().clear();
-		for(Spoor spoor : Spoor.getSporenFromDatabase()) {
-			spoor.getNummer();
-			wisselVanSpoor.getItems().add(Integer.toString(spoor.getNummer()));
-		}
-		
-
-		spoorWisselen.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				int spoorNummer = Integer.parseInt(wisselVanSpoor.getValue());
-				Spoor spoor = new Spoor(spoorNummer, 0.0);
-				selectedLocomotief.setSpoor(spoor);
-				System.out.println(selectedLocomotief.getNaam() + " wisselt naar spoor "+ spoor.getNummer());
-				try {
-					selectedLocomotief.save();
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		
-		loskoppelenVanSpoor.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				selectedLocomotief.setSpoor(null);
-				try {
-					selectedLocomotief.save();
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		Spoor.getSporenFromDatabase();
 	}
 
 
@@ -134,6 +105,7 @@ public class GUIlocomotief {
 			public void handle(ActionEvent e) {
 				try {
 					getChoiceLocomotief(choiceLocomotief);
+					getGeselecteerdeLocomotief(locomotief,choiceLocomotief);
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -143,17 +115,6 @@ public class GUIlocomotief {
 
 		deleteLocomotief.setOnAction(e -> deleteChoiceLocomotief(choiceLocomotief));
 
-		clone.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				try {
-					selectedLocomotief.clone();
-				} catch (CloneNotSupportedException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		
 		addLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -238,7 +199,7 @@ public class GUIlocomotief {
 
 	protected static HBox Loskoppelen_hbox() {
 		HBox Loskoppelen_hbox = new HBox();
-		Loskoppelen_hbox.getChildren().addAll(loskoppelen = new ChoiceBox<>(),
+		Loskoppelen_hbox.getChildren().addAll(
 				loskoppelenVanSpoor = new Button("loskoppelen"));
 
 		Loskoppelen_hbox.setLayoutX(5);
@@ -273,6 +234,18 @@ public class GUIlocomotief {
 		Loskoppelen.setLayoutY(510);
 		return Loskoppelen;
 	}
+	
+	protected static Label locomotief() {
+		locomotief = new Label("locomotief naam");
+		locomotief.setLayoutX(5);
+		locomotief.setLayoutY(0);
+		return locomotief;
+	}
+	
+	public static void getGeselecteerdeLocomotief(Label locomotief,ChoiceBox<String> choiceLocmotief) {
+		String naam = choiceLocmotief.getValue();
+		locomotief.setText(naam);
+	}
 
 	protected static void getChoiceLocomotief(ChoiceBox<String> choiceLocmotief) throws FileNotFoundException {
 		String naam = choiceLocmotief.getValue();
@@ -282,6 +255,14 @@ public class GUIlocomotief {
 		Locomotief locomotief1 = builder.build();
 
 		GUIWagon.WagonEventHandler(locomotief1);
+	}
+
+	protected static void getChoiceLosseLocomotief(ChoiceBox<String> choiceLosseLocomotief) throws FileNotFoundException {
+		choiceLosseLocomotief.getValue();
+	}
+	public static void getGeselecteerdeLosseLocomotief(Label locomotief,ChoiceBox<String> choiceLosseLocomotief) {
+		String naam = choiceLosseLocomotief.getValue();
+		locomotief.setText(naam);
 	}
 
 	protected static void deleteChoiceLocomotief(ChoiceBox<String> choiceLocmotief) {

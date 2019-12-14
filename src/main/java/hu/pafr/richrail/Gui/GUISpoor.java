@@ -19,23 +19,19 @@ public class GUISpoor {
 	protected static Button addSpoor;
 	protected static TextField spoorNummer;
 	protected static TextField lengteSpoor;
+	protected static Label spoorLbl;
 
 	public static Pane createSpoorKeuzeMenu() throws FileNotFoundException {
 		Pane paneSpoor = createPane();
-		//=============================================================
-		//=============================================================
-		//=============================================================
+	
 		
-		//=============================================================
-		//=============================================================
-		//=============================================================
-		//=============================================================
 		Label SpoorLbl = SpoorLbl();
 		HBox Spoor_HBox = Spoor_HBox();
 		VBox VBox = VBox();
 		HBox HBox = HBox();
+		Label spoorLbl = spoor();
 
-		paneSpoor.getChildren().addAll(SpoorLbl, Spoor_HBox, VBox, HBox);
+		paneSpoor.getChildren().addAll(SpoorLbl, Spoor_HBox, VBox, HBox, spoorLbl);
 		Spoor spoor = new Spoor(1, 0.0);
 		SpoorEventHandler(spoor);
 		
@@ -79,6 +75,7 @@ public class GUISpoor {
 			public void handle(ActionEvent e) {
 				try {
 					getChoiceSpoor(choiceSpoor);
+					getGeselecteerdeSpoor(spoorLbl, choiceSpoor);
 					GUItest.createTrain(Integer.parseInt(choiceSpoor.getValue()));
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -137,6 +134,18 @@ public class GUISpoor {
 		HBox.setLayoutX(5);
 		HBox.setLayoutY(170);
 		return HBox;
+	}
+	
+	protected static Label spoor() {
+		spoorLbl = new Label ("spoor naam");
+		spoorLbl.setLayoutX(5);
+		spoorLbl.setLayoutY(0);
+		return spoorLbl;
+	}
+	
+	public static void getGeselecteerdeSpoor(Label spoorLbl,ChoiceBox<String> choiceSpoor) {
+		String nummer = choiceSpoor.getValue();
+		spoorLbl.setText(nummer);
 	}
 
 	public static void getChoiceSpoor(ChoiceBox<String> choiceSpoor) throws FileNotFoundException {

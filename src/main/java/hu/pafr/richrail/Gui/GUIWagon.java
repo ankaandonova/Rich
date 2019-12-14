@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
-import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Factory;
 import hu.pafr.richrail.wagon.Wagon;
 import hu.pafr.richrail.wagon.WagonFactory;
@@ -24,7 +23,6 @@ public class GUIWagon {
 	protected static ChoiceBox<String> choiceWagon;
 	protected static ChoiceBox<String> choiceLosseWagon;
 	protected static ChoiceBox<String> wisselVanLocomotief;
-	protected static ChoiceBox<String> loskoppelenVanLocomotief;
 	protected static Button selectLosseWagon;
 	protected static Button clone;
 	protected static Button wissel;
@@ -35,7 +33,7 @@ public class GUIWagon {
 	protected static TextField wagonNaam;
 	protected static TextField wagonStoel;
 	protected static TextField wagonBedden;
-	private static Wagon selectedWagon;
+	protected static Label wagon;
 
 	public static Pane createWagonKeuzeMenu() throws FileNotFoundException {
 		Pane paneWagon = createPane();
@@ -50,63 +48,20 @@ public class GUIWagon {
 		HBox Wisselen_hbox = Wisselen_hbox();
 		Label loskoppelenLbl = loskoppelenLbl();
 		HBox Loskoppelen_hbox = Loskoppelen_hbox();
+		Label wagon = wagon();
 
 		paneWagon.getChildren().addAll(SelectWagon, Wagon_HBox, losseWagons, HBox, Wagon_VBox, hbox, wisselenLbl,
-				Wisselen_hbox, loskoppelenLbl, Loskoppelen_hbox);
+				Wisselen_hbox, loskoppelenLbl, Loskoppelen_hbox,wagon);
 
 		Builder builder = new LocomotiefBuilder();
 		Locomotief locomotief = builder.build();
-		loadLosseWagons();
-		loadSporenSwitch();
+
 		WagonEventHandler(locomotief);
 		return paneWagon;
 	}
-	
-	private static void loadLosseWagons() {
-		choiceLosseWagon.getItems().clear();
-		for(Wagon wagon : Wagon.getLosseWagonsFromDatabase()) {
-			choiceLosseWagon.setValue(wagon.getNaam());
-			choiceLosseWagon.getItems().add(wagon.getNaam());			
-		}
-	}
 
-	protected static void loadSporenSwitch() throws FileNotFoundException {
-		wisselVanLocomotief.getItems().clear();
-		for(Locomotief locomotief : Locomotief.getLocomotievenFromDatabase()) {			
-			wisselVanLocomotief.getItems().add(locomotief.getNaam());
-		}
-		
-		wissel.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				try {
-					String locomotiefNaam = wisselVanLocomotief.getValue();
-					Builder builder = new LocomotiefBuilder();
-					builder.setNaam(locomotiefNaam);
-					selectedWagon.moveWagon(builder.build());
-					System.out.println("moet nog de lijsten enzo aanpasen maar is verwijdert uit de database");
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		
-		
-		
-		loskoppelen.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				try {
-					selectedWagon = Wagon.getWagonDromDatabase(selectedWagon);
-					selectedWagon.moveWagon(null);
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-	}
-	
 	protected static void WagonEventHandler(Locomotief locomotief) throws FileNotFoundException {
+		choiceWagon.getItems().clear();
 		if (locomotief.getNaam() != null) {
 			locomotief.getWagonnenFromDatabase();
 		}
@@ -121,24 +76,13 @@ public class GUIWagon {
 			@Override
 			public void handle(ActionEvent e) {
 				getChoiceWagon(choiceWagon);
-
+				getGeselecteerdeWagon(wagon,choiceWagon);
 			}
 		});
 
 		// wagon verwijderen
 		deleteWagon.setOnAction(e -> deleteChoiceWagon(choiceWagon));
 
-		clone.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				try {
-					selectedWagon.clone();
-				} catch (CloneNotSupportedException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		
 		// nieuwe wagon toevoegen
 		addWagon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -236,12 +180,24 @@ public class GUIWagon {
 
 	protected static HBox Loskoppelen_hbox() {
 		HBox Loskoppelen_hbox = new HBox();
-		Loskoppelen_hbox.getChildren().addAll(loskoppelenVanLocomotief = new ChoiceBox<>(),
+		Loskoppelen_hbox.getChildren().addAll(
 				loskoppelen = new Button("loskoppelen"));
 
 		Loskoppelen_hbox.setLayoutX(5);
 		Loskoppelen_hbox.setLayoutY(360);
 		return Loskoppelen_hbox;
+	}
+	
+	protected static Label wagon() {
+		wagon = new Label ("wagon naam");
+		wagon.setLayoutX(5);
+		wagon.setLayoutY(0);
+		return wagon;
+	}
+	
+	public static void getGeselecteerdeWagon(Label wagon, ChoiceBox<String> choiceWagon) {
+		String naam = choiceWagon.getValue();
+		wagon.setText(naam);
 	}
 
 	public static void getChoiceWagon(ChoiceBox<String> choiceWagon) {
