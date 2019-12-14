@@ -79,16 +79,10 @@ public class GUISpoor {
 			public void handle(ActionEvent e) {
 				try {
 					getChoiceSpoor(choiceSpoor);
+					GUItest.createTrain(Integer.parseInt(choiceSpoor.getValue()));
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
-
-				try {
-					GUItest.createTrain(Integer.parseInt(choiceSpoor.getValue()));
-				} catch (NumberFormatException | FileNotFoundException e2) {
-					e2.printStackTrace();
-				}
-
 			}
 		});
 
