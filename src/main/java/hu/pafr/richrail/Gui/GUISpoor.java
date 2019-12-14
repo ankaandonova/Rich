@@ -66,7 +66,7 @@ public class GUISpoor {
 				}
 			}
 		});
-		for (Spoor sporen : spoor.getSporen()) {
+		for (Spoor sporen : Spoor.getSporenFromDatabase()) {
 
 			choiceSpoor.getItems().add(Integer.toString(sporen.getNummer()));
 

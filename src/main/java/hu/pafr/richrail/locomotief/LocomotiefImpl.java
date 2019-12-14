@@ -44,8 +44,10 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 	@Override
 	public void getWagonnenFromDatabase() throws FileNotFoundException {
 		for (Wagon wagon : wagonDao.getWagonnen()) {
-			if (wagon.getLocomotief().getNaam().equals(naam)) {
-				wagons.add(wagon);
+			if(wagon.getLocomotief() != null) {
+				if (wagon.getLocomotief().getNaam().equals(naam)) {
+					wagons.add(wagon);
+				}
 			}
 		}
 	}

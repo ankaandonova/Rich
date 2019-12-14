@@ -1,1 +1,140 @@
-{"wagonnen":[{},{},{"stoelen":"13","locomotief":"","bedden":"0","naam":"wagon2"},{"stoelen":"13","locomotief":"trein3","bedden":"0","naam":"wagon1"},{"stoelen":"13","locomotief":"trein3","bedden":"0","naam":"wagon3"},{"stoelen":"13","locomotief":"","bedden":"0","naam":"wagon4"},{"stoelen":"13","locomotief":"","bedden":"0","naam":"wagon5"}],"sporen":[{},{},{"nummer":"11","lengte":200.0},{"nummer":"111","lengte":111.0},{},{"nummer":"2","lengte":133.0}],"locomotiefen":[{},{},{},{},{"type_moter":"diesel","stoelen":"20","hoogte":2.0,"eindpunt":"sdadsahjdbashjdsrecht","gps":true,"max_snelheid":1520.0,"naam":"grote treisn2","spoor":"11","vertrekpunt":"sssssterdam","lengte":20.0},{},{"type_moter":"diesel","stoelen":"20","hoogte":2.0,"eindpunt":"sdadsahjdbashjdsrecht","gps":true,"max_snelheid":1520.0,"naam":"trein2","spoor":"","vertrekpunt":"sssssterdam","lengte":20.0},{"type_moter":"diesel","stoelen":"20","hoogte":2.0,"eindpunt":"sdadsahjdbashjdsrecht","gps":true,"max_snelheid":1520.0,"naam":"trein3","spoor":"","vertrekpunt":"sssssterdam","lengte":20.0},{"type_moter":"diesel","stoelen":"20","hoogte":2.0,"eindpunt":"sdadsahjdbashjdsrecht","gps":true,"max_snelheid":1520.0,"naam":"trein20.1","spoor":"","vertrekpunt":"sssssterdam","lengte":20.0},{"type_moter":"diesel","stoelen":"20","hoogte":2.0,"eindpunt":"sdadsahjdbashjdsrecht","gps":true,"max_snelheid":1520.0,"naam":"trein2.1","spoor":"","vertrekpunt":"sssssterdam","lengte":20.0}]}
+{
+	"wagonnen": [
+		{
+			
+		},
+		{
+			
+		},
+		{
+			"stoelen": "13",
+			"locomotief": "",
+			"bedden": "0",
+			"naam": "wagon2"
+		},
+		{
+			"stoelen": "13",
+			"locomotief": "trein3",
+			"bedden": "0",
+			"naam": "wagon1"
+		},
+		{
+			"stoelen": "13",
+			"locomotief": "trein3",
+			"bedden": "0",
+			"naam": "wagon3"
+		},
+		{
+			"stoelen": "13",
+			"locomotief": "",
+			"bedden": "0",
+			"naam": "wagon4"
+		},
+		{
+			"stoelen": "13",
+			"locomotief": "",
+			"bedden": "0",
+			"naam": "wagon5"
+		}
+	],
+	"sporen": [
+		{
+			
+		},
+		{
+			
+		},
+		{
+			"nummer": "11",
+			"lengte": 200.0
+		},
+		{
+			"nummer": "111",
+			"lengte": 111.0
+		},
+		{
+			
+		},
+		{
+			"nummer": "2",
+			"lengte": 133.0
+		}
+	],
+	"locomotiefen": [
+		{
+			
+		},
+		{
+			
+		},
+		{
+			
+		},
+		{
+			
+		},
+		{
+			"type_moter": "diesel",
+			"stoelen": "20",
+			"hoogte": 2.0,
+			"eindpunt": "sdadsahjdbashjdsrecht",
+			"gps": true,
+			"max_snelheid": 1520.0,
+			"naam": "grote treisn2",
+			"spoor": "11",
+			"vertrekpunt": "sssssterdam",
+			"lengte": 20.0
+		},
+		{
+			
+		},
+		{
+			"type_moter": "diesel",
+			"stoelen": "20",
+			"hoogte": 2.0,
+			"eindpunt": "sdadsahjdbashjdsrecht",
+			"gps": true,
+			"max_snelheid": 1520.0,
+			"naam": "trein2",
+			"spoor": "",
+			"vertrekpunt": "sssssterdam",
+			"lengte": 20.0
+		},
+		{
+			"type_moter": "diesel",
+			"stoelen": "20",
+			"hoogte": 2.0,
+			"eindpunt": "sdadsahjdbashjdsrecht",
+			"gps": true,
+			"max_snelheid": 1520.0,
+			"naam": "trein3",
+			"spoor": "",
+			"vertrekpunt": "sssssterdam",
+			"lengte": 20.0
+		},
+		{
+			"type_moter": "diesel",
+			"stoelen": "20",
+			"hoogte": 2.0,
+			"eindpunt": "sdadsahjdbashjdsrecht",
+			"gps": true,
+			"max_snelheid": 1520.0,
+			"naam": "trein20.1",
+			"spoor": "",
+			"vertrekpunt": "sssssterdam",
+			"lengte": 20.0
+		},
+		{
+			"type_moter": "diesel",
+			"stoelen": "20",
+			"hoogte": 2.0,
+			"eindpunt": "sdadsahjdbashjdsrecht",
+			"gps": true,
+			"max_snelheid": 1520.0,
+			"naam": "trein2.1",
+			"spoor": "",
+			"vertrekpunt": "sssssterdam",
+			"lengte": 20.0
+		}
+	]
+}

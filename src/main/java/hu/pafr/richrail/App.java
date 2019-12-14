@@ -28,7 +28,7 @@ public class App {
 		
 		Spoor spoor = new Spoor(5, 3022.0);
 		
-		builder.setNaam("trein2");
+		builder.setNaam("trein3");
 		builder.setVertrekPunt("sssssterdam");
 		builder.setEindBestemming("sdadsahjdbashjdsrecht");
 		builder.setType_moter( "diesel");
@@ -45,11 +45,16 @@ public class App {
 		//spoor.addLocomotief(locomotief);
 		//locomotief.setSpoor(spoor);
 
+		
+		locomotief.getWagonnenFromDatabase();
+		for(Wagon wago1 : locomotief.getWagons()) {
+			System.out.println("s "+wago1.getNaam());
+		}
 		//losse objecten		
 //		for(Locomotief losseLocomotief : locomotief.getLosseLocomotieven()) {
 //			System.out.println(losseLocomotief.getNaam());
 //		}
-//		for(Wagon losseWagon : wagon.getLosseWagonnen()) {
+//		for(Wagon losseWagon : Wagon.getLosseWagonsFromDatabase()) {
 //			System.out.println("los "+losseWagon.getNaam());
 //		}
 		

@@ -54,13 +54,20 @@ public class GUIWagon {
 
 		Builder builder = new LocomotiefBuilder();
 		Locomotief locomotief = builder.build();
-
+		loadLosseWagons();
 		WagonEventHandler(locomotief);
 		return paneWagon;
 	}
+	
+	private static void loadLosseWagons() {
+		choiceLosseWagon.getItems().clear();
+		for(Wagon wagon : Wagon.getLosseWagonsFromDatabase()) {
+			choiceLosseWagon.setValue(wagon.getNaam());
+			choiceLosseWagon.getItems().add(wagon.getNaam());			
+		}
+	}
 
 	protected static void WagonEventHandler(Locomotief locomotief) throws FileNotFoundException {
-		choiceWagon.getItems().clear();
 		if (locomotief.getNaam() != null) {
 			locomotief.getWagonnenFromDatabase();
 		}

@@ -109,6 +109,7 @@ public class WagonDaoImpl implements WagonDao {
 		Iterator iterator = alleWagonnen.iterator();
 		while (iterator.hasNext()) {
 			Wagon wagon = adapter.getWagonsFromJsonObject((JSONObject) iterator.next());
+			
 			if(wagon != null) {
 				wagonnen.add(wagon);
 			}

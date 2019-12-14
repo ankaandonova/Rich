@@ -25,22 +25,7 @@ public class PersonenWagon implements Cloneable, Wagon {
 	public Locomotief getLocomotief() {
 		return locomotief;
 	}
-	
-	public List<Wagon> getLosseWagonnen(){
-		List<Wagon> wagonnen = new ArrayList<Wagon>();
-		try {
-			for(Wagon wagon : wagonDao.getWagonnen()) {
-				System.out.println(wagon.getNaam());
-				System.out.println("loco "+wagon.getLocomotief().getStoelen());
-				if(wagon.getLocomotief() == null) {
-					wagonnen.add(wagon);
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return wagonnen;
-	}
+
 	
 	@Override
 	public void remove() {

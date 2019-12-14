@@ -28,7 +28,8 @@ public class Spoor {
 		return spoorDao.getSpoor(spoor);
 	}
 
-	public List<Spoor> getSporen() throws FileNotFoundException {
+	public static List<Spoor> getSporenFromDatabase() throws FileNotFoundException {
+		SpoorDao spoorDao = new SpoorDaoImpl();
 		return spoorDao.getSporen();
 	}
 

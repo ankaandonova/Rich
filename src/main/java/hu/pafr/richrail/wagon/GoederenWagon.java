@@ -27,19 +27,6 @@ public class GoederenWagon implements Cloneable, Wagon {
 		wagonDao.update(this);
 		return false;
 	}
-
-	public List<Wagon> getLosseWagonnen(){
-		List<Wagon> wagonnen = new ArrayList<Wagon>();
-		try {
-			for(Wagon wagon : wagonDao.getWagonnen()) {
-				System.out.println("wagonnnaam "+wagon.getNaam());
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return wagonnen;
-	}
-
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {

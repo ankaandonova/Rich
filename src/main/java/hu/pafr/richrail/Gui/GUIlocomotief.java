@@ -56,6 +56,7 @@ public class GUIlocomotief {
 
 		Spoor spoor = new Spoor(0, 0.0);
 		LocomotiefEventHanler(spoor);
+		loadSporenSwitch();
 		loadLosseLocomotieven();
 		return paneLocomotief;
 	}
@@ -67,6 +68,11 @@ public class GUIlocomotief {
 			choiceLosseLocomotief.getItems().add(locomotief.getNaam());
 		}
 	}
+	
+	protected static void loadSporenSwitch() throws FileNotFoundException {
+		Spoor.getSporenFromDatabase();
+	}
+
 
 	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
 		choiceLocomotief.getItems().clear();

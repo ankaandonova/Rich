@@ -21,20 +21,6 @@ public class SlaapWagon implements Cloneable, Wagon {
 		this.stoelen = stoelen;
 		this.bedden = bedden;
 	}
-
-	public List<Wagon> getLosseWagonnen(){
-		List<Wagon> wagonnen = new ArrayList<Wagon>();
-		try {
-			for(Wagon wagon : wagonDao.getWagonnen()) {
-				if(wagon.getLocomotief() == null) {
-					wagonnen.add(wagon);
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return wagonnen;
-	}
 	
 	@Override
 	public void remove() {
