@@ -67,6 +67,19 @@ public class GUIlocomotief {
 			choiceLosseLocomotief.setValue(locomotief.getNaam());
 			choiceLosseLocomotief.getItems().add(locomotief.getNaam());
 		}
+		
+		selectLosseLocomotief.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					getChoiceLocomotief(choiceLocomotief);
+					GUItest.createLocomotief();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
 	}
 	
 	protected static void loadSporenSwitch() throws FileNotFoundException {

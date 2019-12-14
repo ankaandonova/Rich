@@ -8,10 +8,8 @@ import hu.pafr.richrail.locomotief.LocomotiefBuilder;
 import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Wagon;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -64,9 +62,18 @@ public class GUItest extends Application {
 			ImageView imgVw = new ImageView();
 			imgVw.setImage(LocomotiefImg);
 			scherm1.getChildren().add(imgVw);
-			createWagon(locomotief.getNaam());
+			  createWagon(locomotief.getNaam());
 		}
 	}
+	
+	static void createLocomotief() { {
+			Image LocomotiefImg = new Image("file:locomotief.jpg");
+			ImageView imgVw = new ImageView();
+			imgVw.setImage(LocomotiefImg);
+			scherm1.getChildren().add(imgVw);
+		}
+	}
+	
 
 	static void createWagon(String locomotiefNaam) throws FileNotFoundException {
 
