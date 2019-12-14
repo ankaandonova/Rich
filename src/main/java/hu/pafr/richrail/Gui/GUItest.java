@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -22,17 +23,21 @@ public class GUItest extends Application {
 
 	private Scene scene;
 	private BorderPane schermBorder;
-	private static HBox scherm;
+
 	private static VBox scherm1;
 
 	@Override
 	public void start(Stage window) throws Exception, InvocationTargetException {
 		schermBorder = new BorderPane();
 		// draw
-		scherm = createHBox();
+		
+	
 		scherm1 = creatVBox();
-		schermBorder.setTop(scherm);
+	
+		
 		schermBorder.setTop(scherm1);
+		
+		 
 		// spoor
 		schermBorder.setLeft(GUISpoor.createSpoorKeuzeMenu());
 		// trein
@@ -40,7 +45,7 @@ public class GUItest extends Application {
 		// wagon
 		schermBorder.setRight(GUIWagon.createWagonKeuzeMenu());
 
-		scene = new Scene(schermBorder, 1900, 900);
+		scene = new Scene(schermBorder, 900, 900);
 
 		window.setTitle("RichRail");
 		window.setScene(scene);
@@ -48,14 +53,17 @@ public class GUItest extends Application {
 
 	}
 
+
 	static void createTrain(int spoorNummer) throws FileNotFoundException {
 		Spoor spoor = new Spoor(spoorNummer, 0.0);
 
 		spoor.getLocomotiefenFromDatabase();
 
 		for (Locomotief locomotief : spoor.getLocomotiefen()) {
-			Image benzineLocomotiefImg = new Image("personenwagon.jpg");
-			scherm1.getChildren().add(new ImageView(benzineLocomotiefImg));
+			Image LocomotiefImg = new Image("file:locomotief.jpg");
+			ImageView imgVw = new ImageView();
+			imgVw.setImage(LocomotiefImg);
+			scherm1.getChildren().add(imgVw);
 			createWagon(locomotief.getNaam());
 		}
 	}
@@ -69,30 +77,20 @@ public class GUItest extends Application {
 		for (Wagon wagon : locomotief.getWagons()) {
 			if (wagon.getBedden() > 0) {
 
-				Image slaapWagonImg = new Image("slaapwagon.jpg");
+				Image slaapWagonImg = new Image("file:slaapwagon.jpg");
 				scherm1.getChildren().add(new ImageView(slaapWagonImg));
 			} else if (wagon.getStoelen() > 0) {
 
-				Image personenWagonImg = new Image("personenwagon.jpg");
+				Image personenWagonImg = new Image("file:personenwagon.jpg");
 				scherm1.getChildren().add(new ImageView(personenWagonImg));
 			} else {
 
-				Image transportWagonfImg = new Image("transportwagon.jpg");
+				Image transportWagonfImg = new Image("file:transportwagon.jpg");
 				scherm1.getChildren().add(new ImageView(transportWagonfImg));
 			}
 		}
 	}
 
-	@SuppressWarnings("static-access")
-	private HBox createHBox() {
-		HBox hbox = new HBox();
-		schermBorder.setMargin(hbox, new Insets(5));
-		hbox.prefWidthProperty().bind(schermBorder.widthProperty());
-		hbox.prefHeightProperty().bind(schermBorder.heightProperty().subtract(500));
-		hbox.setStyle("-fx-border-style: dotted; -fx-border-width: 0 0 1 0 ; -fx-font-weight: bold;");
-		hbox.setAlignment(Pos.BASELINE_CENTER);
-		return hbox;
-	}
 
 	protected static VBox creatVBox() {
 		VBox vbox = new VBox();
