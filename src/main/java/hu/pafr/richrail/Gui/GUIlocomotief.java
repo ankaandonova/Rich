@@ -56,6 +56,7 @@ public class GUIlocomotief {
 
 		Spoor spoor = new Spoor(0, 0.0);
 		LocomotiefEventHanler(spoor);
+		loadLosseLocomotieven();
 		return paneLocomotief;
 	}
 	
