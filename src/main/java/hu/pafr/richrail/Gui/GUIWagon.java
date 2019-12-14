@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
+import hu.pafr.richrail.spoor.Spoor;
 import hu.pafr.richrail.wagon.Factory;
 import hu.pafr.richrail.wagon.Wagon;
 import hu.pafr.richrail.wagon.WagonFactory;
@@ -34,6 +35,7 @@ public class GUIWagon {
 	protected static TextField wagonNaam;
 	protected static TextField wagonStoel;
 	protected static TextField wagonBedden;
+	private static Wagon selectedWagon;
 
 	public static Pane createWagonKeuzeMenu() throws FileNotFoundException {
 		Pane paneWagon = createPane();
@@ -55,6 +57,7 @@ public class GUIWagon {
 		Builder builder = new LocomotiefBuilder();
 		Locomotief locomotief = builder.build();
 		loadLosseWagons();
+		loadSporenSwitch();
 		WagonEventHandler(locomotief);
 		return paneWagon;
 	}
@@ -67,6 +70,41 @@ public class GUIWagon {
 		}
 	}
 
+	protected static void loadSporenSwitch() throws FileNotFoundException {
+		wisselVanLocomotief.getItems().clear();
+		for(Locomotief locomotief : Locomotief.getLocomotievenFromDatabase()) {			
+			wisselVanLocomotief.getItems().add(locomotief.getNaam());
+		}
+		
+		wissel.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					String locomotiefNaam = wisselVanLocomotief.getValue();
+					Builder builder = new LocomotiefBuilder();
+					builder.setNaam(locomotiefNaam);
+					selectedWagon.moveWagon(builder.build());
+					System.out.println("moet nog de lijsten enzo aanpasen maar is verwijdert uit de database");
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		loskoppelen.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					selectedWagon = Wagon.getWagonDromDatabase(selectedWagon);
+					selectedWagon.moveWagon(null);
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+
+	}
+	
 	protected static void WagonEventHandler(Locomotief locomotief) throws FileNotFoundException {
 		if (locomotief.getNaam() != null) {
 			locomotief.getWagonnenFromDatabase();

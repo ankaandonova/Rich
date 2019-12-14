@@ -70,7 +70,11 @@ public class GUIlocomotief {
 	}
 	
 	protected static void loadSporenSwitch() throws FileNotFoundException {
-		Spoor.getSporenFromDatabase();
+		wisselVanSpoor.getItems().clear();
+		for(Spoor spoor : Spoor.getSporenFromDatabase()) {
+			spoor.getNummer();
+			wisselVanSpoor.getItems().add(Integer.toString(spoor.getNummer()));
+		}
 	}
 
 

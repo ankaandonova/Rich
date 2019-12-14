@@ -45,7 +45,7 @@ public class GUItest extends Application {
 		window.setTitle("RichRail");
 		window.setScene(scene);
 		window.show();
-
+		
 	}
 
 	static void createTrain(int spoorNummer) throws FileNotFoundException {
