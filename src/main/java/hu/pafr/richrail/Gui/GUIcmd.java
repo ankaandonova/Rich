@@ -3,15 +3,11 @@ package hu.pafr.richrail.Gui;
 
 import java.lang.reflect.InvocationTargetException;
 
-import hu.pafr.richrail.domein.locomotief.Locomotief;
 import hu.pafr.richrail.parser.RichRailCli;
 import hu.pafr.richrail.parser.RichRailUitvoerListener;
 import javafx.application.Application;
-import javafx.event.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
