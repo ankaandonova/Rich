@@ -1,7 +1,8 @@
 package hu.pafr.richrail.Gui;
 
 import java.io.FileNotFoundException;
-import hu.pafr.richrail.spoor.Spoor;
+
+import hu.pafr.richrail.domein.spoor.Spoor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

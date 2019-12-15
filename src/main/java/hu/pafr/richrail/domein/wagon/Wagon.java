@@ -1,4 +1,4 @@
-package hu.pafr.richrail.wagon;
+package hu.pafr.richrail.domein.wagon;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import hu.pafr.richrail.database.LocomotiefDao;
 import hu.pafr.richrail.database.LocomotiefDaoImpl;
 import hu.pafr.richrail.database.WagonDao;
 import hu.pafr.richrail.database.WagonDaoImpl;
-import hu.pafr.richrail.locomotief.Locomotief;
+import hu.pafr.richrail.domein.locomotief.Locomotief;
 
 public interface Wagon {
 

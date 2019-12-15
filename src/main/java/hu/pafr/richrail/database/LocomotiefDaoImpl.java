@@ -8,11 +8,11 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import hu.pafr.richrail.locomotief.Builder;
-import hu.pafr.richrail.locomotief.Locomotief;
-import hu.pafr.richrail.locomotief.LocomotiefBuilder;
-import hu.pafr.richrail.spoor.Spoor;
-import hu.pafr.richrail.wagon.Wagon;
+import hu.pafr.richrail.domein.locomotief.Builder;
+import hu.pafr.richrail.domein.locomotief.Locomotief;
+import hu.pafr.richrail.domein.locomotief.LocomotiefBuilder;
+import hu.pafr.richrail.domein.spoor.Spoor;
+import hu.pafr.richrail.domein.wagon.Wagon;
 
 public class LocomotiefDaoImpl implements LocomotiefDao {
 

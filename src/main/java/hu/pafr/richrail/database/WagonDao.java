@@ -3,7 +3,7 @@ package hu.pafr.richrail.database;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import hu.pafr.richrail.wagon.Wagon;
+import hu.pafr.richrail.domein.wagon.Wagon;
 
 public interface WagonDao {
 

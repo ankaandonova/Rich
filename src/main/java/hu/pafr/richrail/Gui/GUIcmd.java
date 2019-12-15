@@ -3,7 +3,7 @@ package hu.pafr.richrail.Gui;
 
 import java.lang.reflect.InvocationTargetException;
 
-import hu.pafr.richrail.locomotief.Locomotief;
+import hu.pafr.richrail.domein.locomotief.Locomotief;
 import hu.pafr.richrail.parser.RichRailCli;
 import hu.pafr.richrail.parser.RichRailUitvoerListener;
 import javafx.application.Application;

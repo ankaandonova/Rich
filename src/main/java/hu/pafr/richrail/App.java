@@ -9,13 +9,13 @@ import hu.pafr.richrail.database.SpoorDao;
 import hu.pafr.richrail.database.SpoorDaoImpl;
 import hu.pafr.richrail.database.WagonDao;
 import hu.pafr.richrail.database.WagonDaoImpl;
-import hu.pafr.richrail.locomotief.Builder;
-import hu.pafr.richrail.locomotief.Locomotief;
-import hu.pafr.richrail.locomotief.LocomotiefBuilder;
-import hu.pafr.richrail.spoor.Spoor;
-import hu.pafr.richrail.wagon.Factory;
-import hu.pafr.richrail.wagon.Wagon;
-import hu.pafr.richrail.wagon.WagonFactory;
+import hu.pafr.richrail.domein.locomotief.Builder;
+import hu.pafr.richrail.domein.locomotief.Locomotief;
+import hu.pafr.richrail.domein.locomotief.LocomotiefBuilder;
+import hu.pafr.richrail.domein.spoor.Spoor;
+import hu.pafr.richrail.domein.wagon.Factory;
+import hu.pafr.richrail.domein.wagon.Wagon;
+import hu.pafr.richrail.domein.wagon.WagonFactory;
 
 public class App {
 	public static void main(String[] args) throws CloneNotSupportedException, FileNotFoundException {

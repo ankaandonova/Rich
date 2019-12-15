@@ -1,4 +1,4 @@
-package hu.pafr.richrail.spoor;
+package hu.pafr.richrail.domein.spoor;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import hu.pafr.richrail.database.LocomotiefDao;
 import hu.pafr.richrail.database.LocomotiefDaoImpl;
 import hu.pafr.richrail.database.SpoorDao;
 import hu.pafr.richrail.database.SpoorDaoImpl;
-import hu.pafr.richrail.locomotief.Locomotief;
+import hu.pafr.richrail.domein.locomotief.Locomotief;
 
 public class Spoor {
 	SpoorDao spoorDao = new SpoorDaoImpl();

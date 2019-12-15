@@ -3,9 +3,9 @@ package hu.pafr.richrail.Gui;
 import java.io.FileNotFoundException; 
 import java.lang.reflect.InvocationTargetException;
 
-import hu.pafr.richrail.locomotief.Locomotief;
-import hu.pafr.richrail.spoor.Spoor;
-import hu.pafr.richrail.wagon.Wagon;
+import hu.pafr.richrail.domein.locomotief.Locomotief;
+import hu.pafr.richrail.domein.spoor.Spoor;
+import hu.pafr.richrail.domein.wagon.Wagon;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

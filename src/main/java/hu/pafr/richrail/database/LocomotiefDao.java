@@ -3,7 +3,7 @@ package hu.pafr.richrail.database;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import hu.pafr.richrail.locomotief.Locomotief;
+import hu.pafr.richrail.domein.locomotief.Locomotief;
 
 public interface LocomotiefDao {
 	public void save(Locomotief locomotief) throws FileNotFoundException;

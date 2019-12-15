@@ -2,12 +2,12 @@ package hu.pafr.richrail.Gui;
 
 import java.io.FileNotFoundException;
 
-import hu.pafr.richrail.locomotief.Builder;
-import hu.pafr.richrail.locomotief.Locomotief;
-import hu.pafr.richrail.locomotief.LocomotiefBuilder;
-import hu.pafr.richrail.wagon.Factory;
-import hu.pafr.richrail.wagon.Wagon;
-import hu.pafr.richrail.wagon.WagonFactory;
+import hu.pafr.richrail.domein.locomotief.Builder;
+import hu.pafr.richrail.domein.locomotief.Locomotief;
+import hu.pafr.richrail.domein.locomotief.LocomotiefBuilder;
+import hu.pafr.richrail.domein.wagon.Factory;
+import hu.pafr.richrail.domein.wagon.Wagon;
+import hu.pafr.richrail.domein.wagon.WagonFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

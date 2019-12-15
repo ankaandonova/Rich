@@ -8,12 +8,12 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 import hu.pafr.richrail.Gui.GUI;
 import hu.pafr.richrail.Gui.GUISpoor;
-import hu.pafr.richrail.locomotief.Builder;
-import hu.pafr.richrail.locomotief.Locomotief;
-import hu.pafr.richrail.locomotief.LocomotiefBuilder;
-import hu.pafr.richrail.wagon.Factory;
-import hu.pafr.richrail.wagon.Wagon;
-import hu.pafr.richrail.wagon.WagonFactory;
+import hu.pafr.richrail.domein.locomotief.Builder;
+import hu.pafr.richrail.domein.locomotief.Locomotief;
+import hu.pafr.richrail.domein.locomotief.LocomotiefBuilder;
+import hu.pafr.richrail.domein.wagon.Factory;
+import hu.pafr.richrail.domein.wagon.Wagon;
+import hu.pafr.richrail.domein.wagon.WagonFactory;
 import parser.RichRailListener;
 import parser.RichRailParser.AddcommandContext;
 import parser.RichRailParser.CommandContext;

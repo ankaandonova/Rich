@@ -1,4 +1,4 @@
-package hu.pafr.richrail.locomotief;
+package hu.pafr.richrail.domein.locomotief;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -8,8 +8,8 @@ import hu.pafr.richrail.database.LocomotiefDao;
 import hu.pafr.richrail.database.LocomotiefDaoImpl;
 import hu.pafr.richrail.database.WagonDao;
 import hu.pafr.richrail.database.WagonDaoImpl;
-import hu.pafr.richrail.spoor.Spoor;
-import hu.pafr.richrail.wagon.Wagon;
+import hu.pafr.richrail.domein.spoor.Spoor;
+import hu.pafr.richrail.domein.wagon.Wagon;
 
 public class LocomotiefImpl implements Locomotief, Cloneable {
 	private LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();

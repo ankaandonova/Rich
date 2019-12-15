@@ -1,4 +1,4 @@
-package hu.pafr.richrail.wagon;
+package hu.pafr.richrail.domein.wagon;
 
 
 public interface Factory {

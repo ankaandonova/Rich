@@ -1,9 +1,9 @@
-package hu.pafr.richrail.locomotief;
+package hu.pafr.richrail.domein.locomotief;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.pafr.richrail.wagon.Wagon;
+import hu.pafr.richrail.domein.wagon.Wagon;
 
 public class LocomotiefBuilder implements Builder {
 	private List<Wagon> wagons = new ArrayList<Wagon>();

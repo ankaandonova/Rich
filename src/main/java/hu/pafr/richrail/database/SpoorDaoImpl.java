@@ -8,8 +8,8 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import hu.pafr.richrail.locomotief.Locomotief;
-import hu.pafr.richrail.spoor.Spoor;
+import hu.pafr.richrail.domein.locomotief.Locomotief;
+import hu.pafr.richrail.domein.spoor.Spoor;
 
 public class SpoorDaoImpl implements SpoorDao {
 	Database database = Database.getDatabase();
