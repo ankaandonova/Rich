@@ -77,7 +77,7 @@ public class GUIWagon {
 				Locomotief locomotief = builder.build();
 				try {
 					geselecteerdeWagon.moveWagon(locomotief);
-					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -90,7 +90,7 @@ public class GUIWagon {
 				try {
 					geselecteerdeWagon.moveWagon(null);
 					System.out.println("=======moved biatchh!!!");
-					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -103,7 +103,7 @@ public class GUIWagon {
 				try {
 					geselecteerdeWagon.clone();
 					try {
-						GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+						GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 					} catch (FileNotFoundException e1) {
 						e1.printStackTrace();
 					}
@@ -154,7 +154,7 @@ public class GUIWagon {
 				Wagon wagon = factory.createWagon(wagonNaam, 0, 0);
 				wagon.remove();
 				try {
-					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -174,7 +174,7 @@ public class GUIWagon {
 						choiceWagon.getItems().add(wagon.getNaam());
 						choiceWagon.setValue(wagon.getNaam());
 					}
-					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}				

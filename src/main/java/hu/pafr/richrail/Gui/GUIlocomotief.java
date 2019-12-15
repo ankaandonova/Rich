@@ -92,7 +92,7 @@ public class GUIlocomotief {
 				try {
 					Spoor spoor = new Spoor(Integer.parseInt(wisselVanSpoor.getValue()), 0.0);
 					geselecteerdeLocomotief.moveLocomotief(spoor);
-					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -104,7 +104,7 @@ public class GUIlocomotief {
 			public void handle(ActionEvent e) {
 				try {
 					geselecteerdeLocomotief.moveLocomotief(null);
-					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -158,7 +158,7 @@ public class GUIlocomotief {
 				locomotief.remove();
 				
 				try {
-					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException eeee) {
 					eeee.printStackTrace();
 				}
@@ -171,7 +171,7 @@ public class GUIlocomotief {
 				try {
 					geselecteerdeLocomotief = (Locomotief) geselecteerdeLocomotief.clone();
 					try {
-						GUItest.createTrain((GUISpoor.geselecteerdeSpoor.getNummer()));
+						GUI.createTrain((GUISpoor.geselecteerdeSpoor.getNummer()));
 						choiceLocomotief.getItems().add(geselecteerdeLocomotief.getNaam());
 						choiceLocomotief.setValue(geselecteerdeLocomotief.getNaam());
 					} catch (FileNotFoundException e1) {
@@ -200,11 +200,11 @@ public class GUIlocomotief {
 				try {
 					if (!locomotief.update()) {
 						locomotief.save();
-						GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+						GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 
 						choiceLocomotief.getItems().add(locomotief.getNaam());
 					} else {
-						GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+						GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 					}
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
