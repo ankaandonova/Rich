@@ -204,7 +204,7 @@ public class GUISpoor {
 		spoorNummer.setText(Integer.toString(geselecteerdeSpoor.getNummer()));
 		lengteSpoor.setText(Double.toString(geselecteerdeSpoor.getLengte()));
 
-		spoorLbl.setText("spoor nummer: " + nummer);
+		spoorLbl.setText(nummer);
 		Spoor spoor1 = new Spoor(Integer.parseInt(nummer), 0.0);
         GUIlocomotief.LocomotiefEventHanler(spoor1);
 
@@ -218,7 +218,7 @@ public class GUISpoor {
 		
 		spoorNummer.setText(null);
 		lengteSpoor.setText(null);
-		spoorLbl.setText("spoor nummer: " + null);
+		spoorLbl.setText( null);
 
 		geselecteerdeSpoor = null;
 		GUI.createTrain(0);

@@ -321,7 +321,7 @@ public class GUIWagon {
 		wagonNaam.setText(choiceWagon);
 		wagonStoel.setText(Integer.toString(geselecteerdeWagon.getStoelen()));
 		wagonBedden.setText(Integer.toString(geselecteerdeWagon.getBedden()));
-		wagon.setText("wagon naam: " + choiceWagon);
+		wagon.setText(choiceWagon);
 	}
 
 

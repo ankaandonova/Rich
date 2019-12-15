@@ -168,7 +168,7 @@ public class GUIlocomotief {
 					locomotiefLengte.setText(null);
 					locomotiefHoogte.setText(null);
 					maxSnelheid.setText(null);
-					locomotiefLbl.setText("locomotief naam: " + null);
+					locomotiefLbl.setText( null);
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException eeee) {
 					eeee.printStackTrace();
@@ -352,7 +352,7 @@ public class GUIlocomotief {
 
 	public static void getGeselecteerdeLocomotief(Label locomotief, ChoiceBox<String> choiceLocmotief) {
 		String naam = choiceLocmotief.getValue();
-		locomotief.setText("locomotief naam: " + naam);
+		locomotiefLbl.setText(naam);
 	}
 
 	protected static void getChoiceLocomotief(String naamLocomotief) throws FileNotFoundException {
@@ -367,7 +367,7 @@ public class GUIlocomotief {
 		locomotiefNaam.setText(geselecteerdeLocomotief.getNaam());
 		locomotiefHoogte.setText(Double.toString(geselecteerdeLocomotief.getHoogte()));
 		maxSnelheid.setText(Double.toString(geselecteerdeLocomotief.getMax_snelheid()));
-		locomotiefLbl.setText("locomotief naaam: " + naamLocomotief);
+		locomotiefLbl.setText(naamLocomotief);
 
 		GUIWagon.WagonEventHandler(geselecteerdeLocomotief);
 	}
