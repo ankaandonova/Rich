@@ -53,7 +53,7 @@ public class GUIWagon {
 		Label wagon = wagon();
 
 		paneWagon.getChildren().addAll(SelectWagon, Wagon_HBox, losseWagons, HBox, Wagon_VBox, hbox, wisselenLbl,
-				Wisselen_hbox, loskoppelenLbl, Loskoppelen_hbox,wagon);
+				Wisselen_hbox, loskoppelenLbl, Loskoppelen_hbox, wagon);
 
 		Builder builder = new LocomotiefBuilder();
 		Locomotief locomotief = builder.build();
@@ -63,15 +63,15 @@ public class GUIWagon {
 	}
 
 	protected static void loadLocomotievenSwitch() {
-		for(Locomotief locomotief : Locomotief.getLocomotievenFromDatabase()){
+		for (Locomotief locomotief : Locomotief.getLocomotievenFromDatabase()) {
 			wisselVanLocomotief.getItems().add(locomotief.getNaam());
 		}
-		
-		for(Wagon wagon : Wagon.getLosseWagonsFromDatabase()) {
+
+		for (Wagon wagon : Wagon.getLosseWagonsFromDatabase()) {
 			choiceLosseWagon.getItems().add(wagon.getNaam());
 			choiceLosseWagon.setValue(wagon.getNaam());
 		}
-		
+
 		selectLosseWagon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -96,7 +96,7 @@ public class GUIWagon {
 				}
 			}
 		});
-		
+
 		loskoppelen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -110,7 +110,7 @@ public class GUIWagon {
 				}
 			}
 		});
-		
+
 		clone.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -118,12 +118,12 @@ public class GUIWagon {
 					Wagon wagon = (Wagon) geselecteerdeWagon.clone();
 					try {
 						wagon.save();
-						if(wagon.getLocomotief() == null) {
-							choiceLosseWagon.getItems().add(wagon.getNaam());						
-							choiceLosseWagon.setValue(wagon.getNaam());			
+						if (wagon.getLocomotief() == null) {
+							choiceLosseWagon.getItems().add(wagon.getNaam());
+							choiceLosseWagon.setValue(wagon.getNaam());
 						} else {
-							choiceWagon.getItems().add(wagon.getNaam());						
-							choiceWagon.setValue(wagon.getNaam());							
+							choiceWagon.getItems().add(wagon.getNaam());
+							choiceWagon.setValue(wagon.getNaam());
 						}
 						GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 					} catch (FileNotFoundException e1) {
@@ -135,18 +135,18 @@ public class GUIWagon {
 			}
 		});
 	}
-	
+
 	protected static void WagonEventHandler(Locomotief locomotief) throws FileNotFoundException {
 		choiceWagon.getItems().clear();
 		if (locomotief.getNaam() != null) {
 			locomotief.getWagonnenFromDatabase();
-			Wagon laatsteWagon = null; 
+			Wagon laatsteWagon = null;
 			for (Wagon wagon : locomotief.getWagons()) {
 				choiceWagon.setValue(wagon.getNaam());
 				choiceWagon.getItems().add(wagon.getNaam());
 				laatsteWagon = wagon;
 			}
-			if(laatsteWagon != null) {
+			if (laatsteWagon != null) {
 				choiceWagon.setValue(laatsteWagon.getNaam());
 				getGeselecteerdeWagon(choiceWagon.getValue());
 			}
@@ -155,7 +155,7 @@ public class GUIWagon {
 		selectWagon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				
+
 				try {
 					getGeselecteerdeWagon(choiceWagon.getValue());
 				} catch (FileNotFoundException e1) {
@@ -168,12 +168,14 @@ public class GUIWagon {
 		deleteWagon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				String wagonNaam = choiceWagon.getValue();
-				choiceWagon.getItems().remove(wagonNaam);
-				Factory factory = new WagonFactory();
-				Wagon wagon = factory.createWagon(wagonNaam, 0, 0);
+
 				try {
-					wagon.remove();
+					if (geselecteerdeWagon.getLocomotief() != null) {
+						choiceWagon.getItems().remove(geselecteerdeWagon.getNaam());
+					} else {
+						choiceLosseWagon.getItems().remove(geselecteerdeWagon.getNaam());
+					}
+					geselecteerdeWagon.remove();
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -188,17 +190,17 @@ public class GUIWagon {
 				Factory factory = new WagonFactory();
 				int stoelen = 0;
 				int bedden = 0;
-				if(wagonStoel.getText().length() != 0) {
+				if (wagonStoel.getText().length() != 0) {
 					stoelen = Integer.parseInt(wagonStoel.getText());
 				}
-				if(wagonBedden.getText().length() != 0) {
+				if (wagonBedden.getText().length() != 0) {
 					bedden = Integer.parseInt(wagonBedden.getText());
 				}
-				
+
 				Wagon wagon = factory.createWagon(wagonNaam.getText(), stoelen, bedden);
 				wagon.setLocomotief(GUIlocomotief.geselecteerdeLocomotief);
 				try {
-					if(!wagon.update()) {
+					if (!wagon.update()) {
 						wagon.save();
 						choiceWagon.getItems().add(wagon.getNaam());
 						choiceWagon.setValue(wagon.getNaam());
@@ -206,7 +208,7 @@ public class GUIWagon {
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
-				}				
+				}
 			}
 		});
 	}
@@ -249,7 +251,7 @@ public class GUIWagon {
 		HBox.setLayoutY(110);
 		return HBox;
 	}
-	
+
 	protected static VBox Wagon_VBox() {
 		VBox Wagon_VBox = new VBox();
 		Wagon_VBox.getChildren().addAll(new Label("Naam"), wagonNaam = new TextField(), new Label("Stoelen"),
@@ -259,7 +261,7 @@ public class GUIWagon {
 		Wagon_VBox.setLayoutY(140);
 		return Wagon_VBox;
 	}
-	
+
 	protected static HBox hbox() {
 		HBox hbox = new HBox();
 		hbox.getChildren().addAll(deleteWagon = new Button("delete"), clone = new Button("clone"),
@@ -276,7 +278,6 @@ public class GUIWagon {
 		wisselen.setLayoutY(320);
 		return wisselen;
 	}
-	
 
 	protected static HBox Wisselen_hbox() {
 		HBox Wisselen_hbox = new HBox();
@@ -287,7 +288,6 @@ public class GUIWagon {
 		return Wisselen_hbox;
 	}
 
-
 	protected static Label loskoppelenLbl() {
 		Label loskoppelenLbl = new Label("Wagon loskoppelen");
 		loskoppelenLbl.setLayoutX(5);
@@ -297,30 +297,32 @@ public class GUIWagon {
 
 	protected static HBox Loskoppelen_hbox() {
 		HBox Loskoppelen_hbox = new HBox();
-		Loskoppelen_hbox.getChildren().addAll(
-				loskoppelen = new Button("loskoppelen"));
+		Loskoppelen_hbox.getChildren().addAll(loskoppelen = new Button("loskoppelen"));
 
 		Loskoppelen_hbox.setLayoutX(5);
 		Loskoppelen_hbox.setLayoutY(390);
 		return Loskoppelen_hbox;
 	}
-	
+
 	protected static Label wagon() {
-		wagon = new Label ("wagon naam");
+		wagon = new Label("wagon naam");
 		wagon.setLayoutX(5);
 		wagon.setLayoutY(0);
 		wagon.setStyle("-fx-font-size: 20; -fx-padding: 5 60 5 60; ");
 		return wagon;
 	}
-	
+
 	public static void getGeselecteerdeWagon(String choiceWagon) throws FileNotFoundException {
 		Factory factory = new WagonFactory();
 		geselecteerdeWagon = Wagon.getWagonDromDatabase(factory.createWagon(choiceWagon, 0, 0));
 		wagonNaam.setText(choiceWagon);
-		wagonStoel.setText(Integer.toString(geselecteerdeWagon.getStoelen()));
-		wagonBedden.setText(Integer.toString(geselecteerdeWagon.getBedden()));
+		if (geselecteerdeWagon.getStoelen() == 0) {
+			wagonStoel.setText(Integer.toString(geselecteerdeWagon.getStoelen()));
+		}
+		if (geselecteerdeWagon.getBedden() == 0) {
+			wagonBedden.setText(Integer.toString(geselecteerdeWagon.getBedden()));
+		}
 		wagon.setText(choiceWagon);
 	}
-
 
 }

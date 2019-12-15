@@ -190,7 +190,7 @@ public class GUISpoor {
 	}
 	
 	protected static Button cmd() {
-		cmd= new Button("cmd");
+		cmd= new Button("command prompt");
 		cmd.setLayoutX(5);
 		cmd.setLayoutY(400);
 		return cmd;

@@ -139,8 +139,6 @@ public class GUIlocomotief {
 			public void handle(ActionEvent e) {
 				try {
 					getChoiceLocomotief(choiceLocomotief.getValue());
-					getGeselecteerdeLocomotief(locomotiefLbl, choiceLocomotief);
-
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -151,13 +149,13 @@ public class GUIlocomotief {
 		deleteLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				String locomotiefNaam1 = choiceLocomotief.getValue();
-				choiceLocomotief.getItems().remove(locomotiefNaam1);
-				Builder builder = new LocomotiefBuilder();
-				builder.setNaam(locomotiefNaam1);
-				Locomotief locomotief = builder.build();
-
 				try {
+					Locomotief locomotief = Locomotief.getLocomotiefFromDatabase(geselecteerdeLocomotief);
+					if (locomotief.getSpoor() == null) {
+						choiceLosseLocomotief.getItems().remove(locomotief.getNaam());
+					} else {
+						choiceLocomotief.getItems().remove(locomotief.getNaam());
+					}
 					locomotief.remove();
 					maxSnelheid.setText(null);
 					vertrekPunt.setText(null);
@@ -168,7 +166,7 @@ public class GUIlocomotief {
 					locomotiefLengte.setText(null);
 					locomotiefHoogte.setText(null);
 					maxSnelheid.setText(null);
-					locomotiefLbl.setText( null);
+					locomotiefLbl.setText(null);
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException eeee) {
 					eeee.printStackTrace();
@@ -348,24 +346,27 @@ public class GUIlocomotief {
 		return locomotiefLbl;
 	}
 
-	public static void getGeselecteerdeLocomotief(Label locomotief, ChoiceBox<String> choiceLocmotief) {
-		String naam = choiceLocmotief.getValue();
-		locomotiefLbl.setText(naam);
-	}
-
 	protected static void getChoiceLocomotief(String naamLocomotief) throws FileNotFoundException {
 		Builder builder = new LocomotiefBuilder();
 		builder.setNaam(naamLocomotief);
+
+		locomotiefLbl.setText(naamLocomotief);
 		geselecteerdeLocomotief = Locomotief.getLocomotiefFromDatabase(builder.build());
+		locomotiefNaam.setText(geselecteerdeLocomotief.getNaam());
 		vertrekPunt.setText(geselecteerdeLocomotief.getVertrekPunt());
 		eindBestemming.setText(geselecteerdeLocomotief.getEindBestemming());
 		typeMotor.setText(geselecteerdeLocomotief.getType_moter());
 		locomotiefStoelen.setText(Integer.toString(geselecteerdeLocomotief.getStoelen()));
-		locomotiefLengte.setText(Double.toString(geselecteerdeLocomotief.getLengte()));
-		locomotiefNaam.setText(geselecteerdeLocomotief.getNaam());
-		locomotiefHoogte.setText(Double.toString(geselecteerdeLocomotief.getHoogte()));
-		maxSnelheid.setText(Double.toString(geselecteerdeLocomotief.getMax_snelheid()));
-		locomotiefLbl.setText(naamLocomotief);
+
+		if (geselecteerdeLocomotief.getLengte() != null) {
+			locomotiefLengte.setText(Double.toString(geselecteerdeLocomotief.getLengte()));
+		}
+		if (geselecteerdeLocomotief.getHoogte() != null) {
+			locomotiefHoogte.setText(Double.toString(geselecteerdeLocomotief.getHoogte()));
+		}
+		if (geselecteerdeLocomotief.getMax_snelheid() != null) {
+			maxSnelheid.setText(Double.toString(geselecteerdeLocomotief.getMax_snelheid()));
+		}
 
 		GUIWagon.WagonEventHandler(geselecteerdeLocomotief);
 	}
