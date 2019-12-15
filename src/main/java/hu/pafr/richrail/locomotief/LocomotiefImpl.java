@@ -53,19 +53,29 @@ public class LocomotiefImpl implements Locomotief, Cloneable {
 	}
 
 	@Override
-	public void remove() {
-		try {
-			locomotiefDao.remove(this);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+	public boolean remove() throws FileNotFoundException {
+		return locomotiefDao.remove(this);
 	}
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Locomotief locomotief = (Locomotief) super.clone();
-		String naamLocomotief = locomotief.getNaam() + "(1)";
-		locomotief.setNaam(naamLocomotief);
+
+		String naamLocomotief = locomotief.getNaam();
+		while(true){
+			naamLocomotief = naamLocomotief + "clone";
+			locomotief.setNaam(naamLocomotief);
+			try {
+				Locomotief l1 = Locomotief.getLocomotiefFromDatabase(locomotief);
+				if(l1 == null) {
+					break;
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		try {
 			locomotief.save();
 		} catch (FileNotFoundException e) {

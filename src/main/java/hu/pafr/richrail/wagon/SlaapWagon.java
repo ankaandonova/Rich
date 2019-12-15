@@ -21,18 +21,12 @@ public class SlaapWagon implements Cloneable, Wagon {
 		this.stoelen = stoelen;
 		this.bedden = bedden;
 	}
-	
+
 	@Override
-	public void remove() {
-		try {
-			wagonDao.remove(this);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public boolean remove() throws FileNotFoundException {
+		return wagonDao.remove(this);
 	}
 
-	
 	public Locomotief getLocomotief() {
 		return locomotief;
 	}
@@ -50,20 +44,19 @@ public class SlaapWagon implements Cloneable, Wagon {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Wagon wagon = (Wagon) super.clone();
-		wagon.setNaam(naam+"(1)");
+		wagon.setNaam(naam + "(1)");
 		try {
 			wagon.save();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		return wagon; 
+		return wagon;
 	}
-	
+
 	public boolean update() throws FileNotFoundException {
 		return wagonDao.update(this);
 	};
 
-	
 	public void save() throws FileNotFoundException {
 		WagonDao wagonDao = new WagonDaoImpl();
 		wagonDao.save(this);
@@ -92,6 +85,5 @@ public class SlaapWagon implements Cloneable, Wagon {
 	public void setBedden(int bedden) {
 		this.bedden = bedden;
 	}
-
 
 }

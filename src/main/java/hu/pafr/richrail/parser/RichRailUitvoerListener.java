@@ -6,6 +6,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import hu.pafr.richrail.Gui.GUI;
+import hu.pafr.richrail.Gui.GUISpoor;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
@@ -50,7 +52,6 @@ public class RichRailUitvoerListener implements RichRailListener {
 	@Override
 	public void exitEveryRule(ParserRuleContext ctx) {
 //		System.out.println("exitEveryRule");
-
 	}
 
 	@Override
@@ -85,9 +86,15 @@ public class RichRailUitvoerListener implements RichRailListener {
 		Builder builder = new LocomotiefBuilder();
 		builder.setNaam(id);
 		Locomotief l1 = builder.build();
+
+		try {
+			l1.save();
+			GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		this.object = l1;
 		this.message = "De trein " + id + " is aangemaakt";
-		
 	}
 
 	@Override
@@ -98,13 +105,19 @@ public class RichRailUitvoerListener implements RichRailListener {
 	@Override
 	public void exitNewwagoncommand(NewwagoncommandContext ctx) {
 		String id = ctx.ID().getText();
-	//	String NUMBER = ctx.NUMBER().getText();
-	//	System.out.println(NUMBER);
 		int stoelen = 20;
 		int bedden = 0;
 
 		Factory factory = new WagonFactory();
-		this.object = factory.createWagon(id, stoelen, bedden);
+		Wagon wagon = factory.createWagon(id, stoelen, bedden);
+
+		try {
+			wagon.save();
+			GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		this.object = wagon;
 		this.message = "De wagon " + id + " is aangemaakt met " + stoelen + " stoelen";
 	}
 
@@ -126,15 +139,20 @@ public class RichRailUitvoerListener implements RichRailListener {
 		Wagon wagon = factory.createWagon(wagonId.toString(), 0, 0);
 		
 		locomotief.setWagon(wagon);
-		
+		wagon.setLocomotief(locomotief);
 		message = "Wagon "+ wagon.getNaam() + " is toegevoegd aan "+ locomotief.getNaam();
 		this.object = locomotief;
+		try {
+			wagon.save();
+			GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void enterGetcommand(GetcommandContext ctx) {
 		System.out.println("enterGetcommand");
-
 	}
 
 	@Override
@@ -147,15 +165,29 @@ public class RichRailUitvoerListener implements RichRailListener {
 			Builder builder = new LocomotiefBuilder();
 			builder.setNaam(id);
 			Locomotief locomotief = builder.build();
-			this.message = "Er zijn "+locomotief.getStoelen()+" stoelen in deze trein.";
+			try {
+				locomotief = Locomotief.getLocomotiefFromDatabase(locomotief);
+				this.message = "Er zijn "+locomotief.getStoelen()+" stoelen in deze trein.";
+			} catch (FileNotFoundException e2) {
+				e2.printStackTrace();
+			}
 			break;
 		case "wagon":
 			Factory factory = new WagonFactory();
 			Wagon wagon = factory.createWagon(id, 0, 0);
-			this.message = "Er zijn "+wagon.getStoelen()+" stoelen in deze wagon.";
+			try {
+				wagon = Wagon.getWagonDromDatabase(wagon);
+				this.message = "Er zijn "+wagon.getStoelen()+" stoelen in deze wagon.";
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
 			break;
 		}
-		
+		try {
+			GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -173,15 +205,34 @@ public class RichRailUitvoerListener implements RichRailListener {
 			Builder builder = new LocomotiefBuilder();
 			builder.setNaam(id);
 			Locomotief locomotief = builder.build();
-			locomotief.remove();
-			this.message = "train "+locomotief.getNaam()+" is succesvol verwijderd.";
+			try {
+				if(locomotief.remove()) {
+					this.message = "train "+locomotief.getNaam()+" is succesvol verwijderd.";	
+				} else {
+					this.message = "train "+locomotief.getNaam()+" is succesvol verwijderd.";				
+				}
+			} catch (FileNotFoundException e2) {
+				e2.printStackTrace();
+			}
 			break;
 		case "wagon":
 			Factory factory = new WagonFactory();
 			Wagon wagon = factory.createWagon(id, 0, 0);
-			wagon.remove();
-			this.message = "wagon "+wagon.getNaam()+" is succesvol verwijderd.";
+			try {
+				if(wagon.remove()) {
+					this.message = "wagon "+wagon.getNaam()+" is succesvol verwijderd.";
+				} else {
+					this.message = "wagon "+wagon.getNaam()+" is niet succesvol verwijderd.";
+				}
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
 			break;
+		}
+		try {
+			GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -202,20 +253,24 @@ public class RichRailUitvoerListener implements RichRailListener {
 		Wagon wagon = factory.createWagon(wagonId.toString(), 0, 0);
 		
 		locomotief.verwijderWagon(wagon);
+		
+		wagon.setLocomotief(null);
+		wagon.update();
+		try {
+			wagon.save();
+			GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		message = "Wagon "+ wagonId +" is verwijderd uit locomotief "+ locomotiefId;
 		object = locomotief;
-		
-	//  if(locomotief.removeWagon(wagon)) {
-	//		message = "Wagon "+ wagonId +" is verwijderd uit locomotief "+ locomotiefId;
-	//	} else {
-	//		message = "Wagon "+ wagonId +" is niet gevonden in locomotief "+ locomotiefId;
-	//	}
 	}
 
+
+	//wordt niet gebruikt 
 	@Override
 	public void enterType(TypeContext ctx) {
 		System.out.println("enterType");
-
 	}
 
 	@Override

@@ -152,8 +152,8 @@ public class GUIWagon {
 				choiceWagon.getItems().remove(wagonNaam);
 				Factory factory = new WagonFactory();
 				Wagon wagon = factory.createWagon(wagonNaam, 0, 0);
-				wagon.remove();
 				try {
+					wagon.remove();
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();

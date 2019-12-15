@@ -56,6 +56,7 @@ public class GUIlocomotief {
 				WisselVanSpoor, Wisselen_hbox, Loskoppelen, Loskoppelen_hbox, locomotief);
 
 		Spoor spoor = new Spoor(0, 0.0);
+		System.out.println("asdlhjibasfluifhiluasdhsdasbcflvibahsbdhjasbjhkdbnasijundijasblg;fsahilbdfjhcasbdlijcnasujndc;dasnjfbaij;sndc;iona");
 		LocomotiefEventHanler(spoor);
 		loadSporenSwitch();
 		loadLosseLocomotieven();
@@ -103,6 +104,8 @@ public class GUIlocomotief {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
+					loadLosseLocomotieven();
+					LocomotiefEventHanler(GUISpoor.geselecteerdeSpoor);
 					geselecteerdeLocomotief.moveLocomotief(null);
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
@@ -155,9 +158,9 @@ public class GUIlocomotief {
 				Builder builder = new LocomotiefBuilder();
 				builder.setNaam(locomotiefNaam);
 				Locomotief locomotief = builder.build();
-				locomotief.remove();
 				
 				try {
+					locomotief.remove();
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException eeee) {
 					eeee.printStackTrace();
@@ -171,9 +174,10 @@ public class GUIlocomotief {
 				try {
 					geselecteerdeLocomotief = (Locomotief) geselecteerdeLocomotief.clone();
 					try {
-						GUI.createTrain((GUISpoor.geselecteerdeSpoor.getNummer()));
 						choiceLocomotief.getItems().add(geselecteerdeLocomotief.getNaam());
 						choiceLocomotief.setValue(geselecteerdeLocomotief.getNaam());
+						getChoiceLocomotief(choiceLocomotief.getValue());
+						GUI.createTrain((GUISpoor.geselecteerdeSpoor.getNummer()));
 					} catch (FileNotFoundException e1) {
 						e1.printStackTrace();
 					}
@@ -200,9 +204,10 @@ public class GUIlocomotief {
 				try {
 					if (!locomotief.update()) {
 						locomotief.save();
-						GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
-
 						choiceLocomotief.getItems().add(locomotief.getNaam());
+						choiceLocomotief.setValue(locomotief.getNaam());
+						getChoiceLocomotief(choiceLocomotief.getValue());
+						GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 					} else {
 						GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 					}

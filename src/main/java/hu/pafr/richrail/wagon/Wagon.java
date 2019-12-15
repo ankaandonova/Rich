@@ -30,7 +30,7 @@ public interface Wagon {
 
 	public void setBedden(int bedden);
 
-	public void remove();
+	public boolean remove() throws FileNotFoundException;
 
 	public Locomotief getLocomotief();
 

@@ -51,7 +51,6 @@ public class GUI extends Application {
 
 	public static void createTrain(int spoorNummer) throws FileNotFoundException {
 		scherm1.getChildren().clear();
-		System.out.println("=======================dsadasdasda============================");
 
 		Spoor spoor = new Spoor(spoorNummer, 0.0);
 		spoor.getLocomotiefenFromDatabase();

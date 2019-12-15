@@ -99,7 +99,7 @@ public interface Locomotief {
 
 	public boolean removeWagon(Wagon wagon) throws FileNotFoundException;
 
-	public void remove();
+	public boolean remove() throws FileNotFoundException;
 
 	public void setSpoor(Spoor spoor);
 

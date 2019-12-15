@@ -22,9 +22,10 @@ public class GUISpoor {
 	protected static Button addSpoor;
 	protected static TextField spoorNummer;
 	protected static TextField lengteSpoor;
-	protected static Spoor geselecteerdeSpoor;
 	protected static Label spoorLbl;
 	protected static Button cmd;
+
+	public static Spoor geselecteerdeSpoor = new Spoor(0, 0.0);
 	
 	public static Pane createSpoorKeuzeMenu() throws FileNotFoundException {
 		Pane paneSpoor = createPane();
@@ -54,24 +55,22 @@ public class GUISpoor {
 
 				spoor2.setNummer(Integer.parseInt(spoorNummer.getText()));
 				spoor2.setLengte(Double.parseDouble(lengteSpoor.getText()));
-				System.out.println("nieuwe spoor nummer  " + spoor2.getNummer());
-				System.out.println("nieuwe spoor  " + spoor2);
-
+				
 				try {
 					if (!spoor2.update()) {
 						spoor2.save();
 						choiceSpoor.getItems().add(Integer.toString(spoor2.getNummer()));
+						choiceSpoor.setValue(Integer.toString(spoor2.getNummer()));
+						getChoiceSpoor(choiceSpoor);
 					}
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
+				
 			}
 		});
 		for (Spoor sporen : Spoor.getSporenFromDatabase()) {
-
 			choiceSpoor.getItems().add(Integer.toString(sporen.getNummer()));
-
-			System.out.println(choiceSpoor.getValue());
 		}
 
 		// spoor kiezen
@@ -80,7 +79,6 @@ public class GUISpoor {
 			public void handle(ActionEvent e) {
 				try {
 					getChoiceSpoor(choiceSpoor);
-					getGeselecteerdeSpoor(choiceSpoor);
 					GUI.createTrain(Integer.parseInt(choiceSpoor.getValue()));
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -195,19 +193,17 @@ public class GUISpoor {
 		return cmd;
 	}
 
-	public static void getGeselecteerdeSpoor(ChoiceBox<String> choiceSpoor) {
+
+
+	public static void getChoiceSpoor(ChoiceBox<String> choiceSpoor) throws FileNotFoundException {
 		String nummer = choiceSpoor.getValue();
 		geselecteerdeSpoor = new Spoor(Integer.parseInt(nummer), 0.0);
+		geselecteerdeSpoor = Spoor.getSpoorFromDatabase(geselecteerdeSpoor);
 		spoorNummer.setText(Integer.toString(geselecteerdeSpoor.getNummer()));
 		lengteSpoor.setText(Double.toString(geselecteerdeSpoor.getLengte()));
 
 		spoorLbl.setText(nummer);
-	}
 
-	public static void getChoiceSpoor(ChoiceBox<String> choiceSpoor) throws FileNotFoundException {
-		String nummer = choiceSpoor.getValue();
-
-		System.out.print("spooornummer " + nummer);
 		Spoor spoor1 = new Spoor(Integer.parseInt(nummer), 0.0);
 		GUIlocomotief.LocomotiefEventHanler(spoor1);
 	}
