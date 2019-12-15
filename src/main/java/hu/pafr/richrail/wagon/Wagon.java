@@ -55,4 +55,6 @@ public interface Wagon {
 		WagonDao wagonDao = new WagonDaoImpl();
 		return wagonDao.getWagon(wagon);
 	}
+
+	public boolean update() throws FileNotFoundException;
 }

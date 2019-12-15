@@ -1,6 +1,7 @@
 package hu.pafr.richrail.Gui;
 
 import java.io.FileNotFoundException;
+
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
@@ -56,11 +57,63 @@ public class GUIWagon {
 
 		Builder builder = new LocomotiefBuilder();
 		Locomotief locomotief = builder.build();
-
+		loadLocomotievenSwitch();
 		WagonEventHandler(locomotief);
 		return paneWagon;
 	}
 
+	protected static void loadLocomotievenSwitch() {
+		System.out.println("loadLocomotievenSwitch");
+		for(Locomotief locomotief : Locomotief.getLocomotievenFromDatabase()){
+			System.out.println(locomotief.getNaam());
+			wisselVanLocomotief.getItems().add(locomotief.getNaam());
+		}
+		
+		wissel.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				Builder builder = new LocomotiefBuilder();
+				builder.setNaam(wisselVanLocomotief.getValue());
+				Locomotief locomotief = builder.build();
+				try {
+					geselecteerdeWagon.moveWagon(locomotief);
+					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		loskoppelen.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					geselecteerdeWagon.moveWagon(null);
+					System.out.println("=======moved biatchh!!!");
+					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		clone.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					geselecteerdeWagon.clone();
+					try {
+						GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					}
+				} catch (CloneNotSupportedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	protected static void WagonEventHandler(Locomotief locomotief) throws FileNotFoundException {
 		choiceWagon.getItems().clear();
 		if (locomotief.getNaam() != null) {
@@ -92,18 +145,39 @@ public class GUIWagon {
 		});
 
 		// wagon verwijderen
-		deleteWagon.setOnAction(e -> deleteChoiceWagon(choiceWagon));
+		deleteWagon.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				String wagonNaam = choiceWagon.getValue();
+				choiceWagon.getItems().remove(wagonNaam);
+				Factory factory = new WagonFactory();
+				Wagon wagon = factory.createWagon(wagonNaam, 0, 0);
+				wagon.remove();
+				try {
+					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		// nieuwe wagon toevoegen
 		addWagon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-
-				wagonNaam.getText();
-				wagonStoel.getText();
-				wagonBedden.getText();
-				System.out.println(wagonNaam.getText() + wagonStoel.getText() + wagonBedden.getText());
-				
+				Factory factory = new WagonFactory();
+				Wagon wagon = factory.createWagon(wagonNaam.getText(), Integer.parseInt(wagonStoel.getText()), Integer.parseInt(wagonBedden.getText()));
+				wagon.setLocomotief(GUIlocomotief.geselecteerdeLocomotief);
+				try {
+					if(!wagon.update()) {
+						wagon.save();
+						choiceWagon.getItems().add(wagon.getNaam());
+						choiceWagon.setValue(wagon.getNaam());
+					}
+					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}				
 			}
 		});
 	}
@@ -222,11 +296,4 @@ public class GUIWagon {
 		System.out.print("choice wagon" + wagon);
 	}
 
-	public static void deleteChoiceWagon(ChoiceBox<String> choiceWagon) {
-		String wagonNaam = choiceWagon.getValue();
-		choiceWagon.getItems().remove(wagonNaam);
-		Factory factory = new WagonFactory();
-		Wagon wagon = factory.createWagon(wagonNaam, 0, 0);
-		wagon.remove();
-	}
 }

@@ -41,9 +41,13 @@ public class GoederenWagon implements Cloneable, Wagon {
 	}
 	
 	public void save() throws FileNotFoundException {
-		WagonDao wagonDao = new WagonDaoImpl();
 		wagonDao.save(this);
 	}
+	
+	public boolean update() throws FileNotFoundException {
+		return wagonDao.update(this);
+	};
+
 
 	public Locomotief getLocomotief() {
 		return locomotief;

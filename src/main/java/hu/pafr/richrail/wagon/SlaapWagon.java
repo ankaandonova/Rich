@@ -59,6 +59,11 @@ public class SlaapWagon implements Cloneable, Wagon {
 		return wagon; 
 	}
 	
+	public boolean update() throws FileNotFoundException {
+		return wagonDao.update(this);
+	};
+
+	
 	public void save() throws FileNotFoundException {
 		WagonDao wagonDao = new WagonDaoImpl();
 		wagonDao.save(this);

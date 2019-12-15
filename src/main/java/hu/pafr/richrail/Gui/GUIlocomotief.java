@@ -42,7 +42,7 @@ public class GUIlocomotief {
 		HBox HBox = HBox();
 		HBox Locomotief_HBox = Locomotief_HBox();
 		VBox vbox = vbox();
-		HBox hbox = hbox();
+		HBox Clone_hbox = Clone_hbox();
 		HBox Wisselen_hbox = Wisselen_hbox();
 		HBox Loskoppelen_hbox = Loskoppelen_hbox();
 		Label kiesLocomotief = kiesLocomotief();
@@ -51,7 +51,7 @@ public class GUIlocomotief {
 		Label Loskoppelen = Loskoppelen();
 		Label locomotief = locomotief();
 
-		paneLocomotief.getChildren().addAll(HBox, kiesLocomotief, kiesLosseLocomotief, Locomotief_HBox, vbox, hbox,
+		paneLocomotief.getChildren().addAll(HBox, kiesLocomotief, kiesLosseLocomotief, Locomotief_HBox, vbox, Clone_hbox,
 				WisselVanSpoor, Wisselen_hbox, Loskoppelen, Loskoppelen_hbox, locomotief);
 
 		Spoor spoor = new Spoor(0, 0.0);
@@ -81,7 +81,36 @@ public class GUIlocomotief {
 	}
 
 	protected static void loadSporenSwitch() throws FileNotFoundException {
-		Spoor.getSporenFromDatabase();
+		for(Spoor spoor : Spoor.getSporenFromDatabase()){
+			wisselVanSpoor.getItems().add(Integer.toString(spoor.getNummer()));
+		}
+		
+		spoorWisselen.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					Spoor spoor = new Spoor(Integer.parseInt(wisselVanSpoor.getValue()), 0.0);
+					geselecteerdeLocomotief.moveLocomotief(spoor);
+					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		loskoppelenVanSpoor.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					geselecteerdeLocomotief.moveLocomotief(null);
+					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+
 	}
 
 	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
@@ -131,12 +160,23 @@ public class GUIlocomotief {
 			}
 		});
 		
-//		clone.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e) {
-//				System.out.println("anka!!!!!!!!!!!!!!!");
-//			}
-//		});
+		clone.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					geselecteerdeLocomotief = (Locomotief) geselecteerdeLocomotief.clone();
+					try {
+						GUItest.createTrain((GUISpoor.geselecteerdeSpoor.getNummer()));
+						choiceLocomotief.getItems().add(geselecteerdeLocomotief.getNaam());
+						choiceLocomotief.setValue(geselecteerdeLocomotief.getNaam());
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					}
+				} catch (CloneNotSupportedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		addLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -208,9 +248,10 @@ public class GUIlocomotief {
 		return vbox;
 	}
 
-	protected static HBox hbox() {
+	protected static HBox Clone_hbox() {
 		HBox hbox = new HBox();
-		hbox.getChildren().addAll(deleteLocomotief = new Button("delete"), addLocomotief = new Button("clone"),
+		hbox.getChildren().addAll(deleteLocomotief = new Button("delete"), 
+				clone = new Button("clone"),
 				addLocomotief = new Button("Toevoegen/wijzigen"));
 		hbox.setLayoutX(5);
 		hbox.setLayoutY(420);
