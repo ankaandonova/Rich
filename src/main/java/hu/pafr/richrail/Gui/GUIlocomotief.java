@@ -115,8 +115,8 @@ public class GUIlocomotief {
 					LocomotiefEventHanler(GUISpoor.geselecteerdeSpoor);
 					geselecteerdeLocomotief.moveLocomotief(null);
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
-					loadLosseLocomotieven();
 					loadSporenSwitch();
+					
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}

@@ -37,7 +37,9 @@ public class GUI extends Application {
 		// spoor
 		schermBorder.setLeft(GUISpoor.createSpoorKeuzeMenu());
 		// trein
-		schermBorder.setCenter(GUIlocomotief.createLocomotiefKeuzeMenu());
+		ScrollPane scLocomotief = new ScrollPane();
+		scLocomotief.setContent(GUIlocomotief.createLocomotiefKeuzeMenu());
+		schermBorder.setCenter(scLocomotief);
 		// wagon
 		schermBorder.setRight(GUIWagon.createWagonKeuzeMenu());
 		
