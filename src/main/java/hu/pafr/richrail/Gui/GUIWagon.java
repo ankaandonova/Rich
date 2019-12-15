@@ -285,13 +285,13 @@ public class GUIWagon {
 	}
 	
 	public static void getGeselecteerdeWagon(ChoiceBox<String> choiceWagon) throws FileNotFoundException {
-		String wagonNaamOuweGek = choiceWagon.getValue();
+		String wagonNaam1 = choiceWagon.getValue();
 		Factory factory = new WagonFactory();
-		geselecteerdeWagon = Wagon.getWagonDromDatabase(factory.createWagon(wagonNaamOuweGek, 0, 0));
-		wagonNaam.setText(wagonNaamOuweGek);
+		geselecteerdeWagon = Wagon.getWagonDromDatabase(factory.createWagon(wagonNaam1, 0, 0));
+		wagonNaam.setText(wagonNaam1);
 		wagonStoel.setText(Integer.toString(geselecteerdeWagon.getStoelen()));
 		wagonBedden.setText(Integer.toString(geselecteerdeWagon.getBedden()));
-		wagon.setText(wagonNaamOuweGek);
+		wagon.setText("wagon naam: " + wagonNaam1);
 	}
 
 	public static void getChoiceWagon(ChoiceBox<String> choiceWagon) {
