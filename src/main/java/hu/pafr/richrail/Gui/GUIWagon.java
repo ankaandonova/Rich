@@ -175,6 +175,11 @@ public class GUIWagon {
 					} else {
 						choiceLosseWagon.getItems().remove(geselecteerdeWagon.getNaam());
 					}
+					wagonNaam.setText(null);
+					wagonStoel.setText(null);
+					wagonBedden.setText(null);
+					wagon.setText(null);
+					
 					geselecteerdeWagon.remove();
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {

@@ -2,6 +2,7 @@ package hu.pafr.richrail.Gui;
 
 import java.io.FileNotFoundException;
 
+import hu.pafr.richrail.domein.locomotief.Locomotief;
 import hu.pafr.richrail.domein.spoor.Spoor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,7 +28,7 @@ public class GUISpoor {
 	protected static Button cmd;
 
 	public static Spoor geselecteerdeSpoor = new Spoor(0, 0.0);
-	
+
 	public static Pane createSpoorKeuzeMenu() throws FileNotFoundException {
 		Pane paneSpoor = createPane();
 
@@ -38,7 +39,7 @@ public class GUISpoor {
 		Label spoorLbl = spoor();
 		Button cmd = cmd();
 
-		paneSpoor.getChildren().addAll(SpoorLbl, Spoor_HBox, VBox, HBox, spoorLbl,cmd);
+		paneSpoor.getChildren().addAll(SpoorLbl, Spoor_HBox, VBox, HBox, spoorLbl, cmd);
 		Spoor spoor = new Spoor(1, 0.0);
 		SpoorEventHandler(spoor);
 
@@ -52,13 +53,13 @@ public class GUISpoor {
 			public void handle(ActionEvent e) {
 				Spoor spoor2 = new Spoor(0, 0.0);
 
-				if(spoorNummer.getText().length() != 0) {
+				if (spoorNummer.getText().length() != 0) {
 					spoor2.setNummer(Integer.parseInt(spoorNummer.getText()));
 				}
-				if(lengteSpoor.getText().length() != 0) {
+				if (lengteSpoor.getText().length() != 0) {
 					spoor2.setLengte(Double.parseDouble(lengteSpoor.getText()));
 				}
-				
+
 				try {
 					if (!spoor2.update()) {
 						spoor2.save();
@@ -66,10 +67,10 @@ public class GUISpoor {
 						choiceSpoor.setValue(Integer.toString(spoor2.getNummer()));
 						getChoiceSpoor(choiceSpoor);
 					}
+					GUIlocomotief.loadSporenSwitch();
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
-				
 			}
 		});
 		for (Spoor sporen : Spoor.getSporenFromDatabase()) {
@@ -82,6 +83,27 @@ public class GUISpoor {
 			public void handle(ActionEvent e) {
 				try {
 					getChoiceSpoor(choiceSpoor);
+					
+					spoorNummer.setText(null);
+					lengteSpoor.setText(null);
+					spoorLbl.setText(null);
+					
+					GUIlocomotief.maxSnelheid.setText(null);
+					GUIlocomotief.vertrekPunt.setText(null);
+					GUIlocomotief.eindBestemming.setText(null);
+					GUIlocomotief.locomotiefStoelen.setText(null);
+					GUIlocomotief.locomotiefNaam.setText(null);
+					GUIlocomotief.typeMotor.setText(null);
+					GUIlocomotief.locomotiefLengte.setText(null);
+					GUIlocomotief.locomotiefHoogte.setText(null);
+					GUIlocomotief.maxSnelheid.setText(null);
+					GUIlocomotief.locomotiefLbl.setText(null);
+					
+					GUIWagon.wagonNaam.setText(null);
+					GUIWagon.wagonStoel.setText(null);
+					GUIWagon.wagonBedden.setText(null);
+					GUIWagon.wagon.setText(null);					
+					
 					GUI.createTrain(Integer.parseInt(choiceSpoor.getValue()));
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -91,21 +113,20 @@ public class GUISpoor {
 
 		// spoor verwijderen
 		deleteSpoor.setOnAction(e ->
-
 		{
 			try {
 				deleteChoiceSpoor(choiceSpoor);
+				
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			}
 		});
-		
-		
+
 		cmd.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				BorderPane schermBorder = new BorderPane();
-				
+
 				HBox hbox = new HBox();
 				VBox vbox = new VBox();
 				TextField text = new TextField();
@@ -118,24 +139,21 @@ public class GUISpoor {
 						GUIcmd.setText(label, text);
 					}
 				});
-	
-				vbox= GUIcmd.createVBox();
+
+				vbox = GUIcmd.createVBox();
 				vbox.getChildren().addAll(label);
 				hbox.getChildren().addAll(text, commit);
-				
+
 				schermBorder.setTop(vbox);
 				schermBorder.setCenter(hbox);
 
 				Scene secondScene = new Scene(schermBorder, 500, 300);
-				
+
 				Stage newWindow = new Stage();
 				newWindow.setTitle("RichRail cmd");
 				newWindow.setScene(secondScene);
 				newWindow.show();
-	
 			}
-
-	
 		});
 	}
 
@@ -188,15 +206,13 @@ public class GUISpoor {
 		spoorLbl.setStyle("-fx-font-size: 20; -fx-padding: 5 60 5 60; ");
 		return spoorLbl;
 	}
-	
+
 	protected static Button cmd() {
-		cmd= new Button("command prompt");
+		cmd = new Button("command prompt");
 		cmd.setLayoutX(5);
 		cmd.setLayoutY(400);
 		return cmd;
 	}
-
-
 
 	public static void getChoiceSpoor(ChoiceBox<String> choiceSpoor) throws FileNotFoundException {
 		String nummer = choiceSpoor.getValue();
@@ -207,7 +223,7 @@ public class GUISpoor {
 
 		spoorLbl.setText(nummer);
 		Spoor spoor1 = new Spoor(Integer.parseInt(nummer), 0.0);
-        GUIlocomotief.LocomotiefEventHanler(spoor1);
+		GUIlocomotief.LocomotiefEventHanler(spoor1);
 
 	}
 
@@ -216,10 +232,15 @@ public class GUISpoor {
 		choiceSpoor.getItems().remove(spoorNummerString);
 		Spoor spoor = new Spoor(Integer.parseInt(spoorNummerString), 0.0);
 		spoor.remove();
-		
+		spoor = Spoor.getSpoorFromDatabase(spoor);
+		for(Locomotief locomotief : spoor.getLocomotiefen()){
+			locomotief.moveLocomotief(null);
+		}
+		spoor.remove();
+		GUIlocomotief.loadLosseLocomotieven();
 		spoorNummer.setText(null);
 		lengteSpoor.setText(null);
-		spoorLbl.setText( null);
+		spoorLbl.setText(null);
 
 		geselecteerdeSpoor = null;
 		GUI.createTrain(0);

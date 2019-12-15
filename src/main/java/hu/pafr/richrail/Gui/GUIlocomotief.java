@@ -95,7 +95,11 @@ public class GUIlocomotief {
 			public void handle(ActionEvent e) {
 				try {
 					Spoor spoor = new Spoor(Integer.parseInt(wisselVanSpoor.getValue()), 0.0);
+					choiceLosseLocomotief.getItems().remove(Integer.parseInt(wisselVanSpoor.getValue()));
 					geselecteerdeLocomotief.moveLocomotief(spoor);
+					if(GUISpoor.geselecteerdeSpoor.getNummer() == Integer.parseInt(wisselVanSpoor.getValue())) {
+						choiceLocomotief.getItems().add(geselecteerdeLocomotief.getNaam());
+					}
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -111,6 +115,8 @@ public class GUIlocomotief {
 					LocomotiefEventHanler(GUISpoor.geselecteerdeSpoor);
 					geselecteerdeLocomotief.moveLocomotief(null);
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+					loadLosseLocomotieven();
+					loadSporenSwitch();
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -156,7 +162,14 @@ public class GUIlocomotief {
 					} else {
 						choiceLocomotief.getItems().remove(locomotief.getNaam());
 					}
+					locomotief.getWagonnenFromDatabase();
+					for(Wagon wagon : locomotief.getWagons()) {
+						wagon.moveWagon(null);
+					}
 					locomotief.remove();
+
+					GUIWagon.loadLocomotievenSwitch();
+					
 					maxSnelheid.setText(null);
 					vertrekPunt.setText(null);
 					eindBestemming.setText(null);
