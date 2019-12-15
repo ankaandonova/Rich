@@ -83,10 +83,10 @@ public class GUI extends Application {
 	
 	private static ImageView createLocomotief() {
 
-		Image LocomotiefImg = new Image("file:locomotief (3).jpg");
+		Image LocomotiefImg = new Image("file:locomotief.jpg");
 		ImageView imgVw = new ImageView();
 		imgVw.setImage(LocomotiefImg);
-		imgVw.setFitHeight(200);
+		imgVw.setFitHeight(180);
 		imgVw.setFitWidth(200);
 		return imgVw;
 	}
