@@ -50,11 +50,13 @@ public class GUISpoor {
 			@Override
 			public void handle(ActionEvent e) {
 				Spoor spoor2 = new Spoor(0, 0.0);
-				lengteSpoor.getText();
-				spoorNummer.getText();
 
-				spoor2.setNummer(Integer.parseInt(spoorNummer.getText()));
-				spoor2.setLengte(Double.parseDouble(lengteSpoor.getText()));
+				if(spoorNummer.getText().length() != 0) {
+					spoor2.setNummer(Integer.parseInt(spoorNummer.getText()));
+				}
+				if(lengteSpoor.getText().length() != 0) {
+					spoor2.setLengte(Double.parseDouble(lengteSpoor.getText()));
+				}
 				
 				try {
 					if (!spoor2.update()) {
