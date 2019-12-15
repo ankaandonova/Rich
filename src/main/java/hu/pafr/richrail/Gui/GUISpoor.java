@@ -206,6 +206,17 @@ public class GUISpoor {
 
 		Spoor spoor1 = new Spoor(Integer.parseInt(nummer), 0.0);
 		GUIlocomotief.LocomotiefEventHanler(spoor1);
+		GUIlocomotief.locomotiefStoelen.setText(null);
+		GUIlocomotief.maxSnelheid.setText(null);
+		GUIlocomotief.vertrekPunt.setText(null);
+		GUIlocomotief.eindBestemming.setText(null);
+		GUIlocomotief.locomotiefStoelen.setText(null);
+		GUIlocomotief.locomotiefNaam.setText(null);
+		GUIlocomotief.typeMotor.setText(null);
+		GUIlocomotief.locomotiefLengte.setText(null);
+		GUIlocomotief.locomotiefHoogte.setText(null);
+		GUIlocomotief.maxSnelheid.setText(null);
+		GUIlocomotief.locomotiefLbl.setText(null);
 	}
 
 	public static void deleteChoiceSpoor(ChoiceBox<String> choiceSpoor) throws FileNotFoundException {
