@@ -195,11 +195,16 @@ public class GUIWagon {
 				Factory factory = new WagonFactory();
 				int stoelen = 0;
 				int bedden = 0;
-				if (wagonStoel.getText().length() != 0) {
-					stoelen = Integer.parseInt(wagonStoel.getText());
+				if(wagonStoel.getText() != null) {
+					if (wagonStoel.getText().length() != 0) {
+						stoelen = Integer.parseInt(wagonStoel.getText());
+					}					
 				}
-				if (wagonBedden.getText().length() != 0) {
-					bedden = Integer.parseInt(wagonBedden.getText());
+
+				if(wagonBedden.getText() != null) {
+					if (wagonBedden.getText().length() != 0) {
+						bedden = Integer.parseInt(wagonBedden.getText());
+					}
 				}
 
 				Wagon wagon = factory.createWagon(wagonNaam.getText(), stoelen, bedden);
