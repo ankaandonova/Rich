@@ -21,44 +21,13 @@ import javafx.stage.Stage;
 
 public class GUIcmd extends Application {
 
-	private Scene scene;
-	private BorderPane schermBorder;
-	private HBox hbox;
-	private VBox vbox;
-	private Button commit;
-	private TextField text;
-	private Label label;
+
+	private static BorderPane schermBorder;
+
 
 	@Override
 	public void start(Stage window) throws Exception, InvocationTargetException {
-		schermBorder = new BorderPane();
 		
-		hbox = new HBox();
-		vbox = new VBox();
-		text = new TextField();
-		commit = new Button("commit");
-		label = new Label("messege");
-		commit.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				setText(label, text);
-			}
-		});
-		
-		hbox = createHBox();
-		vbox = createVBox();
-		vbox.getChildren().addAll(label);
-		hbox.getChildren().addAll(text, commit);
-		
-		schermBorder.setTop(vbox);
-		schermBorder.setCenter(hbox);
-
-		scene = new Scene(schermBorder, 500, 300);
-
-		window.setTitle("RichRail cmd");
-		window.setScene(scene);
-		window.show();
 	}
 
 	public static void main(String[] args) {
@@ -66,7 +35,7 @@ public class GUIcmd extends Application {
 	}
 
 	@SuppressWarnings({ "static-access" })
-	private HBox createHBox() {
+	protected static HBox createHBox() {
 		HBox hbox = new HBox();
 		schermBorder.setMargin(hbox, new Insets(5));
 		hbox.prefWidthProperty().bind(schermBorder.widthProperty());
@@ -76,7 +45,7 @@ public class GUIcmd extends Application {
 		return hbox;
 	}
 
-	protected  VBox createVBox() {
+	protected static  VBox createVBox() {
 		VBox vbox = new VBox();
 		vbox.setPrefWidth(450);
 		vbox.setPrefHeight(200);

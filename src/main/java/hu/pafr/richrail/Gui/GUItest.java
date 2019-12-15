@@ -9,6 +9,7 @@ import hu.pafr.richrail.wagon.Wagon;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,7 +41,7 @@ public class GUItest extends Application {
 		// wagon
 		schermBorder.setRight(GUIWagon.createWagonKeuzeMenu());
 
-		scene = new Scene(schermBorder, 900, 900);
+		scene = new Scene(schermBorder, 1350, 1000);
 
 		window.setTitle("RichRail");
 		window.setScene(scene);
@@ -58,9 +59,12 @@ public class GUItest extends Application {
 		VBox vb = new VBox();
 		for (Locomotief locomotief : spoor.getLocomotiefen()) {
 			final HBox hb = new HBox();
-
+			Label locomotiefLbl = new Label(); 
+			String naam = locomotief.getNaam();
+			locomotiefLbl.setText(naam);
+			locomotiefLbl.setMinWidth(100);
 			ImageView locomotiefImg = createLocomotief();
-			hb.getChildren().add(locomotiefImg);
+			hb.getChildren().addAll(locomotiefLbl,locomotiefImg);
 
 			locomotief.getWagonnenFromDatabase();
 			for (Wagon wagon : locomotief.getWagons()) {
@@ -69,12 +73,15 @@ public class GUItest extends Application {
 			}
 
 			hb.setSpacing(5);
-			vb.getChildren().add(hb);
+			
+			vb.getChildren().addAll(hb);
+		
 		}
-
-		scherm1.getChildren().add(vb);
+	
+		scherm1.getChildren().addAll(vb);
 	}
-
+	
+	
 	private static ImageView createLocomotief() {
 
 		Image LocomotiefImg = new Image("file:locomotief (3).jpg");
@@ -113,9 +120,9 @@ public class GUItest extends Application {
 
 	private static VBox creatVBox() {
 		VBox vbox = new VBox();
-		vbox.setPrefHeight(350);
+		vbox.setPrefHeight(250);
 		vbox.prefWidthProperty().bind(schermBorder.widthProperty());
-		vbox.setStyle(" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold;");
+		vbox.setStyle("  -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold;");
 		vbox.setAlignment(Pos.BASELINE_LEFT);
 		return vbox;
 	}

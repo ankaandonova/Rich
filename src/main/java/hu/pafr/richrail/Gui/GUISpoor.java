@@ -4,13 +4,16 @@ import java.io.FileNotFoundException;
 import hu.pafr.richrail.spoor.Spoor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class GUISpoor {
 	protected static ChoiceBox<String> choiceSpoor;
@@ -22,6 +25,7 @@ public class GUISpoor {
 	protected static Spoor geselecteerdeSpoor;
 	protected static Label spoorLbl;
 	protected static Button cmd;
+	
 	public static Pane createSpoorKeuzeMenu() throws FileNotFoundException {
 		Pane paneSpoor = createPane();
 
@@ -94,20 +98,57 @@ public class GUISpoor {
 				e1.printStackTrace();
 			}
 		});
+		
+		
+		cmd.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				BorderPane schermBorder = new BorderPane();
+				
+				HBox hbox = new HBox();
+				VBox vbox = new VBox();
+				TextField text = new TextField();
+				Button commit = new Button("commit");
+				Label label = new Label("messege");
+				commit.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent event) {
+						GUIcmd.setText(label, text);
+					}
+				});
+	
+				vbox= GUIcmd.createVBox();
+				vbox.getChildren().addAll(label);
+				hbox.getChildren().addAll(text, commit);
+				
+				schermBorder.setTop(vbox);
+				schermBorder.setCenter(hbox);
+
+				Scene secondScene = new Scene(schermBorder, 500, 300);
+				
+				Stage newWindow = new Stage();
+				newWindow.setTitle("RichRail cmd");
+				newWindow.setScene(secondScene);
+				newWindow.show();
+	
+			}
+
+	
+		});
 	}
 
 	protected static Pane createPane() {
 		Pane pane = new Pane();
-		pane.setPrefWidth(450);
-		pane.setStyle(
-				" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
+		pane.setMinWidth(450);
+		pane.setStyle(" -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
 		return pane;
 	}
 
 	protected static Label SpoorLbl() {
 		Label SpoorLbl = new Label("Kies een spoor");
 		SpoorLbl.setLayoutX(5);
-		SpoorLbl.setLayoutY(10);
+		SpoorLbl.setLayoutY(40);
 		return SpoorLbl;
 	}
 
@@ -115,7 +156,7 @@ public class GUISpoor {
 		HBox Spoor_HBox = new HBox();
 		Spoor_HBox.getChildren().addAll(choiceSpoor = new ChoiceBox<>(), selectSpoor = new Button("select"));
 		Spoor_HBox.setLayoutX(5);
-		Spoor_HBox.setLayoutY(40);
+		Spoor_HBox.setLayoutY(60);
 		return Spoor_HBox;
 	}
 
@@ -125,7 +166,7 @@ public class GUISpoor {
 				lengteSpoor = new TextField());
 
 		VBox.setLayoutX(5);
-		VBox.setLayoutY(65);
+		VBox.setLayoutY(85);
 		return VBox;
 	}
 
@@ -134,7 +175,7 @@ public class GUISpoor {
 		HBox.getChildren().addAll(deleteSpoor = new Button("delete"), addSpoor = new Button("Toevoegen/wijzigen"));
 
 		HBox.setLayoutX(5);
-		HBox.setLayoutY(170);
+		HBox.setLayoutY(190);
 		return HBox;
 	}
 
@@ -143,6 +184,7 @@ public class GUISpoor {
 		spoorLbl.setLayoutX(5);
 		spoorLbl.setLayoutY(0);
 
+		spoorLbl.setStyle("-fx-font-size: 20; -fx-padding: 5 60 5 60; ");
 		return spoorLbl;
 	}
 	
