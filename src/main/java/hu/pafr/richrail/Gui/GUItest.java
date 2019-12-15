@@ -30,12 +30,12 @@ public class GUItest extends Application {
 	private BorderPane schermBorder;
 	private static VBox scherm1;
 
-	static List<Locomotief> values = new ArrayList<Locomotief>();
-	static Label[] labels = new Label[values.size()];
-	static ProgressBar[] pbs = new ProgressBar[values.size()];
-	static ProgressIndicator[] pins = new ProgressIndicator[values.size()];
-	static HBox hbs[] = new HBox[values.size()];
-	
+	final static Float[] values = new Float[] { -1.0f, 0f, 0.6f, 1.0f, 0.5f };
+	final static Label[] labels = new Label[values.length];
+	final static ProgressBar[] pbs = new ProgressBar[values.length];
+	final static ProgressIndicator[] pins = new ProgressIndicator[values.length];
+	final static HBox hbs[] = new HBox[values.length];
+
 	@Override
 	public void start(Stage window) throws Exception, InvocationTargetException {
 		schermBorder = new BorderPane();
@@ -67,27 +67,24 @@ public class GUItest extends Application {
 
 	public static void createTrain(int spoorNummer) throws FileNotFoundException {
 		scherm1.getChildren().clear();
-		
+
 		Group root = new Group();
 		Scene scene = new Scene(root, 300, 150);
 		Spoor spoor = new Spoor(spoorNummer, 0.0);
-		
+
 		spoor.getLocomotiefenFromDatabase();
-		values = spoor.getLocomotiefen();
+		spoor.getLocomotiefen().size();
 		System.out.println("===========================");
-		System.out.println("size " + values.size());
-		for (int i = 0; i < values.size(); i++) {
-			System.out.println(values);
-			System.out.println(values.size()+1);
-			System.out.println(i);
-			final Label label = new Label();
-			label.setText("progress:" + values.get(i));
+		System.out.println(spoor.getLocomotiefen().size());
+		for (int i = 0; i < spoor.getLocomotiefen().size(); i++) {
+			final Label label = labels[i] = new Label();
+			label.setText("progress:" + values[i]);
 
-			final ProgressBar pb  = new ProgressBar();
-			//pb.setProgress(values.get(i));
+			final ProgressBar pb = pbs[i] = new ProgressBar();
+			pb.setProgress(values[i]);
 
-			final ProgressIndicator pin = new ProgressIndicator();
-			//pin.setProgress(values.get(i));
+			final ProgressIndicator pin = pins[i] = new ProgressIndicator();
+			pin.setProgress(values[i]);
 			
 			final HBox hb = hbs[i] = new HBox();
 			hb.setSpacing(5);
@@ -95,10 +92,15 @@ public class GUItest extends Application {
 			hb.getChildren().addAll(label, pb, pin);
 		}
 
-		final VBox vb = new VBox();
+		VBox vb = new VBox();
 		vb.setSpacing(5);
-		vb.getChildren().addAll(hbs);
+		if(hbs != null) {
+			vb.getChildren().addAll(hbs);			
+		} else {
+			System.out.println("werkt niettt!!!");
+		}
 		scherm1.getChildren().add(vb);
+
 	}
 
 	public static ImageView createLocomotief() {
@@ -106,8 +108,7 @@ public class GUItest extends Application {
 		Image LocomotiefImg = new Image("file:locomotief.jpg");
 		ImageView imgVw = new ImageView();
 		imgVw.setImage(LocomotiefImg);
-		
-		
+
 		return imgVw;
 	}
 
