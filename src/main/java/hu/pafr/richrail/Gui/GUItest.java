@@ -9,6 +9,7 @@ import hu.pafr.richrail.wagon.Wagon;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -18,7 +19,7 @@ import javafx.stage.Stage;
 
 public class GUItest extends Application {
 	private Scene scene;
-	private BorderPane schermBorder;
+	private static BorderPane schermBorder;
 	private static VBox scherm1;
 
 	@Override
@@ -27,8 +28,10 @@ public class GUItest extends Application {
 		// draw
 
 		scherm1 = creatVBox();
-
-		schermBorder.setTop(scherm1);
+		ScrollPane sc = new ScrollPane();
+		sc.setContent(scherm1);
+		schermBorder.setTop(sc);
+		
 
 		// spoor
 		schermBorder.setLeft(GUISpoor.createSpoorKeuzeMenu());
@@ -74,29 +77,44 @@ public class GUItest extends Application {
 
 	private static ImageView createLocomotief() {
 
-		Image LocomotiefImg = new Image("file:locomotief.jpg");
+		Image LocomotiefImg = new Image("file:locomotief (3).jpg");
 		ImageView imgVw = new ImageView();
 		imgVw.setImage(LocomotiefImg);
-
+		imgVw.setFitHeight(200);
+		imgVw.setFitWidth(200);
 		return imgVw;
 	}
 
 	private static ImageView createWagon(Wagon wagon) throws FileNotFoundException {
 		if (wagon.getBedden() > 0) {
 			Image slaapWagonImg = new Image("file:slaapwagon.jpg");
-			return new ImageView(slaapWagonImg);
+			ImageView imgVw = new ImageView();
+			imgVw.setImage(slaapWagonImg);
+			imgVw.setFitHeight(190);
+			imgVw.setFitWidth(300);
+			return imgVw;
 		} else if (wagon.getStoelen() > 0) {
 			Image personenWagonImg = new Image("file:personenwagon.jpg");
-			return new ImageView(personenWagonImg);
+			ImageView imgVw = new ImageView();
+			imgVw.setImage(personenWagonImg);
+			imgVw.setFitHeight(120);
+			imgVw.setFitWidth(300);
+		
+			return imgVw;
 		} else {
 			Image transportWagonfImg = new Image("file:transportwagon.jpg");
-			return new ImageView(transportWagonfImg);
+			ImageView imgVw = new ImageView();
+			imgVw.setImage(transportWagonfImg);
+			imgVw.setFitHeight(190);
+			imgVw.setFitWidth(300);
+			return imgVw;
 		}
 	}
 
 	private static VBox creatVBox() {
 		VBox vbox = new VBox();
-		vbox.setPrefWidth(450);
+		vbox.setPrefHeight(350);
+		vbox.prefWidthProperty().bind(schermBorder.widthProperty());
 		vbox.setStyle(" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold;");
 		vbox.setAlignment(Pos.BASELINE_LEFT);
 		return vbox;
