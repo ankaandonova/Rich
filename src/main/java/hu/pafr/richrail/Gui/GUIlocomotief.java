@@ -113,8 +113,31 @@ public class GUIlocomotief {
 			}
 		});
 
-		deleteLocomotief.setOnAction(e -> deleteChoiceLocomotief(choiceLocomotief));
-
+		deleteLocomotief.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				String locomotiefNaam = choiceLocomotief.getValue();
+				choiceLocomotief.getItems().remove(locomotiefNaam);
+				Builder builder = new LocomotiefBuilder();
+				builder.setNaam(locomotiefNaam);
+				Locomotief locomotief = builder.build();
+				locomotief.remove();
+				
+				try {
+					GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+				} catch (FileNotFoundException eeee) {
+					eeee.printStackTrace();
+				}
+			}
+		});
+		
+//		clone.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent e) {
+//				System.out.println("anka!!!!!!!!!!!!!!!");
+//			}
+//		});
+		
 		addLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -127,6 +150,7 @@ public class GUIlocomotief {
 				builder.setLengte(Double.parseDouble(locomotiefLengte.getText()));
 				builder.setStoelen(Integer.parseInt(locomotiefStoelen.getText()));
 				Locomotief locomotief = builder.build();
+				locomotief.setSpoor(GUISpoor.geselecteerdeSpoor);
 
 				try {
 					if (!locomotief.update()) {
@@ -134,6 +158,8 @@ public class GUIlocomotief {
 						GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 
 						choiceLocomotief.getItems().add(locomotief.getNaam());
+					} else {
+						GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 					}
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -265,12 +291,4 @@ public class GUIlocomotief {
 		GUIWagon.WagonEventHandler(geselecteerdeLocomotief);
 	}
 
-	protected static void deleteChoiceLocomotief(ChoiceBox<String> choiceLocmotief) {
-		String locomotiefNaam = choiceLocmotief.getValue();
-		choiceLocmotief.getItems().remove(locomotiefNaam);
-		Builder builder = new LocomotiefBuilder();
-		builder.setNaam(locomotiefNaam);
-		Locomotief locomotief = builder.build();
-		locomotief.remove();
-	}
 }
