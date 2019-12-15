@@ -69,6 +69,7 @@ public class GUIWagon {
 		
 		for(Wagon wagon : Wagon.getLosseWagonsFromDatabase()) {
 			choiceLosseWagon.getItems().add(wagon.getNaam());
+			choiceLosseWagon.setValue(wagon.getNaam());
 		}
 		
 		selectLosseWagon.setOnAction(new EventHandler<ActionEvent>() {

@@ -5,8 +5,6 @@ import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
 import hu.pafr.richrail.spoor.Spoor;
-import hu.pafr.richrail.wagon.Wagon;
-import hu.pafr.richrail.wagon.WagonFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -85,6 +83,7 @@ public class GUIlocomotief {
 	}
 
 	protected static void loadSporenSwitch() throws FileNotFoundException {
+		wisselVanSpoor.getItems().clear();
 		for (Spoor spoor : Spoor.getSporenFromDatabase()) {
 			wisselVanSpoor.getItems().add(Integer.toString(spoor.getNummer()));
 		}

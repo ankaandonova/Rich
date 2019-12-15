@@ -34,7 +34,7 @@ public class SpoorDaoImpl implements SpoorDao {
 		}
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	public boolean remove(Spoor spoor) throws FileNotFoundException {
 		JSONObject databaseObject = database.getDatabaseJson();
 		JSONArray sporen = (JSONArray) databaseObject.get("sporen");
