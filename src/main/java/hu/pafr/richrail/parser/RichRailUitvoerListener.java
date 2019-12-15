@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 import hu.pafr.richrail.Gui.GUI;
 import hu.pafr.richrail.Gui.GUISpoor;
+import hu.pafr.richrail.Gui.GUIlocomotief;
 import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
@@ -207,7 +208,7 @@ public class RichRailUitvoerListener implements RichRailListener {
 			Locomotief locomotief = builder.build();
 			try {
 				if(locomotief.remove()) {
-					this.message = "train "+locomotief.getNaam()+" is succesvol verwijderd.";	
+					this.message = "train "+locomotief.getNaam()+" is succesvol verwijderd.";
 				} else {
 					this.message = "train "+locomotief.getNaam()+" is succesvol verwijderd.";				
 				}
