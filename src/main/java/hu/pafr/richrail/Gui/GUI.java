@@ -33,15 +33,19 @@ public class GUI extends Application {
 		sc.setContent(scherm1);
 		schermBorder.setTop(sc);
 		
-
+	
 		// spoor
+		
 		schermBorder.setLeft(GUISpoor.createSpoorKeuzeMenu());
 		// trein
-		schermBorder.setCenter(GUIlocomotief.createLocomotiefKeuzeMenu());
+		ScrollPane scLocomotief = new ScrollPane();
+		scLocomotief.setContent(GUIlocomotief.createLocomotiefKeuzeMenu());
+		schermBorder.setCenter(scLocomotief);
 		// wagon
+	
 		schermBorder.setRight(GUIWagon.createWagonKeuzeMenu());
-		
-		scene = new Scene(schermBorder, 1350, 1000);
+
+		scene = new Scene(schermBorder, 1350, 400);
 
 		window.setTitle("RichRail");
 		window.setScene(scene);
