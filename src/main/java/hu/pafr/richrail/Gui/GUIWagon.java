@@ -184,37 +184,16 @@ public class GUIWagon {
 
 	protected static Pane createPane() {
 		Pane pane = new Pane();
-		pane.setPrefWidth(450);
-		pane.setStyle(" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
+		pane.setMinWidth(450);
+		pane.setStyle("  -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
 		return pane;
 	}
 
 	protected static Label SelectWagon() {
 		Label SelectWagon = new Label("Kies een wagon op geselecteerde locomotief");
 		SelectWagon.setLayoutX(5);
-		SelectWagon.setLayoutY(10);
+		SelectWagon.setLayoutY(40);
 		return SelectWagon;
-	}
-
-	protected static Label losseWagons() {
-		Label losseWagons = new Label("Kies een losse wagon");
-		losseWagons.setLayoutX(5);
-		losseWagons.setLayoutY(60);
-		return losseWagons;
-	}
-
-	protected static Label wisselenLbl() {
-		Label wisselen = new Label("Wissel van locomotief");
-		wisselen.setLayoutX(5);
-		wisselen.setLayoutY(290);
-		return wisselen;
-	}
-
-	protected static Label loskoppelenLbl() {
-		Label loskoppelenLbl = new Label("Wagon loskoppelen");
-		loskoppelenLbl.setLayoutX(5);
-		loskoppelenLbl.setLayoutY(340);
-		return loskoppelenLbl;
 	}
 
 	protected static HBox Wagon_HBox() {
@@ -222,8 +201,15 @@ public class GUIWagon {
 		Wagon_HBox.getChildren().addAll(choiceWagon = new ChoiceBox<>(), selectWagon = new Button("select"));
 
 		Wagon_HBox.setLayoutX(5);
-		Wagon_HBox.setLayoutY(30);
+		Wagon_HBox.setLayoutY(60);
 		return Wagon_HBox;
+	}
+
+	protected static Label losseWagons() {
+		Label losseWagons = new Label("Kies een losse wagon");
+		losseWagons.setLayoutX(5);
+		losseWagons.setLayoutY(90);
+		return losseWagons;
 	}
 
 	protected static HBox HBox() {
@@ -231,37 +217,53 @@ public class GUIWagon {
 		HBox.getChildren().addAll(choiceLosseWagon = new ChoiceBox<>(), selectLosseWagon = new Button("select"));
 
 		HBox.setLayoutX(5);
-		HBox.setLayoutY(80);
+		HBox.setLayoutY(110);
 		return HBox;
 	}
-
+	
 	protected static VBox Wagon_VBox() {
 		VBox Wagon_VBox = new VBox();
 		Wagon_VBox.getChildren().addAll(new Label("Naam"), wagonNaam = new TextField(), new Label("Stoelen"),
 				wagonStoel = new TextField(), new Label("Bedden"), wagonBedden = new TextField());
 
 		Wagon_VBox.setLayoutX(5);
-		Wagon_VBox.setLayoutY(110);
+		Wagon_VBox.setLayoutY(140);
 		return Wagon_VBox;
 	}
-
+	
 	protected static HBox hbox() {
 		HBox hbox = new HBox();
 		hbox.getChildren().addAll(deleteWagon = new Button("delete"), clone = new Button("clone"),
 				addWagon = new Button("Toevoegen/wijzigen"));
 
 		hbox.setLayoutX(5);
-		hbox.setLayoutY(250);
+		hbox.setLayoutY(290);
 		return hbox;
 	}
+
+	protected static Label wisselenLbl() {
+		Label wisselen = new Label("Wissel van locomotief");
+		wisselen.setLayoutX(5);
+		wisselen.setLayoutY(320);
+		return wisselen;
+	}
+	
 
 	protected static HBox Wisselen_hbox() {
 		HBox Wisselen_hbox = new HBox();
 		Wisselen_hbox.getChildren().addAll(wisselVanLocomotief = new ChoiceBox<>(), wissel = new Button("wissel"));
 
 		Wisselen_hbox.setLayoutX(5);
-		Wisselen_hbox.setLayoutY(310);
+		Wisselen_hbox.setLayoutY(340);
 		return Wisselen_hbox;
+	}
+
+
+	protected static Label loskoppelenLbl() {
+		Label loskoppelenLbl = new Label("Wagon loskoppelen");
+		loskoppelenLbl.setLayoutX(5);
+		loskoppelenLbl.setLayoutY(370);
+		return loskoppelenLbl;
 	}
 
 	protected static HBox Loskoppelen_hbox() {
@@ -270,7 +272,7 @@ public class GUIWagon {
 				loskoppelen = new Button("loskoppelen"));
 
 		Loskoppelen_hbox.setLayoutX(5);
-		Loskoppelen_hbox.setLayoutY(360);
+		Loskoppelen_hbox.setLayoutY(390);
 		return Loskoppelen_hbox;
 	}
 	
@@ -278,6 +280,7 @@ public class GUIWagon {
 		wagon = new Label ("wagon naam");
 		wagon.setLayoutX(5);
 		wagon.setLayoutY(0);
+		wagon.setStyle("-fx-font-size: 20; -fx-padding: 5 60 5 60; ");
 		return wagon;
 	}
 	

@@ -219,14 +219,28 @@ public class GUIlocomotief {
 		pane.setStyle("  -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
 		return pane;
 	}
+	
+	protected static Label kiesLocomotief() {
+		Label kiesLocomotief = new Label("Kies een locomotief op geselecteerde spoor");
+		kiesLocomotief.setLayoutX(5);
+		kiesLocomotief.setLayoutY(40);
+		return kiesLocomotief;
+	}
 
 	protected static HBox HBox() {
 		HBox HBox = new HBox();
 		HBox.getChildren().addAll(choiceLocomotief = new ChoiceBox<>(), selectLocomotief = new Button("select"));
 
 		HBox.setLayoutX(5);
-		HBox.setLayoutY(50);
+		HBox.setLayoutY(60);
 		return HBox;
+	}
+	
+	protected static Label kiesLosseLocomotief() {
+		Label kiesLosseLocomotief = new Label("Kies een losse locomotief");
+		kiesLosseLocomotief.setLayoutX(5);
+		kiesLosseLocomotief.setLayoutY(90);
+		return kiesLosseLocomotief;
 	}
 
 	protected static HBox Locomotief_HBox() {
@@ -235,7 +249,7 @@ public class GUIlocomotief {
 				selectLosseLocomotief = new Button("select"));
 
 		Locomotief_HBox.setLayoutX(5);
-		Locomotief_HBox.setLayoutY(100);
+		Locomotief_HBox.setLayoutY(110);
 		return Locomotief_HBox;
 	}
 
@@ -248,7 +262,7 @@ public class GUIlocomotief {
 				locomotiefStoelen = new TextField());
 
 		vbox.setLayoutX(5);
-		vbox.setLayoutY(130);
+		vbox.setLayoutY(140);
 		return vbox;
 	}
 
@@ -258,8 +272,15 @@ public class GUIlocomotief {
 				clone = new Button("clone"),
 				addLocomotief = new Button("Toevoegen/wijzigen"));
 		hbox.setLayoutX(5);
-		hbox.setLayoutY(420);
+		hbox.setLayoutY(450);
 		return hbox;
+	}
+	
+	protected static Label WisselVanSpoor() {
+		Label WisselVanSpoor = new Label("Wissel van spoor");
+		WisselVanSpoor.setLayoutX(5);
+		WisselVanSpoor.setLayoutY(490);
+		return WisselVanSpoor;
 	}
 
 	protected static HBox Wisselen_hbox() {
@@ -267,8 +288,16 @@ public class GUIlocomotief {
 		Wisselen_hbox.getChildren().addAll(wisselVanSpoor = new ChoiceBox<>(), spoorWisselen = new Button("wisselen"));
 
 		Wisselen_hbox.setLayoutX(5);
-		Wisselen_hbox.setLayoutY(500);
+		Wisselen_hbox.setLayoutY(510);
 		return Wisselen_hbox;
+	}
+	
+
+	protected static Label Loskoppelen() {
+		Label Loskoppelen = new Label("Locomotief loskoppelen");
+		Loskoppelen.setLayoutX(5);
+		Loskoppelen.setLayoutY(540);
+		return Loskoppelen;
 	}
 
 	protected static HBox Loskoppelen_hbox() {
@@ -276,36 +305,8 @@ public class GUIlocomotief {
 		Loskoppelen_hbox.getChildren().addAll(loskoppelenVanSpoor = new Button("loskoppelen"));
 
 		Loskoppelen_hbox.setLayoutX(5);
-		Loskoppelen_hbox.setLayoutY(530);
+		Loskoppelen_hbox.setLayoutY(560);
 		return Loskoppelen_hbox;
-	}
-
-	protected static Label kiesLocomotief() {
-		Label kiesLocomotief = new Label("Kies een locomotief op geselecteerde spoor");
-		kiesLocomotief.setLayoutX(5);
-		kiesLocomotief.setLayoutY(30);
-		return kiesLocomotief;
-	}
-
-	protected static Label kiesLosseLocomotief() {
-		Label kiesLosseLocomotief = new Label("Kies een losse locomotief");
-		kiesLosseLocomotief.setLayoutX(5);
-		kiesLosseLocomotief.setLayoutY(70);
-		return kiesLosseLocomotief;
-	}
-
-	protected static Label WisselVanSpoor() {
-		Label WisselVanSpoor = new Label("Wissel van spoor");
-		WisselVanSpoor.setLayoutX(5);
-		WisselVanSpoor.setLayoutY(450);
-		return WisselVanSpoor;
-	}
-
-	protected static Label Loskoppelen() {
-		Label Loskoppelen = new Label("Locomotief loskoppelen");
-		Loskoppelen.setLayoutX(5);
-		Loskoppelen.setLayoutY(530);
-		return Loskoppelen;
 	}
 
 	protected static Label locomotief() {
