@@ -45,6 +45,7 @@ public class LocomotiefDaoImpl implements LocomotiefDao {
 		JSONObject databaseObject = database.getDatabaseJson();
 		JSONArray alleLocomotiefen = (JSONArray) databaseObject.get("locomotiefen");
 		Iterator iterator = alleLocomotiefen.iterator();
+		System.out.println("================fnsdjkfbdjkjfnsjkfnksnkjnfdkjsnfdsk============");
 		while (iterator.hasNext()) {
 			JSONObject locomotiefObject = (JSONObject) iterator.next();
 			Locomotief locomotiefFromDatabase = adapter.getLocomotiefFromJsonObject(locomotiefObject);

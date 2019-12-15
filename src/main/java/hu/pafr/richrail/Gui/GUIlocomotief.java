@@ -39,8 +39,6 @@ public class GUIlocomotief {
 	protected static Pane createLocomotiefKeuzeMenu() throws FileNotFoundException {
 		Pane paneLocomotief = createPane();
 
-
-
 		HBox HBox = HBox();
 		HBox Locomotief_HBox = Locomotief_HBox();
 		VBox vbox = vbox();
@@ -54,7 +52,7 @@ public class GUIlocomotief {
 		Label locomotief = locomotief();
 
 		paneLocomotief.getChildren().addAll(HBox, kiesLocomotief, kiesLosseLocomotief, Locomotief_HBox, vbox, hbox,
-				WisselVanSpoor, Wisselen_hbox, Loskoppelen, Loskoppelen_hbox,locomotief);
+				WisselVanSpoor, Wisselen_hbox, Loskoppelen, Loskoppelen_hbox, locomotief);
 
 		Spoor spoor = new Spoor(0, 0.0);
 		LocomotiefEventHanler(spoor);
@@ -62,35 +60,33 @@ public class GUIlocomotief {
 		loadLosseLocomotieven();
 		return paneLocomotief;
 	}
-	
+
 	protected static void loadLosseLocomotieven() {
 		choiceLosseLocomotief.getItems().clear();
-		for(Locomotief locomotief : Locomotief.getLosseLocomotieven()) {
+		for (Locomotief locomotief : Locomotief.getLosseLocomotieven()) {
 			choiceLosseLocomotief.setValue(locomotief.getNaam());
 			choiceLosseLocomotief.getItems().add(locomotief.getNaam());
 		}
-		
+
 		selectLosseLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-//				try {
-//					getChoiceLosseLocomotief(choiceLosseLocomotief);
-//					GUItest.createLocomotief();
-//					getGeselecteerdeLosseLocomotief(choiceLosseLocomotief);
-//				} catch (FileNotFoundException e1) {
-//					e1.printStackTrace();
-//				}
+				try {
+					getChoiceLocomotief(choiceLosseLocomotief.getValue());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
-	
+
 	protected static void loadSporenSwitch() throws FileNotFoundException {
 		Spoor.getSporenFromDatabase();
 	}
 
 	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
 		choiceLocomotief.getItems().clear();
-		//zet de locomotieven van het geselcteerde spoor in de lijst
+		// zet de locomotieven van het geselcteerde spoor in de lijst
 		if (spoor.getNummer() != 0) {
 			spoor.getLocomotiefenFromDatabase();
 			Locomotief laatsteLocomotief = null;
@@ -98,20 +94,18 @@ public class GUIlocomotief {
 				laatsteLocomotief = locomotief;
 				choiceLocomotief.getItems().add(locomotief.getNaam());
 			}
-			if(laatsteLocomotief != null) {
+			if (laatsteLocomotief != null) {
 				choiceLocomotief.setValue(laatsteLocomotief.getNaam());
-				getGeselecteerdeLosseLocomotief(choiceLocomotief);
-				getChoiceLocomotief(choiceLocomotief);
+				getChoiceLocomotief(choiceLocomotief.getValue());
 			}
 		}
-		
+
 		selectLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				try {
-					getGeselecteerdeLosseLocomotief(choiceLocomotief);
-					getChoiceLocomotief(choiceLocomotief);
-					getGeselecteerdeLocomotief(locomotief,choiceLocomotief);
+				try {				
+					getChoiceLocomotief(choiceLocomotief.getValue());
+					getGeselecteerdeLocomotief(locomotief, choiceLocomotief);
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -137,6 +131,8 @@ public class GUIlocomotief {
 				try {
 					if (!locomotief.update()) {
 						locomotief.save();
+						GUItest.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+
 						choiceLocomotief.getItems().add(locomotief.getNaam());
 					}
 				} catch (FileNotFoundException e1) {
@@ -149,7 +145,8 @@ public class GUIlocomotief {
 	protected static Pane createPane() {
 		Pane pane = new Pane();
 		pane.setPrefWidth(450);
-		pane.setStyle(" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
+		pane.setStyle(
+				" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
 		return pane;
 	}
 
@@ -205,8 +202,7 @@ public class GUIlocomotief {
 
 	protected static HBox Loskoppelen_hbox() {
 		HBox Loskoppelen_hbox = new HBox();
-		Loskoppelen_hbox.getChildren().addAll(
-				loskoppelenVanSpoor = new Button("loskoppelen"));
+		Loskoppelen_hbox.getChildren().addAll(loskoppelenVanSpoor = new Button("loskoppelen"));
 
 		Loskoppelen_hbox.setLayoutX(5);
 		Loskoppelen_hbox.setLayoutY(530);
@@ -240,34 +236,20 @@ public class GUIlocomotief {
 		Loskoppelen.setLayoutY(510);
 		return Loskoppelen;
 	}
-	
+
 	protected static Label locomotief() {
 		locomotief = new Label("locomotief naam");
 		locomotief.setLayoutX(5);
 		locomotief.setLayoutY(0);
 		return locomotief;
 	}
-	
-	public static void getGeselecteerdeLocomotief(Label locomotief,ChoiceBox<String> choiceLocmotief) {
+
+	public static void getGeselecteerdeLocomotief(Label locomotief, ChoiceBox<String> choiceLocmotief) {
 		String naam = choiceLocmotief.getValue();
 		locomotief.setText(naam);
 	}
 
-	protected static void getChoiceLocomotief(ChoiceBox<String> choiceLocmotief) throws FileNotFoundException {
-		String naam = choiceLocmotief.getValue();
-
-		Builder builder = new LocomotiefBuilder();
-		builder.setNaam(naam);
-		Locomotief locomotief1 = builder.build();
-
-		GUIWagon.WagonEventHandler(locomotief1);
-	}
-
-	protected static void getChoiceLosseLocomotief(ChoiceBox<String> choiceLosseLocomotief) throws FileNotFoundException {
-		choiceLosseLocomotief.getValue();
-	}
-	public static void getGeselecteerdeLosseLocomotief(ChoiceBox<String> choiceLosseLocomotief) throws FileNotFoundException {
-		String naamLocomotief = choiceLosseLocomotief.getValue();
+	protected static void getChoiceLocomotief(String naamLocomotief) throws FileNotFoundException {
 		Builder builder = new LocomotiefBuilder();
 		builder.setNaam(naamLocomotief);
 		geselecteerdeLocomotief = Locomotief.getLocomotiefFromDatabase(builder.build());
@@ -279,6 +261,8 @@ public class GUIlocomotief {
 		locomotiefLengte.setText(Double.toString(geselecteerdeLocomotief.getLengte()));
 		locomotiefNaam.setText(geselecteerdeLocomotief.getNaam());
 		locomotief.setText(naamLocomotief);
+
+		GUIWagon.WagonEventHandler(geselecteerdeLocomotief);
 	}
 
 	protected static void deleteChoiceLocomotief(ChoiceBox<String> choiceLocmotief) {

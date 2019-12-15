@@ -24,8 +24,7 @@ public class GUISpoor {
 
 	public static Pane createSpoorKeuzeMenu() throws FileNotFoundException {
 		Pane paneSpoor = createPane();
-	
-		
+
 		Label SpoorLbl = SpoorLbl();
 		HBox Spoor_HBox = Spoor_HBox();
 		VBox VBox = VBox();
@@ -35,7 +34,7 @@ public class GUISpoor {
 		paneSpoor.getChildren().addAll(SpoorLbl, Spoor_HBox, VBox, HBox, spoorLbl);
 		Spoor spoor = new Spoor(1, 0.0);
 		SpoorEventHandler(spoor);
-		
+
 		return paneSpoor;
 	}
 
@@ -99,7 +98,8 @@ public class GUISpoor {
 	protected static Pane createPane() {
 		Pane pane = new Pane();
 		pane.setPrefWidth(450);
-		pane.setStyle(" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
+		pane.setStyle(
+				" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
 		return pane;
 	}
 
@@ -136,14 +136,14 @@ public class GUISpoor {
 		HBox.setLayoutY(170);
 		return HBox;
 	}
-	
+
 	protected static Label spoor() {
-		spoorLbl = new Label ("spoor naam");
+		spoorLbl = new Label("spoor naam");
 		spoorLbl.setLayoutX(5);
 		spoorLbl.setLayoutY(0);
 		return spoorLbl;
 	}
-	
+
 	public static void getGeselecteerdeSpoor(ChoiceBox<String> choiceSpoor) {
 		String nummer = choiceSpoor.getValue();
 		geselecteerdeSpoor = new Spoor(Integer.parseInt(nummer), 0.0);
@@ -165,5 +165,12 @@ public class GUISpoor {
 		choiceSpoor.getItems().remove(spoorNummerString);
 		Spoor spoor = new Spoor(Integer.parseInt(spoorNummerString), 0.0);
 		spoor.remove();
+		
+		spoorNummer.setText(null);
+		lengteSpoor.setText(null);
+		spoorLbl.setText(null);
+
+		geselecteerdeSpoor = null;
+		GUItest.createTrain(0);
 	}
 }
