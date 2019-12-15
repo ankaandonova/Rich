@@ -142,12 +142,12 @@ public class GUISpoor {
 		spoorLbl = new Label("spoor naam");
 		spoorLbl.setLayoutX(5);
 		spoorLbl.setLayoutY(0);
+
 		return spoorLbl;
 	}
 	
 	protected static Button cmd() {
 		cmd= new Button("cmd");
-		cmd.setLayoutX(350);
 		cmd.setLayoutY(400);
 		return cmd;
 	}
@@ -157,6 +157,7 @@ public class GUISpoor {
 		geselecteerdeSpoor = new Spoor(Integer.parseInt(nummer), 0.0);
 		spoorNummer.setText(Integer.toString(geselecteerdeSpoor.getNummer()));
 		lengteSpoor.setText(Double.toString(geselecteerdeSpoor.getLengte()));
+
 		spoorLbl.setText(nummer);
 	}
 
