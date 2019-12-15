@@ -40,7 +40,7 @@ public class GUI extends Application {
 		schermBorder.setCenter(GUIlocomotief.createLocomotiefKeuzeMenu());
 		// wagon
 		schermBorder.setRight(GUIWagon.createWagonKeuzeMenu());
-
+		
 		scene = new Scene(schermBorder, 1350, 1000);
 
 		window.setTitle("RichRail");
@@ -70,12 +70,11 @@ public class GUI extends Application {
 				ImageView wagonImg = createWagon(wagon);
 				hb.getChildren().add(wagonImg);
 			}
-
 			hb.setSpacing(5);
-			
-			vb.getChildren().addAll(hb);
-		
+			vb.getChildren().addAll(hb);		
 		}
+		
+
 	
 		scherm1.getChildren().addAll(vb);
 	}

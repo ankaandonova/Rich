@@ -32,8 +32,8 @@ public class GUIlocomotief {
 	protected static TextField locomotiefLengte;
 	protected static TextField locomotiefNaam;
 	protected static TextField typeMotor;
-	protected static TextField  locomotiefHoogte;
-	protected static TextField  maxSnelheid;
+	protected static TextField locomotiefHoogte;
+	protected static TextField maxSnelheid;
 	protected static Locomotief geselecteerdeLocomotief;
 	protected static Label locomotiefLbl;
 
@@ -52,11 +52,12 @@ public class GUIlocomotief {
 		Label Loskoppelen = Loskoppelen();
 		Label locomotief = locomotief();
 
-		paneLocomotief.getChildren().addAll(HBox, kiesLocomotief, kiesLosseLocomotief, Locomotief_HBox, vbox, Clone_hbox,
-				WisselVanSpoor, Wisselen_hbox, Loskoppelen, Loskoppelen_hbox, locomotief);
+		paneLocomotief.getChildren().addAll(HBox, kiesLocomotief, kiesLosseLocomotief, Locomotief_HBox, vbox,
+				Clone_hbox, WisselVanSpoor, Wisselen_hbox, Loskoppelen, Loskoppelen_hbox, locomotief);
 
 		Spoor spoor = new Spoor(0, 0.0);
-		System.out.println("asdlhjibasfluifhiluasdhsdasbcflvibahsbdhjasbjhkdbnasijundijasblg;fsahilbdfjhcasbdlijcnasujndc;dasnjfbaij;sndc;iona");
+		System.out.println(
+				"asdlhjibasfluifhiluasdhsdasbcflvibahsbdhjasbjhkdbnasijundijasblg;fsahilbdfjhcasbdlijcnasujndc;dasnjfbaij;sndc;iona");
 		LocomotiefEventHanler(spoor);
 		loadSporenSwitch();
 		loadLosseLocomotieven();
@@ -83,10 +84,10 @@ public class GUIlocomotief {
 	}
 
 	protected static void loadSporenSwitch() throws FileNotFoundException {
-		for(Spoor spoor : Spoor.getSporenFromDatabase()){
+		for (Spoor spoor : Spoor.getSporenFromDatabase()) {
 			wisselVanSpoor.getItems().add(Integer.toString(spoor.getNummer()));
 		}
-		
+
 		spoorWisselen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -99,7 +100,7 @@ public class GUIlocomotief {
 				}
 			}
 		});
-		
+
 		loskoppelenVanSpoor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -113,8 +114,6 @@ public class GUIlocomotief {
 				}
 			}
 		});
-		
-
 	}
 
 	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
@@ -136,10 +135,10 @@ public class GUIlocomotief {
 		selectLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				try {				
+				try {
 					getChoiceLocomotief(choiceLocomotief.getValue());
 					getGeselecteerdeLocomotief(locomotiefLbl, choiceLocomotief);
-					
+
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -155,7 +154,7 @@ public class GUIlocomotief {
 				Builder builder = new LocomotiefBuilder();
 				builder.setNaam(locomotiefNaam1);
 				Locomotief locomotief = builder.build();
-				
+
 				try {
 					locomotief.remove();
 					maxSnelheid.setText(null);
@@ -174,7 +173,7 @@ public class GUIlocomotief {
 				}
 			}
 		});
-		
+
 		clone.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -193,7 +192,7 @@ public class GUIlocomotief {
 				}
 			}
 		});
-		
+
 		addLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -202,11 +201,28 @@ public class GUIlocomotief {
 				builder.setVertrekPunt(vertrekPunt.getText());
 				builder.setEindBestemming(eindBestemming.getText());
 				builder.setType_moter(typeMotor.getText());
-				builder.setLengte(Double.parseDouble(locomotiefLengte.getText()));
-				builder.setStoelen(Integer.parseInt(locomotiefStoelen.getText()));
-				builder.setMax_snelheid(Double.parseDouble(maxSnelheid.getText()));
-				builder.setHoogte(Double.parseDouble(locomotiefHoogte.getText()));
-				
+				System.out.println("'" + locomotiefLengte.getText().length() + "'");
+				if (locomotiefLengte.getText().length() != 0) {
+					builder.setLengte(Double.parseDouble(locomotiefLengte.getText()));
+				} else {
+					builder.setLengte(Double.parseDouble("0.0"));
+				}
+				if (locomotiefStoelen.getText().length() != 0) {
+					builder.setStoelen(Integer.parseInt(locomotiefStoelen.getText()));
+				} else {
+					builder.setStoelen(Integer.parseInt("0"));
+				}
+				if (maxSnelheid.getText().length() != 0) {
+					builder.setMax_snelheid(Double.parseDouble(maxSnelheid.getText()));
+				} else {
+					builder.setMax_snelheid(Double.parseDouble("0.0"));
+				}
+				if (locomotiefHoogte.getText().length() != 0) {
+					builder.setHoogte(Double.parseDouble(locomotiefHoogte.getText()));
+				} else {
+					builder.setHoogte(Double.parseDouble("0.0"));
+				}
+
 				Locomotief locomotief = builder.build();
 				locomotief.setSpoor(GUISpoor.geselecteerdeSpoor);
 
@@ -233,7 +249,7 @@ public class GUIlocomotief {
 		pane.setStyle("  -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
 		return pane;
 	}
-	
+
 	protected static Label kiesLocomotief() {
 		Label kiesLocomotief = new Label("Kies een locomotief op geselecteerde spoor");
 		kiesLocomotief.setLayoutX(5);
@@ -249,7 +265,7 @@ public class GUIlocomotief {
 		HBox.setLayoutY(60);
 		return HBox;
 	}
-	
+
 	protected static Label kiesLosseLocomotief() {
 		Label kiesLosseLocomotief = new Label("Kies een losse locomotief");
 		kiesLosseLocomotief.setLayoutX(5);
@@ -271,11 +287,10 @@ public class GUIlocomotief {
 		VBox vbox = new VBox();
 		vbox.getChildren().addAll(new Label("Naam"), locomotiefNaam = new TextField(), new Label("Vertrek punt"),
 				vertrekPunt = new TextField(), new Label("Eind bestemming"), eindBestemming = new TextField(),
-				new Label("Type motor"), typeMotor = new TextField(),
-				new Label("Lengte"), locomotiefLengte = new TextField(),
-				new Label("Hoogte"), locomotiefHoogte = new TextField(),
-				new Label("Maximum snelheid"), maxSnelheid = new TextField(),
-				new Label("Stoelen"), locomotiefStoelen = new TextField());
+				new Label("Type motor"), typeMotor = new TextField(), new Label("Lengte"),
+				locomotiefLengte = new TextField(), new Label("Hoogte"), locomotiefHoogte = new TextField(),
+				new Label("Maximum snelheid"), maxSnelheid = new TextField(), new Label("Stoelen"),
+				locomotiefStoelen = new TextField());
 
 		vbox.setLayoutX(5);
 		vbox.setLayoutY(140);
@@ -284,14 +299,13 @@ public class GUIlocomotief {
 
 	protected static HBox Clone_hbox() {
 		HBox hbox = new HBox();
-		hbox.getChildren().addAll(deleteLocomotief = new Button("delete"), 
-				clone = new Button("clone"),
+		hbox.getChildren().addAll(deleteLocomotief = new Button("delete"), clone = new Button("clone"),
 				addLocomotief = new Button("Toevoegen/wijzigen"));
 		hbox.setLayoutX(5);
 		hbox.setLayoutY(480);
 		return hbox;
 	}
-	
+
 	protected static Label WisselVanSpoor() {
 		Label WisselVanSpoor = new Label("Wissel van spoor");
 		WisselVanSpoor.setLayoutX(5);
@@ -307,7 +321,6 @@ public class GUIlocomotief {
 		Wisselen_hbox.setLayoutY(540);
 		return Wisselen_hbox;
 	}
-	
 
 	protected static Label Loskoppelen() {
 		Label Loskoppelen = new Label("Locomotief loskoppelen");
@@ -335,9 +348,9 @@ public class GUIlocomotief {
 
 	public static void getGeselecteerdeLocomotief(Label locomotief, ChoiceBox<String> choiceLocmotief) {
 		String naam = choiceLocmotief.getValue();
-		locomotief.setText("locomotief naam: "+ naam);
+		locomotief.setText("locomotief naam: " + naam);
 	}
-	
+
 	protected static void getChoiceLocomotief(String naamLocomotief) throws FileNotFoundException {
 		Builder builder = new LocomotiefBuilder();
 		builder.setNaam(naamLocomotief);
@@ -350,7 +363,7 @@ public class GUIlocomotief {
 		locomotiefNaam.setText(geselecteerdeLocomotief.getNaam());
 		locomotiefHoogte.setText(Double.toString(geselecteerdeLocomotief.getHoogte()));
 		maxSnelheid.setText(Double.toString(geselecteerdeLocomotief.getMax_snelheid()));
-		locomotiefLbl.setText("locomotief naaam: " +naamLocomotief);
+		locomotiefLbl.setText("locomotief naaam: " + naamLocomotief);
 
 		GUIWagon.WagonEventHandler(geselecteerdeLocomotief);
 	}
