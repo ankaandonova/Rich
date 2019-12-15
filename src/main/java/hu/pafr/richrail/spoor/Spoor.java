@@ -48,13 +48,9 @@ public class Spoor {
 	public void getLocomotiefenFromDatabase() {
 		try {
 			for (Locomotief locomotef : locomotiefDao.getLocomotiefen()) {
-				System.out.println("==================" + nummer);
-				System.out.println(locomotef.getNaam());
 				if (locomotef.getSpoor() != null) {
 					// de locomotief heeft een spoor
-					System.out.println(locomotef.getSpoor().getNummer());
 					if (locomotef.getSpoor().getNummer() == nummer) {
-						System.out.println("dsahibdsaibdiuasiudshaiudhshabfdhijsabdnbusal");
 						// de locomotief hoort bij het spoor
 						locomotiefen.add(locomotef);
 					}
@@ -68,7 +64,6 @@ public class Spoor {
 
 	public void addLocomotief(Locomotief locomotief) {
 		locomotiefen.add(locomotief);
-		System.out.println(locomotiefen);
 	}
 
 	public List<Locomotief> getLocomotiefen() {
@@ -77,7 +72,6 @@ public class Spoor {
 
 	public void verwijderLocomotief(Locomotief locomotief) {
 		locomotiefen.remove(locomotief);
-		System.out.println(locomotiefen);
 	}
 
 	public int getNummer() {

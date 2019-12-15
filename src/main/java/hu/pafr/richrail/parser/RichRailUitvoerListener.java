@@ -100,7 +100,7 @@ public class RichRailUitvoerListener implements RichRailListener {
 
 	@Override
 	public void enterNewwagoncommand(NewwagoncommandContext ctx) {
-		System.out.println("enterNewwagoncommand");
+		//System.out.println("enterNewwagoncommand");
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class RichRailUitvoerListener implements RichRailListener {
 
 	@Override
 	public void enterAddcommand(AddcommandContext ctx) {
-		System.out.println("enterAddcommand");
+		//System.out.println("enterAddcommand");
 	}
 
 	@Override
@@ -144,6 +144,7 @@ public class RichRailUitvoerListener implements RichRailListener {
 		message = "Wagon "+ wagon.getNaam() + " is toegevoegd aan "+ locomotief.getNaam();
 		this.object = locomotief;
 		try {
+			locomotief.save();
 			wagon.save();
 			GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 		} catch (FileNotFoundException e) {
@@ -153,7 +154,7 @@ public class RichRailUitvoerListener implements RichRailListener {
 
 	@Override
 	public void enterGetcommand(GetcommandContext ctx) {
-		System.out.println("enterGetcommand");
+		//System.out.println("enterGetcommand");
 	}
 
 	@Override
@@ -193,7 +194,7 @@ public class RichRailUitvoerListener implements RichRailListener {
 
 	@Override
 	public void enterDelcommand(DelcommandContext ctx) {
-		System.out.println("enterDelcommand");
+		//System.out.println("enterDelcommand");
 
 	}
 
@@ -239,7 +240,7 @@ public class RichRailUitvoerListener implements RichRailListener {
 
 	@Override
 	public void enterRemcommand(RemcommandContext ctx) {
-		System.out.println("enterRemcommand");
+	//	System.out.println("enterRemcommand");
 
 	}
 
@@ -271,12 +272,12 @@ public class RichRailUitvoerListener implements RichRailListener {
 	//wordt niet gebruikt 
 	@Override
 	public void enterType(TypeContext ctx) {
-		System.out.println("enterType");
+	//	System.out.println("enterType");
 	}
 
 	@Override
 	public void exitType(TypeContext ctx) {
-		System.out.println("exitType");
+	//	System.out.println("exitType");
 
 	}
 

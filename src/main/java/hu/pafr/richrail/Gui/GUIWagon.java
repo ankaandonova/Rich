@@ -63,9 +63,7 @@ public class GUIWagon {
 	}
 
 	protected static void loadLocomotievenSwitch() {
-		System.out.println("loadLocomotievenSwitch");
 		for(Locomotief locomotief : Locomotief.getLocomotievenFromDatabase()){
-			System.out.println(locomotief.getNaam());
 			wisselVanLocomotief.getItems().add(locomotief.getNaam());
 		}
 		
@@ -143,7 +141,6 @@ public class GUIWagon {
 			locomotief.getWagonnenFromDatabase();
 			Wagon laatsteWagon = null; 
 			for (Wagon wagon : locomotief.getWagons()) {
-				System.out.println("wagon in de database  " + wagon.getNaam());
 				choiceWagon.setValue(wagon.getNaam());
 				choiceWagon.getItems().add(wagon.getNaam());
 				laatsteWagon = wagon;

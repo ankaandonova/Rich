@@ -19,7 +19,6 @@ public class SpoorDaoImpl implements SpoorDao {
 	public void save(Spoor spoor) throws FileNotFoundException {
 		JSONObject databaseObject = database.getDatabaseJson();
 		JSONArray alleSporen = (JSONArray) databaseObject.get("sporen");
-		System.out.println(getSpoor(spoor));
 		if(getSpoor(spoor) == null) {
 			alleSporen.add(adapter.spoorToJson(spoor));
 		} else {	
@@ -30,7 +29,6 @@ public class SpoorDaoImpl implements SpoorDao {
 		//locomotiefen van spoor opslaan
 		LocomotiefDao locomotiefDao = new LocomotiefDaoImpl();
 		for(Locomotief locomotief : spoor.getLocomotiefen()) {
-			System.out.println("locomotief "+locomotief.getNaam());
 			locomotief.setSpoor(spoor);
 			locomotiefDao.save(locomotief);
 		}

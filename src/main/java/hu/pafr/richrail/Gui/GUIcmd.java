@@ -59,7 +59,6 @@ public class GUIcmd extends Application {
 		RichRailUitvoerListener richrail =RichRailCli.voerCommandUit(invoer);
 		Object object = richrail.getObject();
 		String responseMessage = richrail.getMessage();
-		System.out.println("'"+responseMessage+"'");
 		if(responseMessage == null) {
 			label.setText("ongeldige syntax");
 		} else {

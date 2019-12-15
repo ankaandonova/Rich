@@ -58,8 +58,7 @@ public class GUIlocomotief {
 				Clone_hbox, WisselVanSpoor, Wisselen_hbox, Loskoppelen, Loskoppelen_hbox, locomotief);
 
 		Spoor spoor = new Spoor(0, 0.0);
-		System.out.println(
-				"asdlhjibasfluifhiluasdhsdasbcflvibahsbdhjasbjhkdbnasijundijasblg;fsahilbdfjhcasbdlijcnasujndc;dasnjfbaij;sndc;iona");
+
 		LocomotiefEventHanler(spoor);
 		loadSporenSwitch();
 		loadLosseLocomotieven();
@@ -196,7 +195,6 @@ public class GUIlocomotief {
 				}
 			}
 		});
-
 		addLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -205,7 +203,6 @@ public class GUIlocomotief {
 				builder.setVertrekPunt(vertrekPunt.getText());
 				builder.setEindBestemming(eindBestemming.getText());
 				builder.setType_moter(typeMotor.getText());
-				System.out.println("'" + locomotiefLengte.getText().length() + "'");
 				if (locomotiefLengte.getText().length() != 0) {
 					builder.setLengte(Double.parseDouble(locomotiefLengte.getText()));
 				} else {

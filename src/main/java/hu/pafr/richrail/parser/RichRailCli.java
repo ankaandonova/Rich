@@ -16,12 +16,9 @@ public class RichRailCli {
 	    Lexer lexer = new RichRailLexer(stream);
 
 	    CommonTokenStream tokens = new CommonTokenStream(lexer);
-        System.out.println("2");
         RichRailParser parser = new RichRailParser(tokens);
-        System.out.println("3");
         ParseTree tree = parser.command();
         
-     	System.out.println("1");
         RichRailUitvoerListener richrail = new RichRailUitvoerListener();
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(richrail, tree);
