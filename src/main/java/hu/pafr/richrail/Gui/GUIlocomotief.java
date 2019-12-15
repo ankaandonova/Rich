@@ -168,8 +168,6 @@ public class GUIlocomotief {
 					}
 					locomotief.remove();
 
-					GUIWagon.loadLocomotievenSwitch();
-					
 					maxSnelheid.setText(null);
 					vertrekPunt.setText(null);
 					eindBestemming.setText(null);
@@ -181,6 +179,8 @@ public class GUIlocomotief {
 					maxSnelheid.setText(null);
 					locomotiefLbl.setText(null);
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
+					
+					GUIWagon.loadLocomotievenSwitch();
 				} catch (FileNotFoundException eeee) {
 					eeee.printStackTrace();
 				}

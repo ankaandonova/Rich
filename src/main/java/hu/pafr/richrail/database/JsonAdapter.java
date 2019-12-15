@@ -87,9 +87,6 @@ public class JsonAdapter {
 		JSONObject wagonJson = new JSONObject();
 		wagonJson.put("naam", wagon.getNaam());
 		Locomotief locomotief = wagon.getLocomotief();
-		System.out.println("save");
-		System.out.println(wagon.getNaam());
-		System.out.println(wagon.getLocomotief().getNaam());
 		if (locomotief == null) {
 			wagonJson.put("locomotief", "");
 		} else {
