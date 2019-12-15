@@ -5,6 +5,8 @@ import hu.pafr.richrail.locomotief.Builder;
 import hu.pafr.richrail.locomotief.Locomotief;
 import hu.pafr.richrail.locomotief.LocomotiefBuilder;
 import hu.pafr.richrail.spoor.Spoor;
+import hu.pafr.richrail.wagon.Wagon;
+import hu.pafr.richrail.wagon.WagonFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -178,8 +180,10 @@ public class GUIlocomotief {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-					geselecteerdeLocomotief = (Locomotief) geselecteerdeLocomotief.clone();
 					try {
+						Locomotief cloner = Locomotief.getLocomotiefFromDatabase(geselecteerdeLocomotief);
+						geselecteerdeLocomotief = (Locomotief) cloner.clone();
+
 						choiceLocomotief.getItems().add(geselecteerdeLocomotief.getNaam());
 						choiceLocomotief.setValue(geselecteerdeLocomotief.getNaam());
 						getChoiceLocomotief(choiceLocomotief.getValue());

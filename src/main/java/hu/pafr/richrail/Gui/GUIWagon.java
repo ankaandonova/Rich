@@ -188,7 +188,16 @@ public class GUIWagon {
 			@Override
 			public void handle(ActionEvent e) {
 				Factory factory = new WagonFactory();
-				Wagon wagon = factory.createWagon(wagonNaam.getText(), Integer.parseInt(wagonStoel.getText()), Integer.parseInt(wagonBedden.getText()));
+				int stoelen = 0;
+				int bedden = 0;
+				if(wagonStoel.getText().length() != 0) {
+					stoelen = Integer.parseInt(wagonStoel.getText());
+				}
+				if(wagonBedden.getText().length() != 0) {
+					bedden = Integer.parseInt(wagonBedden.getText());
+				}
+				
+				Wagon wagon = factory.createWagon(wagonNaam.getText(), stoelen, bedden);
 				wagon.setLocomotief(GUIlocomotief.geselecteerdeLocomotief);
 				try {
 					if(!wagon.update()) {
