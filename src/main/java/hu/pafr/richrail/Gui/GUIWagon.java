@@ -69,6 +69,20 @@ public class GUIWagon {
 			wisselVanLocomotief.getItems().add(locomotief.getNaam());
 		}
 		
+		for(Wagon wagon : Wagon.getLosseWagonsFromDatabase()) {
+			choiceLosseWagon.getItems().add(wagon.getNaam());
+		}
+		
+		selectLosseWagon.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					getGeselecteerdeWagon(choiceLosseWagon.getValue());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		wissel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -89,7 +103,8 @@ public class GUIWagon {
 			public void handle(ActionEvent e) {
 				try {
 					geselecteerdeWagon.moveWagon(null);
-					System.out.println("=======moved biatchh!!!");
+					WagonEventHandler(GUIlocomotief.geselecteerdeLocomotief);
+					loadLocomotievenSwitch();
 					GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -101,8 +116,16 @@ public class GUIWagon {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-					geselecteerdeWagon.clone();
+					Wagon wagon = (Wagon) geselecteerdeWagon.clone();
 					try {
+						wagon.save();
+						if(wagon.getLocomotief() == null) {
+							choiceLosseWagon.getItems().add(wagon.getNaam());						
+							choiceLosseWagon.setValue(wagon.getNaam());			
+						} else {
+							choiceWagon.getItems().add(wagon.getNaam());						
+							choiceWagon.setValue(wagon.getNaam());							
+						}
 						GUI.createTrain(GUISpoor.geselecteerdeSpoor.getNummer());
 					} catch (FileNotFoundException e1) {
 						e1.printStackTrace();
@@ -127,17 +150,16 @@ public class GUIWagon {
 			}
 			if(laatsteWagon != null) {
 				choiceWagon.setValue(laatsteWagon.getNaam());
-				getGeselecteerdeWagon(choiceWagon);
-				getChoiceWagon(choiceWagon);
+				getGeselecteerdeWagon(choiceWagon.getValue());
 			}
 		}
 
 		selectWagon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				getChoiceWagon(choiceWagon);
+				
 				try {
-					getGeselecteerdeWagon(choiceWagon);
+					getGeselecteerdeWagon(choiceWagon.getValue());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -284,19 +306,14 @@ public class GUIWagon {
 		return wagon;
 	}
 	
-	public static void getGeselecteerdeWagon(ChoiceBox<String> choiceWagon) throws FileNotFoundException {
-		String wagonNaam1 = choiceWagon.getValue();
+	public static void getGeselecteerdeWagon(String choiceWagon) throws FileNotFoundException {
 		Factory factory = new WagonFactory();
-		geselecteerdeWagon = Wagon.getWagonDromDatabase(factory.createWagon(wagonNaam1, 0, 0));
-		wagonNaam.setText(wagonNaam1);
+		geselecteerdeWagon = Wagon.getWagonDromDatabase(factory.createWagon(choiceWagon, 0, 0));
+		wagonNaam.setText(choiceWagon);
 		wagonStoel.setText(Integer.toString(geselecteerdeWagon.getStoelen()));
 		wagonBedden.setText(Integer.toString(geselecteerdeWagon.getBedden()));
-		wagon.setText("wagon naam: " + wagonNaam1);
+		wagon.setText("wagon naam: " + choiceWagon);
 	}
 
-	public static void getChoiceWagon(ChoiceBox<String> choiceWagon) {
-		String wagon = choiceWagon.getValue();
-		System.out.print("choice wagon" + wagon);
-	}
 
 }
