@@ -81,7 +81,7 @@ public class GUISpoor {
 				try {
 					getChoiceSpoor(choiceSpoor);
 					getGeselecteerdeSpoor(choiceSpoor);
-					GUItest.createTrain(Integer.parseInt(choiceSpoor.getValue()));
+					GUI.createTrain(Integer.parseInt(choiceSpoor.getValue()));
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -223,6 +223,6 @@ public class GUISpoor {
 		spoorLbl.setText(null);
 
 		geselecteerdeSpoor = null;
-		GUItest.createTrain(0);
+		GUI.createTrain(0);
 	}
 }

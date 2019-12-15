@@ -18,7 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class GUItest extends Application {
+public class GUI extends Application {
 	private Scene scene;
 	private static BorderPane schermBorder;
 	private static VBox scherm1;
