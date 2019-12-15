@@ -10,7 +10,7 @@ import hu.pafr.richrail.locomotief.Locomotief;
 
 public class GoederenWagon implements Cloneable, Wagon {
 	private WagonDao wagonDao = new WagonDaoImpl();
-	
+
 	private String naam;
 	private int stoelen;
 	private int bedden;
@@ -27,36 +27,42 @@ public class GoederenWagon implements Cloneable, Wagon {
 		wagonDao.update(this);
 		return false;
 	}
-	
+
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Wagon wagon = (Wagon) super.clone();
-		wagon.setNaam(naam+"(1)");
-		try {
-			wagon.save();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		String naamWagon = wagon.getNaam();
+		while (true) {
+			naamWagon = naamWagon + "clone";
+			wagon.setNaam(naamWagon);
+			try {
+				Wagon w1 = Wagon.getWagonDromDatabase(wagon);
+				if (w1 == null) {
+					break;
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
-		return wagon; 
+		return wagon;
 	}
-	
+
 	public void save() throws FileNotFoundException {
 		wagonDao.save(this);
 	}
-	
+
 	public boolean update() throws FileNotFoundException {
 		return wagonDao.update(this);
 	};
 
-
 	public Locomotief getLocomotief() {
 		return locomotief;
 	}
-	
+
 	public void setLocomotief(Locomotief locomotief) {
 		this.locomotief = locomotief;
 	}
-	
+
 	public String getNaam() {
 		return naam;
 	}
