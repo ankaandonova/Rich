@@ -19,6 +19,7 @@ public class GUIlocomotief {
 	protected static ChoiceBox<String> choiceLocomotief;
 	protected static ChoiceBox<String> choiceLosseLocomotief;
 	protected static ChoiceBox<String> wisselVanSpoor;
+	protected static ChoiceBox<String> typeMotor;
 	protected static Button selectLocomotief;
 	protected static Button selectLosseLocomotief;
 	protected static Button deleteLocomotief;
@@ -28,7 +29,7 @@ public class GUIlocomotief {
 	protected static Button loskoppelenVanSpoor;
 	protected static TextField vertrekPunt;
 	protected static TextField eindBestemming;
-	protected static TextField typeMotor;
+
 	protected static TextField gps;
 	protected static TextField locomotiefStoelen;
 	protected static TextField locomotiefLengte;
@@ -115,6 +116,7 @@ public class GUIlocomotief {
 
 	protected static void LocomotiefEventHanler(Spoor spoor) throws FileNotFoundException {
 		choiceLocomotief.getItems().clear();
+		typeMotor.getItems().clear();
 		// zet de locomotieven van het geselcteerde spoor in de lijst
 		if (spoor.getNummer() != 0) {
 			spoor.getLocomotiefenFromDatabase();
@@ -122,10 +124,12 @@ public class GUIlocomotief {
 			for (Locomotief locomotief : spoor.getLocomotiefen()) {
 				laatsteLocomotief = locomotief;
 				choiceLocomotief.getItems().add(locomotief.getNaam());
+				typeMotor.getItems().add(locomotief.getType_moter());
 			}
 			if (laatsteLocomotief != null) {
 				choiceLocomotief.setValue(laatsteLocomotief.getNaam());
 				getChoiceLocomotief(choiceLocomotief.getValue());
+				typeMotor.getItems().add(laatsteLocomotief.getType_moter());
 			}
 		}
 
@@ -135,6 +139,7 @@ public class GUIlocomotief {
 				try {				
 					getChoiceLocomotief(choiceLocomotief.getValue());
 					getGeselecteerdeLocomotief(locomotief, choiceLocomotief);
+					
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -185,7 +190,7 @@ public class GUIlocomotief {
 				builder.setNaam(locomotiefNaam.getText());
 				builder.setVertrekPunt(vertrekPunt.getText());
 				builder.setEindBestemming(eindBestemming.getText());
-				builder.setType_moter(typeMotor.getText());
+				builder.setType_moter(typeMotor.getValue());
 				builder.setGps(Boolean.parseBoolean(gps.getText()));
 				builder.setLengte(Double.parseDouble(locomotiefLengte.getText()));
 				builder.setStoelen(Integer.parseInt(locomotiefStoelen.getText()));
@@ -210,9 +215,8 @@ public class GUIlocomotief {
 
 	protected static Pane createPane() {
 		Pane pane = new Pane();
-		pane.setPrefWidth(450);
-		pane.setStyle(
-				" -fx-border-style: dotted; -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
+		pane.setMinWidth(450);
+		pane.setStyle("  -fx-border-width: 1 1 1 1 ; -fx-font-weight: bold; -fx-background-color:white");
 		return pane;
 	}
 
@@ -221,7 +225,7 @@ public class GUIlocomotief {
 		HBox.getChildren().addAll(choiceLocomotief = new ChoiceBox<>(), selectLocomotief = new Button("select"));
 
 		HBox.setLayoutX(5);
-		HBox.setLayoutY(30);
+		HBox.setLayoutY(50);
 		return HBox;
 	}
 
@@ -231,7 +235,7 @@ public class GUIlocomotief {
 				selectLosseLocomotief = new Button("select"));
 
 		Locomotief_HBox.setLayoutX(5);
-		Locomotief_HBox.setLayoutY(80);
+		Locomotief_HBox.setLayoutY(100);
 		return Locomotief_HBox;
 	}
 
@@ -239,12 +243,12 @@ public class GUIlocomotief {
 		VBox vbox = new VBox();
 		vbox.getChildren().addAll(new Label("Naam"), locomotiefNaam = new TextField(), new Label("Vertrek punt"),
 				vertrekPunt = new TextField(), new Label("Eind bestemming"), eindBestemming = new TextField(),
-				new Label("Type motor"), typeMotor = new TextField(), new Label("GPS"), gps = new TextField(),
+				new Label("Type motor"), typeMotor = new ChoiceBox<>(), new Label("GPS"), gps = new TextField(),
 				new Label("Lengte"), locomotiefLengte = new TextField(), new Label("Stoelen"),
 				locomotiefStoelen = new TextField());
 
 		vbox.setLayoutX(5);
-		vbox.setLayoutY(110);
+		vbox.setLayoutY(130);
 		return vbox;
 	}
 
@@ -263,7 +267,7 @@ public class GUIlocomotief {
 		Wisselen_hbox.getChildren().addAll(wisselVanSpoor = new ChoiceBox<>(), spoorWisselen = new Button("wisselen"));
 
 		Wisselen_hbox.setLayoutX(5);
-		Wisselen_hbox.setLayoutY(470);
+		Wisselen_hbox.setLayoutY(500);
 		return Wisselen_hbox;
 	}
 
@@ -279,14 +283,14 @@ public class GUIlocomotief {
 	protected static Label kiesLocomotief() {
 		Label kiesLocomotief = new Label("Kies een locomotief op geselecteerde spoor");
 		kiesLocomotief.setLayoutX(5);
-		kiesLocomotief.setLayoutY(10);
+		kiesLocomotief.setLayoutY(30);
 		return kiesLocomotief;
 	}
 
 	protected static Label kiesLosseLocomotief() {
 		Label kiesLosseLocomotief = new Label("Kies een losse locomotief");
 		kiesLosseLocomotief.setLayoutX(5);
-		kiesLosseLocomotief.setLayoutY(60);
+		kiesLosseLocomotief.setLayoutY(70);
 		return kiesLosseLocomotief;
 	}
 
@@ -300,7 +304,7 @@ public class GUIlocomotief {
 	protected static Label Loskoppelen() {
 		Label Loskoppelen = new Label("Locomotief loskoppelen");
 		Loskoppelen.setLayoutX(5);
-		Loskoppelen.setLayoutY(510);
+		Loskoppelen.setLayoutY(530);
 		return Loskoppelen;
 	}
 
@@ -308,6 +312,7 @@ public class GUIlocomotief {
 		locomotief = new Label("locomotief naam");
 		locomotief.setLayoutX(5);
 		locomotief.setLayoutY(0);
+		locomotief.setStyle("-fx-font-size: 20; -fx-padding: 5 60 5 60; ");
 		return locomotief;
 	}
 
@@ -315,14 +320,14 @@ public class GUIlocomotief {
 		String naam = choiceLocmotief.getValue();
 		locomotief.setText(naam);
 	}
-
+	
 	protected static void getChoiceLocomotief(String naamLocomotief) throws FileNotFoundException {
 		Builder builder = new LocomotiefBuilder();
 		builder.setNaam(naamLocomotief);
 		geselecteerdeLocomotief = Locomotief.getLocomotiefFromDatabase(builder.build());
 		vertrekPunt.setText(geselecteerdeLocomotief.getVertrekPunt());
 		eindBestemming.setText(geselecteerdeLocomotief.getEindBestemming());
-		typeMotor.setText(geselecteerdeLocomotief.getType_moter());
+		//typeMotor.setText(geselecteerdeLocomotief.getType_moter());
 		gps.setText(Boolean.toString(geselecteerdeLocomotief.isGps()));
 		locomotiefStoelen.setText(Integer.toString(geselecteerdeLocomotief.getStoelen()));
 		locomotiefLengte.setText(Double.toString(geselecteerdeLocomotief.getLengte()));
