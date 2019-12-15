@@ -21,7 +21,7 @@ public class GUISpoor {
 	protected static TextField lengteSpoor;
 	protected static Spoor geselecteerdeSpoor;
 	protected static Label spoorLbl;
-
+	protected static Button cmd;
 	public static Pane createSpoorKeuzeMenu() throws FileNotFoundException {
 		Pane paneSpoor = createPane();
 
@@ -30,8 +30,9 @@ public class GUISpoor {
 		VBox VBox = VBox();
 		HBox HBox = HBox();
 		Label spoorLbl = spoor();
+		Button cmd = cmd();
 
-		paneSpoor.getChildren().addAll(SpoorLbl, Spoor_HBox, VBox, HBox, spoorLbl);
+		paneSpoor.getChildren().addAll(SpoorLbl, Spoor_HBox, VBox, HBox, spoorLbl,cmd);
 		Spoor spoor = new Spoor(1, 0.0);
 		SpoorEventHandler(spoor);
 
@@ -142,6 +143,13 @@ public class GUISpoor {
 		spoorLbl.setLayoutX(5);
 		spoorLbl.setLayoutY(0);
 		return spoorLbl;
+	}
+	
+	protected static Button cmd() {
+		cmd= new Button("cmd");
+		cmd.setLayoutX(350);
+		cmd.setLayoutY(400);
+		return cmd;
 	}
 
 	public static void getGeselecteerdeSpoor(ChoiceBox<String> choiceSpoor) {
