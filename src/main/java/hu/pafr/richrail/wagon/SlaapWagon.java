@@ -44,11 +44,18 @@ public class SlaapWagon implements Cloneable, Wagon {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Wagon wagon = (Wagon) super.clone();
-		wagon.setNaam(naam + "(1)");
-		try {
-			wagon.save();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		String naamWagon = wagon.getNaam();
+		while (true) {
+			naamWagon = naamWagon + "clone";
+			wagon.setNaam(naamWagon);
+			try {
+				Wagon w1 = Wagon.getWagonDromDatabase(wagon);
+				if (w1 == null) {
+					break;
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 		return wagon;
 	}
