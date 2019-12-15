@@ -73,13 +73,13 @@ public class GUIlocomotief {
 		selectLosseLocomotief.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				try {
-					getChoiceLosseLocomotief(choiceLosseLocomotief);
-					GUItest.createLocomotief();
-					getGeselecteerdeLosseLocomotief(choiceLosseLocomotief);
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
+//				try {
+//					getChoiceLosseLocomotief(choiceLosseLocomotief);
+//					GUItest.createLocomotief();
+//					getGeselecteerdeLosseLocomotief(choiceLosseLocomotief);
+//				} catch (FileNotFoundException e1) {
+//					e1.printStackTrace();
+//				}
 			}
 		});
 	}

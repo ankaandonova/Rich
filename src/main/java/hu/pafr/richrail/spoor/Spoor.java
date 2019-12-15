@@ -54,7 +54,7 @@ public class Spoor {
 					// de locomotief heeft een spoor
 					System.out.println(locomotef.getSpoor().getNummer());
 					if (locomotef.getSpoor().getNummer() == nummer) {
-
+						System.out.println("dsahibdsaibdiuasiudshaiudhshabfdhijsabdnbusal");
 						// de locomotief hoort bij het spoor
 						locomotiefen.add(locomotef);
 					}
